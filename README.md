@@ -2,13 +2,29 @@
 
 Macros that generate dbt code, and log it to the command line.
 
-The expected workflow is:
-* Use these macros within dbt Develop to generate dbt code
-* Paste the generated code into your project, refactoring as required
-
-
 # Macros
-## generate_base_model ([source](macros/generate_base_mode.sql))
+## generate_source ([source](macros/generate_source.sql))
+This macro generates lightweight YAML for a [Source](https://docs.getdbt.com/docs/using-sources),
+which you can then paste into a schema file.
+### Usage:
+1. Use the macro (in dbt Develop, in a scratch file, or in a run operation) like
+  so:
+```
+{{ code_gen.generate_source('raw_jaffle_shop') }}
+```
+2. The YAML for the soruce will be logged to the command line
+```txt
+version: 2
+
+sources:
+  - name: raw_jaffle_shop
+    tables:
+      - name: customers
+      - name: orders
+      - name: payments
+```
+
+## generate_base_model ([source](macros/generate_base_model.sql))
 This macro generates the SQL for a base model, which you can then paste into a
 model.
 
