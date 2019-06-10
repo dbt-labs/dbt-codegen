@@ -12,7 +12,7 @@ which you can then paste into a schema file.
 ```
 {{ code_gen.generate_source('raw_jaffle_shop') }}
 ```
-2. The YAML for the soruce will be logged to the command line
+2. The YAML for the source will be logged to the command line
 ```txt
 version: 2
 
@@ -23,6 +23,8 @@ sources:
       - name: orders
       - name: payments
 ```
+3. Paste the output in to a schema file, and refactor as required.
+
 
 ## generate_base_model ([source](macros/generate_base_model.sql))
 This macro generates the SQL for a base model, which you can then paste into a
