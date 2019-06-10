@@ -7,7 +7,7 @@
 {% set base_model_sql %}
 with source as (
 
-    select * from {% raw %}{{ source({% endraw %}'{{source_name}}', '{{table_name}}'{% raw %})}}{% endraw %}
+    select * from {% raw %}{{ source({% endraw %}'{{source_name}}', '{{table_name}}' {% raw %})}}{% endraw %}
 
 ),
 
