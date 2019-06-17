@@ -10,7 +10,7 @@ which you can then paste into a schema file.
 1. Use the macro (in dbt Develop, in a scratch file, or in a run operation) like
   so:
 ```
-{{ code_gen.generate_source('raw_jaffle_shop') }}
+{{ codegen.generate_source('raw_jaffle_shop') }}
 ```
 2. The YAML for the source will be logged to the command line
 ```txt
@@ -35,7 +35,7 @@ model.
 2. Use the macro (in dbt Develop, or in a scratch file), and compile your code
 ```
 {{
-  code_gen.generate_base_model(
+  codegen.generate_base_model(
     source_name='raw_jaffle_shop',
     table_name='customers'
   )
