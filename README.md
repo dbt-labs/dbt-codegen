@@ -1,4 +1,4 @@
-# dbt-codegen
+# [beta] dbt-codegen
 
 Macros that generate dbt code, and log it to the command line.
 
@@ -65,6 +65,3 @@ renamed as (
 select * from renamed
 ```
 4. Paste the output in to a model, and refactor as required.
-
-# To-do:
-* Macros to generate sources for a schema
