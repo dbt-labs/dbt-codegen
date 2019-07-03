@@ -2,6 +2,7 @@ version: 2
 
 sources:
   - name: raw_data
-    schema: "{{ generate_schema_name('raw_data') }}"
+    # have to hardcode this as I can't access the generate_schema_name macro
+    identifer: codegen_integration_tests_raw_data
     tables:
       - name: data__a_relation

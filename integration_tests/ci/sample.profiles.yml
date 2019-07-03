@@ -16,7 +16,7 @@ codegen_integration_tests:
       pass: "{{ env_var('CI_DBT_PASS') }}"
       port: "{{ env_var('CI_DBT_PORT') }}"
       dbname: "{{ env_var('CI_DBT_DBNAME') }}"
-      schema: codegen_integration_tests_postgres
+      schema: codegen_integration_tests
       threads: 1
 
     redshift:
@@ -26,7 +26,7 @@ codegen_integration_tests:
       pass: "{{ env_var('CI_REDSHIFT_DBT_PASS') }}"
       dbname: "{{ env_var('CI_REDSHIFT_DBT_DBNAME') }}"
       port: 5439
-      schema: codegen_integration_tests_redshift
+      schema: codegen_integration_tests
       threads: 1
 
     bigquery:
@@ -34,7 +34,7 @@ codegen_integration_tests:
       method: service-account
       keyfile: "{{ env_var('GCLOUD_SERVICE_KEY_PATH') }}"
       project: 'dbt-integration-tests'
-      schema: codegen_integration_tests_bigquery
+      schema: codegen_integration_tests
       threads: 1
 
     snowflake:
@@ -45,5 +45,5 @@ codegen_integration_tests:
       role: "{{ env_var('CI_SNOWFLAKE_DBT_ROLE') }}"
       database: "{{ env_var('CI_SNOWFLAKE_DBT_DATABASE') }}"
       warehouse: "{{ env_var('CI_SNOWFLAKE_DBT_WAREHOUSE') }}"
-      schema: codegen_integration_tests_snowflake
+      schema: codegen_integration_tests
       threads: 1
