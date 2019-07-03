@@ -15,7 +15,7 @@
 
 
 ---
-{% macro generate_source(schema_name) %}
+{% macro generate_source(schema_name, database_name=target.database, generate_columns=False) %}
 
 {% set sources_yaml=[] %}
 
@@ -30,7 +30,26 @@
 {% for table in tables %}
     {% do sources_yaml.append('      - name: ' ~ table) %}
 
+    {% if generate_columns %}
+    {% do sources_yaml.append('        columns:') %}
+
+        {% set table_relation=api.Relation.create(
+            database=database_name,
+            schema=schema_name,
+            identifier=table
+        ) %}
+
+        {% set columns=adapter.get_columns_in_relation(table_relation) %}
+
+        {% for column in columns %}
+            {% do sources_yaml.append('          - name: ' ~ column.name) %}
+        {% endfor %}
+            {% do sources_yaml.append('') %}
+
+    {% endif %}
+
 {% endfor %}
+
 {% if execute %}
 
     {{ log(sources_yaml | join ('\n'), info=True) }}
