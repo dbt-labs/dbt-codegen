@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: raw_data
+    schema: "{{ generate_schema_name('raw_data') }}"
+    tables:
+      - name: data__a_relation
