@@ -1,0 +1,19 @@
+
+name: 'codegen_integration_tests'
+version: '1.0'
+
+profile: 'codegen_integration_tests'
+
+source-paths: ["models"]
+analysis-paths: ["analysis"]
+test-paths: ["tests"]
+data-paths: ["data"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets:
+    - "target"
+    - "dbt_modules"
+
+seeds:
+  schema: raw_data
