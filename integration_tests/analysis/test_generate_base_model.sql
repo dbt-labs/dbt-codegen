@@ -1,8 +1,6 @@
-{% set raw_schema=generate_schema_name('raw_data') %}
-
 {{
   codegen.generate_base_model(
-    source_name=raw_schema,
-    table_name='data__a_relation'
+    source_name='test_data_source',
+    table_name='my_test_table'
   )
 }}

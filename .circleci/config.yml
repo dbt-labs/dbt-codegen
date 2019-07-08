@@ -41,6 +41,7 @@ jobs:
             . venv/bin/activate
             cd integration_tests
             dbt deps --target postgres
+            dbt run-operation create_source_table --target postgres
             dbt seed --target postgres --full-refresh
             dbt run --target postgres
             dbt test --target postgres
@@ -52,6 +53,7 @@ jobs:
             echo `pwd`
             cd integration_tests
             dbt deps --target redshift
+            dbt run-operation create_source_table --target redshift
             dbt seed --target redshift --full-refresh
             dbt run --target redshift
             dbt test --target redshift
@@ -63,6 +65,7 @@ jobs:
             echo `pwd`
             cd integration_tests
             dbt deps --target snowflake
+            dbt run-operation create_source_table --target snowflake
             dbt seed --target snowflake --full-refresh
             dbt run --target snowflake
             dbt test --target snowflake
@@ -77,6 +80,7 @@ jobs:
             echo `pwd`
             cd integration_tests
             dbt deps --target bigquery
+            dbt run-operation create_source_table --target bigquery
             dbt seed --target bigquery --full-refresh
             dbt run --target bigquery
             dbt test --target bigquery
