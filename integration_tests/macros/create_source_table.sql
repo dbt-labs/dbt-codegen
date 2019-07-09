@@ -1,26 +1,19 @@
 {% macro create_source_table() %}
 
-{% set target_schema="test_data_source" %}
+{% set target_schema="codegen_integration_tests__data_source_schema" %}
 
 {% do adapter.create_schema(target.database, target_schema) %}
 
-{%- set target_relation = api.Relation.create(
-    identifier='my_test_table',
-    schema=target_schema,
-    type='table'
-) %}
+{% set query_sql %}
+drop table if exists {{ target_schema }}.codegen_integration_tests__data_source_table;
+create table {{ target_schema }}.codegen_integration_tests__data_source_table as (
+    select
+        1 as my_integer_col,
+        true as my_bool_col
+)
 
-
-{% set source_sql %}
-select
-    1 as my_integer_col,
-    true as my_bool_col
 {% endset %}
 
-{% do create_table_as(
-    temporary=False,
-    relation=target_relation,
-    sql=source_sql
-) %}
+{{ run_query(query_sql) }}
 
 {% endmacro %}

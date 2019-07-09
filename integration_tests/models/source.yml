@@ -1,8 +1,6 @@
 version: 2
 
 sources:
-  - name: raw_data
-    # have to hardcode this as I can't access the generate_schema_name macro
-    schema: codegen_integration_tests_raw_data
+  - name: codegen_integration_tests__data_source_schema
     tables:
-      - name: data__a_relation
+      - name: codegen_integration_tests__data_source_table

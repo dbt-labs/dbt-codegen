@@ -1,6 +1,6 @@
 {{
   codegen.generate_base_model(
-    source_name='test_data_source',
-    table_name='my_test_table'
+    source_name='codegen_integration_tests__data_source_schema',
+    table_name='codegen_integration_tests__data_source_table'
   )
 }}

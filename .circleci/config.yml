@@ -25,7 +25,7 @@ jobs:
             . venv/bin/activate
 
             pip install --upgrade pip setuptools
-            pip install dbt
+            pip install dbt --pre # using pre-release for unreleased 0.14.0 functionality
 
             mkdir -p ~/.dbt
             cp integration_tests/ci/sample.profiles.yml ~/.dbt/profiles.yml
@@ -42,6 +42,7 @@ jobs:
             cd integration_tests
             dbt deps --target postgres
             dbt run-operation create_source_table --target postgres
+            dbt compile --target postgres
             dbt seed --target postgres --full-refresh
             dbt run --target postgres
             dbt test --target postgres
@@ -54,6 +55,7 @@ jobs:
             cd integration_tests
             dbt deps --target redshift
             dbt run-operation create_source_table --target redshift
+            dbt compile --target redshift
             dbt seed --target redshift --full-refresh
             dbt run --target redshift
             dbt test --target redshift
@@ -66,6 +68,7 @@ jobs:
             cd integration_tests
             dbt deps --target snowflake
             dbt run-operation create_source_table --target snowflake
+            dbt compile --target snowflake
             dbt seed --target snowflake --full-refresh
             dbt run --target snowflake
             dbt test --target snowflake
@@ -81,6 +84,7 @@ jobs:
             cd integration_tests
             dbt deps --target bigquery
             dbt run-operation create_source_table --target bigquery
+            dbt compile --target bigquery
             dbt seed --target bigquery --full-refresh
             dbt run --target bigquery
             dbt test --target bigquery
