@@ -7,7 +7,7 @@
 {% set base_model_sql %}
 with source as (
 
-    select * from {% raw %}{{ source({% endraw %}'{{ source_name }}', '{{ table_name }}'{% raw %})}}{% endraw %}
+    select * from {% raw %}{{ source({% endraw %}'{{ source_name }}', '{{ table_name }}'{% raw %}) }}{% endraw %}
 
 ),
 
@@ -15,7 +15,7 @@ renamed as (
 
     select
         {%- for column in column_names %}
-        {{ column }}{{"," if not loop.last}}
+        {{ column | lower }}{{"," if not loop.last}}
         {%- endfor %}
 
     from source
@@ -28,6 +28,7 @@ select * from renamed
 {% if execute %}
 
 {{ log(base_model_sql, info=True) }}
+{% do return(base_model_sql) %}
 
 {% endif %}
 {% endmacro %}
