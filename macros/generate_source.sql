@@ -18,10 +18,6 @@
 ---
 {% macro generate_source(schema_name, database_name=target.database, generate_columns=False) %}
 
-{% if target.type == 'snowflake' %}
-  {% set schema_name = schema_name | upper %}
-{% endif %}
-
 {% set sources_yaml=[] %}
 
 {% do sources_yaml.append('version: 2') %}
