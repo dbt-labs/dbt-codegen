@@ -25,10 +25,11 @@
 {% do sources_yaml.append('') %}
 {% do sources_yaml.append('sources:') %}
 {% do sources_yaml.append('  - name: ' ~ schema_name | lower) %}
+
 {% if database_name != target.database %}
 {% do sources_yaml.append('    database: ' ~ database_name | lower) %}
-
 {% endif %}
+
 {% do sources_yaml.append('    tables:') %}
 
 {% set tables=codegen.get_tables_in_schema(schema_name, database_name) %}
