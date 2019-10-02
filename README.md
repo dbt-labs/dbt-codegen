@@ -35,6 +35,7 @@ version: 2
 
 sources:
   - name: raw_jaffle_shop
+    database: raw
     tables:
       - name: customers
       - name: orders
