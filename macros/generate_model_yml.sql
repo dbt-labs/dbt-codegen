@@ -22,7 +22,6 @@
     {% do model_yaml.append('        description: ' ~ column.name | lower | replace('_',' ')) %}
     {% do model_yaml.append('') %}
 {% endfor %}
-    {% do model_yaml.append('') %}
 
 {% if execute %}
 
