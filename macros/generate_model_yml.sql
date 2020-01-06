@@ -1,19 +1,15 @@
-{% macro generate_model_yml( table_name ) %}
+{% macro generate_model_yml( model_name ) %}
 
 {% set model_yaml=[] %}
 
 {% do model_yaml.append('version: 2') %}
 {% do model_yaml.append('') %}
 {% do model_yaml.append('models:') %}
-{% do model_yaml.append('  - name: ' ~ table_name | lower) %}
+{% do model_yaml.append('  - name: ' ~ model_name | lower) %}
 {% do model_yaml.append('    description: ' ~ 'table description here') %}
 {% do model_yaml.append('    columns:') %}
 
-{% set table_relation=api.Relation.create(
-    database=target.database,
-    schema=target.schema,
-    identifier=table_name
-) %}
+{% set table_relation=ref(model_name) %}
 
 {% set columns = adapter.get_columns_in_relation(table_relation) %}
 

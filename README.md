@@ -97,7 +97,7 @@ select * from renamed
 This macro generates the yml for any model your run in your target profile, which you can then paste into a yml file.
 
 ### Arguments:
-* `table_name` (required): The table you wish to generate the yml file for.
+* `model_name` (required): The model you wish to generate the yml file for.
 
 
 ### Usage:
@@ -109,7 +109,7 @@ This macro generates the yml for any model your run in your target profile, whic
 
 Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
 ```
-$ dbt run-operation generate_model_yml --args 'table_name: my_model'
+$ dbt run-operation generate_model_yml --args 'model_name: my_model'
 ```
 3. The YAML for the model will be logged to the command line
 ```txt
