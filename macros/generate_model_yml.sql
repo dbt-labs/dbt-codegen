@@ -11,7 +11,7 @@
 
 {% set table_relation=ref(model_name) %}
 
-{% do model_yaml.append( codegen.generate_columns_yaml(table_relation) ) %}
+{% do model_yaml.append( ( codegen.generate_columns_yaml(table_relation) | join ('\n')) ) %}
 
 {% if execute %}
 

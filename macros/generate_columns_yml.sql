@@ -9,6 +9,6 @@
     {% do column_yaml.append('') %}
 {% endfor %}
 
-{{ return(column_yaml | join ('\n'))  }}
+{{ return(column_yaml)  }}
 
 {% endmacro %}
