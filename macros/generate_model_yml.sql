@@ -11,13 +11,7 @@
 
 {% set table_relation=ref(model_name) %}
 
-{% set columns = adapter.get_columns_in_relation(table_relation) %}
-
-{% for column in columns %}
-    {% do model_yaml.append('      - name: ' ~ column.name | lower ) %}
-    {% do model_yaml.append('        description: ' ~ column.name | lower | replace('_',' ')) %}
-    {% do model_yaml.append('') %}
-{% endfor %}
+{% do model_yaml.append( codegen.generate_columns_yaml(table_relation) ) %}
 
 {% if execute %}
 
