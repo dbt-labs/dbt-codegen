@@ -102,9 +102,6 @@ select * from renamed
 ```
 4. Paste the output in to a model, and refactor as required.
 
-
-
-
 ## generate_model_yaml ([source](macros/generate_model_yaml.sql))
 This macro generates the YAML for a model, which you can then paste into a
 schema.yml file.
