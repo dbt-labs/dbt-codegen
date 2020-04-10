@@ -1,4 +1,3 @@
-
 {% set actual_model_yaml = codegen.generate_model_yaml(
     model_name='codegen_integration_tests__data_source_table'
   )
