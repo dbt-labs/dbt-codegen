@@ -14,7 +14,7 @@
 
 {% for column in columns %}
     {% do model_yaml.append('      - name: ' ~ column.name | lower ) %}
-    {% do model_yaml.append('      - description: ""') %}
+    {% do model_yaml.append('        description: ""') %}
     {% do model_yaml.append('') %}
 {% endfor %}
 
