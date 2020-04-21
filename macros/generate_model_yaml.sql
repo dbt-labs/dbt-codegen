@@ -7,7 +7,7 @@
 {% do model_yaml.append('models:') %}
 {% do model_yaml.append('  - name: ' ~ model_name | lower) %}
 {% do model_yaml.append('    description: ""') %}
-{% do model_yaml.append('    columns: ""') %}
+{% do model_yaml.append('    columns:') %}
 
 {% set relation=ref(model_name) %}
 {%- set columns = adapter.get_columns_in_relation(relation) -%}
