@@ -10,7 +10,7 @@ models:
   - name: model_yaml
     tables:
       - name: codegen_integration_tests__data_source_table
-        descriptions: ""
+        description: ""
         columns:
           - name: col_a
             description: ""
