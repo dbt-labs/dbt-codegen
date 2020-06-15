@@ -1,8 +1,12 @@
 {% macro create_source_table() %}
 
-{% set target_schema="codegen_integration_tests__data_source_schema" %}
+{% set target_schema=api.Relation.create(
+    database=target.database,
+    schema="codegen_integration_tests__data_source_schema"
+) %}
 
-{% do adapter.create_schema(target.database, target_schema) %}
+
+{% do adapter.create_schema(target_schema) %}
 
 {% set drop_table_sql %}
 drop table if exists {{ target_schema }}.codegen_integration_tests__data_source_table
