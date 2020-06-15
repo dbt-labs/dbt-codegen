@@ -2,6 +2,15 @@
 
 Macros that generate dbt code, and log it to the command line.
 
+# Contents
+* [generate_source](#generate_source-source)
+* [generate_base_model](#generate_base_model-source)
+
+# Installation instructions
+New to dbt packages? Read more about them [here](https://docs.getdbt.com/docs/building-a-dbt-project/package-management/).
+1. Include this package in your `packages.yml` file — check [here](https://hub.getdbt.com/fishtown-analytics/codegen/latest/) for the latest version number.
+2. Run `dbt deps` to install the package.
+
 # Macros
 ## generate_source ([source](macros/generate_source.sql))
 This macro generates lightweight YAML for a [Source](https://docs.getdbt.com/docs/using-sources),
