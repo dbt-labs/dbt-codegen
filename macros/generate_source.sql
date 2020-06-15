@@ -1,6 +1,6 @@
 {% macro get_tables_in_schema(schema_name,database_name=target.database) %}
 
-    {% set tables=dbt_utils.get_tables_by_prefix(
+    {% set tables=dbt_utils.get_relations_by_prefix(
             schema=schema_name,
             prefix='',
             database=database_name
