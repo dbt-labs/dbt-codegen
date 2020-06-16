@@ -5,6 +5,7 @@ Macros that generate dbt code, and log it to the command line.
 # Contents
 * [generate_source](#generate_source-source)
 * [generate_base_model](#generate_base_model-source)
+* [generate_model_yaml](#generate_model_yaml-source)
 
 # Installation instructions
 New to dbt packages? Read more about them [here](https://docs.getdbt.com/docs/building-a-dbt-project/package-management/).
