@@ -2,7 +2,7 @@ name: 'codegen_integration_tests'
 version: '1.0'
 config-version: 2
 
-profile: 'codegen_integration_tests'
+profile: 'integration_tests'
 
 source-paths: ["models"]
 analysis-paths: ["analysis"]
