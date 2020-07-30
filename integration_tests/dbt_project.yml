@@ -17,3 +17,4 @@ clean-targets:
 
 seeds:
   +schema: raw_data
+  +quote_columns: false
