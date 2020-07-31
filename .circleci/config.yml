@@ -41,11 +41,11 @@ jobs:
           command: |
             . venv/bin/activate
             cd integration_tests
-            dbt deps --target postgres
-            dbt run-operation create_source_table --target postgres
-            dbt seed --target postgres --full-refresh
-            dbt run --target postgres
-            dbt test --target postgres
+            dbt --warn-error deps --target postgres
+            dbt --warn-error run-operation create_source_table --target postgres
+            dbt --warn-error seed --target postgres --full-refresh
+            dbt --warn-error run --target postgres
+            dbt --warn-error test --target postgres
 
       - run:
           name: "Run Tests - Redshift"
@@ -53,11 +53,11 @@ jobs:
             . venv/bin/activate
             echo `pwd`
             cd integration_tests
-            dbt deps --target redshift
-            dbt run-operation create_source_table --target redshift
-            dbt seed --target redshift --full-refresh
-            dbt run --target redshift
-            dbt test --target redshift
+            dbt --warn-error deps --target redshift
+            dbt --warn-error run-operation create_source_table --target redshift
+            dbt --warn-error seed --target redshift --full-refresh
+            dbt --warn-error run --target redshift
+            dbt --warn-error test --target redshift
 
       - run:
           name: "Run Tests - Snowflake"
@@ -65,11 +65,11 @@ jobs:
             . venv/bin/activate
             echo `pwd`
             cd integration_tests
-            dbt deps --target snowflake
-            dbt run-operation create_source_table --target snowflake
-            dbt seed --target snowflake --full-refresh
-            dbt run --target snowflake
-            dbt test --target snowflake
+            dbt --warn-error deps --target snowflake
+            dbt --warn-error run-operation create_source_table --target snowflake
+            dbt --warn-error seed --target snowflake --full-refresh
+            dbt --warn-error run --target snowflake
+            dbt --warn-error test --target snowflake
 
       - run:
           name: "Run Tests - BigQuery"
@@ -80,11 +80,11 @@ jobs:
             . venv/bin/activate
             echo `pwd`
             cd integration_tests
-            dbt deps --target bigquery
-            dbt run-operation create_source_table --target bigquery
-            dbt seed --target bigquery --full-refresh
-            dbt run --target bigquery
-            dbt test --target bigquery
+            dbt --warn-error deps --target bigquery
+            dbt --warn-error run-operation create_source_table --target bigquery
+            dbt --warn-error seed --target bigquery --full-refresh
+            dbt --warn-error run --target bigquery
+            dbt --warn-error test --target bigquery
 
 
       - save_cache:

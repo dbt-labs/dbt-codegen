@@ -1,5 +1,5 @@
 {% set actual_model_yaml = codegen.generate_model_yaml(
-    model_name='codegen_integration_tests__data_source_table'
+    model_name='data__a_relation'
   )
 %}
 
@@ -7,15 +7,14 @@
 version: 2
 
 models:
-  - name: model_yaml
-    tables:
-      - name: codegen_integration_tests__data_source_table
+  - name: data__a_relation
+    description: ""
+    columns:
+      - name: col_a
         description: ""
-        columns:
-          - name: col_a
-            description: ""
-          - name: col_b
-            description: ""
+
+      - name: col_b
+        description: ""
 
 {% endset %}
 
