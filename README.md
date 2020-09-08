@@ -40,7 +40,7 @@ or
 $ dbt run-operation generate_source --args '{"schema_name": "raw_jaffle_shop", "database_name": "raw"}'
 ```
 2. The YAML for the source will be logged to the command line
-```txt
+```
 version: 2
 
 sources:
@@ -79,7 +79,7 @@ $ dbt run-operation generate_base_model --args '{"source_name": "raw_jaffle_shop
 ```
 
 3. The SQL for a base model will be logged to the command line
-```txt
+```
 with source as (
 
     select * from {{ source('raw_jaffle_shop', 'customers') }}
@@ -126,7 +126,7 @@ $ dbt run-operation generate_model_yaml --args '{"model_name": "customers"}'
 ```
 
 3. The YAML for a base model will be logged to the command line
-```txt
+```
 version: 2
 
 models:
