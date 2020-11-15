@@ -5,6 +5,7 @@ Macros that generate dbt code, and log it to the command line.
 # Contents
 * [generate_source](#generate_source-source)
 * [generate_base_model](#generate_base_model-source)
+* [generate_base_seed_model] (#generate_base_seed_model-seed)
 * [generate_model_yaml](#generate_model_yaml-source)
 
 # Installation instructions
@@ -138,3 +139,50 @@ models:
         description: ""
 ```
 4. Paste the output in to a schema.yml file, and refactor as required.
+
+## generate_base_seed_model ([source](macros/generate_base_seed_model.sql))
+This macro generates the SQL for a base seed model, which you can then paste into a
+model.
+
+### Arguments:
+* `seed_name` (required): The seed you wish to generate base model SQL for.
+
+### Usage:
+1. Create a source for the table you wish to create a base model on top of.
+2. Use the macro (in dbt Develop, or in a scratch file), and compile your code
+```
+{{
+  codegen.generate_base_seed_model(
+    seed_name='raw_jaffle_shop'
+  )
+}}
+```
+Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
+```
+$ dbt run-operation generate_base_seed_model --args '{"seed_name": "raw_jaffle_shop" }'
+```
+
+3. The SQL for a base model will be logged to the command line
+```
+with source as (
+
+    select * from {{ ref('raw_jaffle_shop') }}
+
+),
+
+renamed as (
+
+    select
+        id,
+        first_name,
+        last_name,
+        email,
+        _elt_updated_at
+
+    from source
+
+)
+
+select * from renamed
+```
+4. Paste the output in to a model, and refactor as required.
