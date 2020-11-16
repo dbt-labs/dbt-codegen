@@ -7,7 +7,7 @@
 {% set expected_base_seed_model %}
 with source as (
 
-    select * from {% raw %}{{ ref({% endraw %}'{{ seed_name }}'{% raw %}) }}{% endraw %}
+    select * from {%raw%}{{ ref('data__a_relation') }}{%endraw%}
 
 ),
 
