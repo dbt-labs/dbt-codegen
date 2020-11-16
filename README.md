@@ -5,7 +5,7 @@ Macros that generate dbt code, and log it to the command line.
 # Contents
 * [generate_source](#generate_source-source)
 * [generate_base_model](#generate_base_model-source)
-* [generate_base_seed_model] (#generate_base_seed_model-seed)
+* [generate_base_seed_model](#generate_base_seed_model-seed)
 * [generate_model_yaml](#generate_model_yaml-source)
 
 # Installation instructions
