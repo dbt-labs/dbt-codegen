@@ -1,6 +1,6 @@
 
-{% set actual_base_model = codegen.generate_base_seed_model(
-    seed_name='data__a_relation'
+{% set actual_base_model = codegen.generate_base_model_from_ref(
+    ref_name='data__a_relation'
   )
 %}
 

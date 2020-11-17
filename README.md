@@ -5,7 +5,7 @@ Macros that generate dbt code, and log it to the command line.
 # Contents
 * [generate_source](#generate_source-source)
 * [generate_base_model](#generate_base_model-source)
-* [generate_base_seed_model](#generate_base_seed_model-seed)
+* [generate_base_model_from_ref](#generate_base_model_from_ref-seed)
 * [generate_model_yaml](#generate_model_yaml-source)
 
 # Installation instructions
@@ -140,26 +140,26 @@ models:
 ```
 4. Paste the output in to a schema.yml file, and refactor as required.
 
-## generate_base_seed_model ([source](macros/generate_base_seed_model.sql))
+## generate_base_model_from_ref ([source](macros/generate_base_model_from_ref.sql))
 This macro generates the SQL for a base seed model, which you can then paste into a
 model.
 
 ### Arguments:
-* `seed_name` (required): The seed you wish to generate base model SQL for.
+* `ref_name` (required): The seed you wish to generate base model SQL for.
 
 ### Usage:
 1. Create a source for the table you wish to create a base model on top of.
 2. Use the macro (in dbt Develop, or in a scratch file), and compile your code
 ```
 {{
-  codegen.generate_base_seed_model(
-    seed_name='raw_jaffle_shop'
+  codegen.generate_base_model_from_ref(
+    ref_name='raw_jaffle_shop'
   )
 }}
 ```
 Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
 ```
-$ dbt run-operation generate_base_seed_model --args '{"seed_name": "raw_jaffle_shop" }'
+$ dbt run-operation generate_base_model_from_ref --args '{"ref_name": "raw_jaffle_shop" }'
 ```
 
 3. The SQL for a base model will be logged to the command line

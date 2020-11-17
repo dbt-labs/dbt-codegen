@@ -1,11 +1,11 @@
-{% macro generate_base_seed_model(seed_name) %}
+{% macro generate_base_model_from_ref(ref_name) %}
 
-{%- set columns = adapter.get_columns_in_relation(ref(seed_name)) -%}
+{%- set columns = adapter.get_columns_in_relation(ref(ref_name)) -%}
 {% set column_names=columns | map(attribute='name') %}
 {% set base_model_sql %}
 with source as (
 
-    select * from {% raw %}{{ ref({% endraw %}'{{ seed_name }}'{% raw %}) }}{% endraw %}
+    select * from {% raw %}{{ ref({% endraw %}'{{ ref_name }}'{% raw %}) }}{% endraw %}
 
 ),
 
