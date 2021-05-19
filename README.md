@@ -25,7 +25,7 @@ source data is in.
 column names to your source definition.
 
 ### Usage:
-1. Use the macro (in dbt Develop, in a scratch file, or in a run operation) like so:
+1. Copy the macro into a statement tab in the dbt Cloud IDE, or into an analysis file, and compile your code
 
 ```
 {{ codegen.generate_source('raw_jaffle_shop') }}
@@ -71,7 +71,7 @@ model.
 
 ### Usage:
 1. Create a source for the table you wish to create a base model on top of.
-2. Use the macro (in dbt Develop, or in a scratch file), and compile your code
+2. Copy the macro into a statement tab in the dbt Cloud IDE, or into an analysis file, and compile your code
 
 ```
 {{ codegen.generate_base_model(
@@ -122,7 +122,7 @@ schema.yml file.
 
 ### Usage:
 1. Create a model.
-2. Use the macro (in dbt Develop, or in a scratch file), and compile your code
+2. Copy the macro into a statement tab in the dbt Cloud IDE, or into an analysis file, and compile your code
 
 ```
 {{ codegen.generate_model_yaml(
