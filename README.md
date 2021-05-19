@@ -25,21 +25,27 @@ source data is in.
 column names to your source definition.
 
 ### Usage:
-1. Use the macro (in dbt Develop, in a scratch file, or in a run operation) like
-  so:
+1. Use the macro (in dbt Develop, in a scratch file, or in a run operation) like so:
+
 ```
 {{ codegen.generate_source('raw_jaffle_shop') }}
 ```
+
 Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
+
 ```
 $ dbt run-operation generate_source --args 'schema_name: raw_jaffle_shop'
 ```
+
 or
+
 ```
 # for multiple arguments, use the dict syntax
-$ dbt run-operation generate_source --args '{"schema_name": "raw_jaffle_shop", "database_name": "raw"}'
+$ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "database_name": "raw"}'
 ```
+
 2. The YAML for the source will be logged to the command line
+
 ```
 version: 2
 
@@ -51,6 +57,7 @@ sources:
       - name: orders
       - name: payments
 ```
+
 3. Paste the output in to a schema `.yml` file, and refactor as required.
 
 ## generate_base_model ([source](macros/generate_base_model.sql))
@@ -65,20 +72,22 @@ model.
 ### Usage:
 1. Create a source for the table you wish to create a base model on top of.
 2. Use the macro (in dbt Develop, or in a scratch file), and compile your code
+
 ```
-{{
-  codegen.generate_base_model(
+{{ codegen.generate_base_model(
     source_name='raw_jaffle_shop',
     table_name='customers'
-  )
-}}
+) }}
 ```
+
 Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
+
 ```
 $ dbt run-operation generate_base_model --args '{"source_name": "raw_jaffle_shop", "table_name": "customers"}'
 ```
 
 3. The SQL for a base model will be logged to the command line
+
 ```
 with source as (
 
@@ -101,6 +110,7 @@ renamed as (
 
 select * from renamed
 ```
+
 4. Paste the output in to a model, and refactor as required.
 
 ## generate_model_yaml ([source](macros/generate_model_yaml.sql))
@@ -113,19 +123,21 @@ schema.yml file.
 ### Usage:
 1. Create a model.
 2. Use the macro (in dbt Develop, or in a scratch file), and compile your code
+
 ```
-{{
-  codegen.generate_model_yaml(
+{{ codegen.generate_model_yaml(
     model_name='customers'
-  )
-}}
+) }}
 ```
+
 Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
+
 ```
 $ dbt run-operation generate_model_yaml --args '{"model_name": "customers"}'
 ```
 
 3. The YAML for a base model will be logged to the command line
+
 ```
 version: 2
 
@@ -137,4 +149,5 @@ models:
       - name: customer_name
         description: ""
 ```
+
 4. Paste the output in to a schema.yml file, and refactor as required.
