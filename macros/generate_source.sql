@@ -50,6 +50,7 @@
 
         {% for column in columns %}
             {% do sources_yaml.append('          - name: ' ~ column.name | lower ) %}
+            {% do sources_yaml.append('            description: ""' ~ column.name | lower ) %}
         {% endfor %}
             {% do sources_yaml.append('') %}
 
