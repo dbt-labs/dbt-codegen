@@ -48,8 +48,11 @@ sources:
     database: raw
     tables:
       - name: customers
+        description: ""
       - name: orders
+        description: ""
       - name: payments
+        description: ""
 ```
 3. Paste the output in to a schema `.yml` file, and refactor as required.
 
