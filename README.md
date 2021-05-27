@@ -67,6 +67,7 @@ model.
 ### Arguments:
 * `source_name` (required): The source you wish to generate base model SQL for.
 * `table_name` (required): The source table you wish to generate base model SQL for.
+* `leading_commas` (optional, default=False): Whether you want your commas to be leading (vs trailing).
 
 
 ### Usage:

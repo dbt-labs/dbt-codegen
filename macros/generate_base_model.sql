@@ -1,4 +1,4 @@
-{% macro generate_base_model(source_name, table_name) %}
+{% macro generate_base_model(source_name, table_name, leading_commas=False) %}
 
 {%- set source_relation = source(source_name, table_name) -%}
 
@@ -14,9 +14,15 @@ with source as (
 renamed as (
 
     select
+        {%- if leading_commas -%}
+        {%- for column in column_names %}
+        {{", " if not loop.first}}{{ column | lower }}
+        {%- endfor %}
+        {%- else -%}
         {%- for column in column_names %}
         {{ column | lower }}{{"," if not loop.last}}
-        {%- endfor %}
+        {%- endfor -%}
+        {%- endif %}
 
     from source
 
