@@ -3,6 +3,7 @@
 ## Fixes
 
 ## Features
+- Add optional leading_commas arg to generate_base_model
 
 ## Other
 
