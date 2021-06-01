@@ -1,4 +1,4 @@
-{% macro get_tables_in_schema(schema_name,database_name=target.database) %}
+{% macro get_tables_in_schema(schema_name,database_name=target.database,include_descriptions=False) %}
 
     {% set tables=dbt_utils.get_relations_by_prefix(
             schema=schema_name,
@@ -50,7 +50,9 @@
 
         {% for column in columns %}
             {% do sources_yaml.append('          - name: ' ~ column.name | lower ) %}
-            {% do sources_yaml.append('            description: ""' ) %}
+            {% if include_descriptions %}
+                {% do sources_yaml.append('            description: ""' ) %}
+            {% endif %}
         {% endfor %}
             {% do sources_yaml.append('') %}
 
