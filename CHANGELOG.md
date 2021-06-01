@@ -1,6 +1,6 @@
 # dbt-codegen v0.4.0 (unreleased)
-
 ## Fixes
+- In the `generate_source` macro, use `dbt_utils.get_relations_by_pattern` instead of `get_relations_by_prefix`, since the latter will be deprecated in the future (#42)
 
 ## Features
 
