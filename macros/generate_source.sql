@@ -9,8 +9,6 @@
     {% set table_list= tables | map(attribute='identifier') %}
 
     {{ return(table_list | sort) }}
-    {{ log("*** table list ***", info=True) }}
-    {{ log(table_list, info=True) }}
 
 {% endmacro %}
 
