@@ -1,4 +1,4 @@
-{% macro get_tables_in_schema(schema_name,database_name=target.database,include_descriptions=False) %}
+{% macro get_tables_in_schema(schema_name,database_name=target.database) %}
 
     {% set tables=dbt_utils.get_relations_by_prefix(
             schema=schema_name,
@@ -17,7 +17,7 @@
 
 
 ---
-{% macro generate_source(schema_name, database_name=target.database, generate_columns=False) %}
+{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False) %}
 
 {% set sources_yaml=[] %}
 
