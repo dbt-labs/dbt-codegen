@@ -23,6 +23,8 @@ which you can then paste into a schema file.
 source data is in.
 * `generate_columns` (optional, default=False): Whether you want to add the
 column names to your source definition.
+* `include_descriptions` (optional, default=False): Whether you want to add 
+description placeholders to your source definition.
 
 ### Usage:
 1. Copy the macro into a statement tab in the dbt Cloud IDE, or into an analysis file, and compile your code
@@ -54,8 +56,11 @@ sources:
     database: raw
     tables:
       - name: customers
+        description: ""
       - name: orders
+        description: ""
       - name: payments
+        description: ""
 ```
 
 3. Paste the output in to a schema `.yml` file, and refactor as required.

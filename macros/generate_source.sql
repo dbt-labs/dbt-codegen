@@ -17,7 +17,7 @@
 
 
 ---
-{% macro generate_source(schema_name, database_name=target.database, generate_columns=False) %}
+{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False) %}
 
 {% set sources_yaml=[] %}
 
@@ -50,6 +50,9 @@
 
         {% for column in columns %}
             {% do sources_yaml.append('          - name: ' ~ column.name | lower ) %}
+            {% if include_descriptions %}
+                {% do sources_yaml.append('            description: ""' ) %}
+            {% endif %}
         {% endfor %}
             {% do sources_yaml.append('') %}
 

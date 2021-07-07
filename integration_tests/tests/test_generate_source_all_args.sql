@@ -4,7 +4,8 @@
 {% set actual_source_yaml = codegen.generate_source(
     schema_name=raw_schema,
     database_name=target.database,
-    generate_columns=True
+    generate_columns=True,
+    include_descriptions=True
 ) %}
 
 
@@ -17,7 +18,9 @@ sources:
       - name: data__a_relation
         columns:
           - name: col_a
+            description: ""
           - name: col_b
+            description: ""
 
 {% endset %}
 
