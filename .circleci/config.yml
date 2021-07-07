@@ -25,7 +25,7 @@ jobs:
             . venv/bin/activate
 
             pip install --upgrade pip setuptools
-            pip install dbt --upgrade
+            pip install --pre dbt --upgrade
 
             mkdir -p ~/.dbt
             cp integration_tests/ci/sample.profiles.yml ~/.dbt/profiles.yml

@@ -1,11 +1,18 @@
-# dbt-codegen v0.4.0 (unreleased)
+# dbt-codegen v0.4.0
+
+## Breaking changes
+- Requires `dbt>=0.20.0` and `dbt-utils>=0.7.0`
+- Depends on `dbt-labs/dbt_utils` (instead of `fishtown-analytics/dbt_utils`)
+
+## Features
+- Add optional `leading_commas` arg to `generate_base_model` (#41 @jaypeedevlin)
+- Add optional `include_descriptions` arg to `generate_source` (#40 @djbelknapdbs)
+
 ## Fixes
 - In the `generate_source` macro, use `dbt_utils.get_relations_by_pattern` instead of `get_relations_by_prefix`, since the latter will be deprecated in the future (#42)
 
-## Features
-- Add optional leading_commas arg to generate_base_model (#41 @jaypeedevlin)
-
-## Other
+## Under the hood
+- Use new adapter.dispatch syntax (#44)
 
 # dbt-codegen v0.3.2
 
