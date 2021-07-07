@@ -1,23 +1,20 @@
-{% macro get_tables_in_schema(schema_name,database_name=target.database) %}
+{% macro get_tables_in_schema(schema_name, database_name=target.database) %}
 
-    {% set tables=dbt_utils.get_relations_by_prefix(
-            schema=schema_name,
-            prefix='',
-            database=database_name
-        )
-    %}
+    {% set tables=dbt_utils.get_relations_by_pattern(
+            database=database_name,
+            schema_pattern=schema_name,
+            table_pattern='%'
+    ) %}
 
-    {% set table_list= tables | map(attribute = 'identifier') %}
+    {% set table_list= tables | map(attribute='identifier') %}
 
     {{ return(table_list | sort) }}
-    {{ log("*** table list ***", info=True) }}
-    {{ log(table_list, info=True) }}
 
 {% endmacro %}
 
 
 ---
-{% macro generate_source(schema_name, database_name=target.database, generate_columns=False) %}
+{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False) %}
 
 {% set sources_yaml=[] %}
 
@@ -50,6 +47,9 @@
 
         {% for column in columns %}
             {% do sources_yaml.append('          - name: ' ~ column.name | lower ) %}
+            {% if include_descriptions %}
+                {% do sources_yaml.append('            description: ""' ) %}
+            {% endif %}
         {% endfor %}
             {% do sources_yaml.append('') %}
 
