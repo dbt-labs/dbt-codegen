@@ -1,3 +1,10 @@
+# dbt-codegen v0.4.1
+
+## Features
+- Add optional `table_names` arg to `generate_source` (#50 @rahulj51)
+
+
+
 # dbt-codegen v0.4.0
 
 ## Breaking changes
