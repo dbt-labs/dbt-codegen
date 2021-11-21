@@ -14,7 +14,7 @@
 
 
 ---
-{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False) %}
+{% macro generate_source(schema_name, database_name=target.database, table_names=None, generate_columns=False, include_descriptions=False) %}
 
 {% set sources_yaml=[] %}
 
@@ -29,7 +29,11 @@
 
 {% do sources_yaml.append('    tables:') %}
 
+{% if table_names is none %}
 {% set tables=codegen.get_tables_in_schema(schema_name, database_name) %}
+{% else %}
+{% set tables=table_names %}
+{% endif %}
 
 {% for table in tables %}
     {% do sources_yaml.append('      - name: ' ~ table | lower ) %}
