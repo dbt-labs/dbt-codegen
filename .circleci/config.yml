@@ -4,7 +4,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6.13-stretch
+      - image: cimg/python:3.9.9
       - image: circleci/postgres:9.6.5-alpine-ram
 
     steps:
@@ -21,11 +21,11 @@ jobs:
       - run:
           name: "Setup dbt"
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
+            python3 -m venv dbt_venv
+            . dbt_venv/bin/activate
 
-            pip install --upgrade pip setuptools
-            pip install --pre dbt --upgrade
+            python -m pip install --upgrade pip setuptools
+            python -m pip install --pre dbt-core dbt-postgres dbt-redshift dbt-snowflake dbt-bigquery
 
             mkdir -p ~/.dbt
             cp integration_tests/ci/sample.profiles.yml ~/.dbt/profiles.yml
@@ -39,37 +39,37 @@ jobs:
             POSTGRES_TEST_PORT: 5432
             POSTGRES_TEST_DBNAME: circle_test
           command: |
-            . venv/bin/activate
+            . dbt_venv/bin/activate
             cd integration_tests
-            dbt --warn-error deps --target postgres
-            dbt --warn-error run-operation create_source_table --target postgres
-            dbt --warn-error seed --target postgres --full-refresh
-            dbt --warn-error run --target postgres
-            dbt --warn-error test --target postgres
+            dbt deps --target postgres
+            dbt run-operation create_source_table --target postgres
+            dbt seed --target postgres --full-refresh
+            dbt run --target postgres
+            dbt test --target postgres
 
       - run:
           name: "Run Tests - Redshift"
           command: |
-            . venv/bin/activate
+            . dbt_venv/bin/activate
             echo `pwd`
             cd integration_tests
-            dbt --warn-error deps --target redshift
-            dbt --warn-error run-operation create_source_table --target redshift
-            dbt --warn-error seed --target redshift --full-refresh
-            dbt --warn-error run --target redshift
-            dbt --warn-error test --target redshift
+            dbt deps --target redshift
+            dbt run-operation create_source_table --target redshift
+            dbt seed --target redshift --full-refresh
+            dbt run --target redshift
+            dbt test --target redshift
 
       - run:
           name: "Run Tests - Snowflake"
           command: |
-            . venv/bin/activate
+            . dbt_venv/bin/activate
             echo `pwd`
             cd integration_tests
-            dbt --warn-error deps --target snowflake
-            dbt --warn-error run-operation create_source_table --target snowflake
-            dbt --warn-error seed --target snowflake --full-refresh
-            dbt --warn-error run --target snowflake
-            dbt --warn-error test --target snowflake
+            dbt deps --target snowflake
+            dbt run-operation create_source_table --target snowflake
+            dbt seed --target snowflake --full-refresh
+            dbt run --target snowflake
+            dbt test --target snowflake
 
       - run:
           name: "Run Tests - BigQuery"
@@ -77,17 +77,17 @@ jobs:
               BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
 
           command: |
-            . venv/bin/activate
+            . dbt_venv/bin/activate
             echo `pwd`
             cd integration_tests
-            dbt --warn-error deps --target bigquery
-            dbt --warn-error run-operation create_source_table --target bigquery
-            dbt --warn-error seed --target bigquery --full-refresh
-            dbt --warn-error run --target bigquery
-            dbt --warn-error test --target bigquery
+            dbt deps --target bigquery
+            dbt run-operation create_source_table --target bigquery
+            dbt seed --target bigquery --full-refresh
+            dbt run --target bigquery
+            dbt test --target bigquery
 
 
       - save_cache:
           key: deps1-{{ .Branch }}
           paths:
-            - "venv"
+            - "dbt_venv"
