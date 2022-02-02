@@ -1,3 +1,8 @@
+# dbt-codegen 0.5.1
+
+## Fixes
+- generate_model_yaml now correctly handles nested bigquery fields (#27)
+
 # dbt-codegen 0.5.0
 
 This release supports any version (minor and patch) of v1, which means far less need for compatibility releases in the future.
