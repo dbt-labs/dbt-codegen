@@ -1,10 +1,19 @@
-{% macro get_tables_in_schema(schema_name, database_name=target.database) %}
-
-    {% set tables=dbt_utils.get_relations_by_pattern(
+{% macro get_tables_in_schema(schema_name, database_name=target.database, table_pattern='') %}
+    
+    {% if table_pattern != '' %}
+        {% set tables=dbt_utils.get_relations_by_pattern(
+            database=database_name,
+            schema_pattern=schema_name,
+            table_pattern=table_pattern
+        ) %}
+    {% else %}
+        {% set tables=dbt_utils.get_relations_by_pattern(
             database=database_name,
             schema_pattern=schema_name,
             table_pattern='%'
-    ) %}
+        ) %}
+
+    {% endif %}
 
     {% set table_list= tables | map(attribute='identifier') %}
 
@@ -14,7 +23,7 @@
 
 
 ---
-{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False) %}
+{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, table_pattern='') %}
 
 {% set sources_yaml=[] %}
 
@@ -29,7 +38,7 @@
 
 {% do sources_yaml.append('    tables:') %}
 
-{% set tables=codegen.get_tables_in_schema(schema_name, database_name) %}
+{% set tables=codegen.get_tables_in_schema(schema_name, database_name, table_pattern) %}
 
 {% for table in tables %}
     {% do sources_yaml.append('      - name: ' ~ table | lower ) %}
