@@ -29,7 +29,7 @@
 
 {% do sources_yaml.append('    tables:') %}
 
-{% set tables=codegen.get_tables_in_schema(schema_name, database_name, table_pattern) %}
+{% set tables=codegen.get_tables_in_schema(schema_name, table_pattern, database_name) %}
 
 {% for table in tables %}
     {% do sources_yaml.append('      - name: ' ~ table | lower ) %}
