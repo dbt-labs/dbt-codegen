@@ -1,19 +1,10 @@
-{% macro get_tables_in_schema(schema_name, database_name=target.database, table_pattern='') %}
+{% macro get_tables_in_schema(schema_name, table_pattern, database_name=target.database) %}
     
-    {% if table_pattern != '' %}
-        {% set tables=dbt_utils.get_relations_by_pattern(
-            database=database_name,
-            schema_pattern=schema_name,
-            table_pattern=table_pattern
-        ) %}
-    {% else %}
-        {% set tables=dbt_utils.get_relations_by_pattern(
-            database=database_name,
-            schema_pattern=schema_name,
-            table_pattern='%'
-        ) %}
-
-    {% endif %}
+    {% set tables=dbt_utils.get_relations_by_pattern(
+        database=database_name,
+        schema_pattern=schema_name,
+        table_pattern=table_pattern
+    ) %}
 
     {% set table_list= tables | map(attribute='identifier') %}
 
@@ -23,7 +14,7 @@
 
 
 ---
-{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, table_pattern='') %}
+{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, table_pattern='%') %}
 
 {% set sources_yaml=[] %}
 
