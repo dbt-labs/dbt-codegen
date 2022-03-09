@@ -19,6 +19,8 @@ which you can then paste into a schema file.
 
 ### Arguments
 * `schema_name` (required): The schema name that contains your source data
+* `table_pattern` (optional, default='%'): A table prefix / postfix that you 
+want to subselect from all available tables within a given schema.
 * `database_name` (optional, default=target.database): The database that your
 source data is in.
 * `generate_columns` (optional, default=False): Whether you want to add the
