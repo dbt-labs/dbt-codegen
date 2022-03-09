@@ -14,7 +14,7 @@
 
 
 ---
-{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, table_pattern='%') %}
+{% macro generate_source(schema_name, table_pattern='%', database_name=target.database, generate_columns=False, include_descriptions=False) %}
 
 {% set sources_yaml=[] %}
 
