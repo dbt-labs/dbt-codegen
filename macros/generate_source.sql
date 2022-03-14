@@ -19,7 +19,6 @@
 
 {% set sources_yaml=[] %}
 
-{% do sources_yaml.append('') %}
 {% do sources_yaml.append('version: 2') %}
 {% do sources_yaml.append('') %}
 {% do sources_yaml.append('sources:') %}

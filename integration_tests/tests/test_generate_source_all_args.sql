@@ -12,6 +12,7 @@
 
 
 {% set expected_source_yaml %}
+
 version: 2
 
 sources:
@@ -25,6 +26,7 @@ sources:
             description: ""
 
       - name: data__b_relation
+        columns:
           - name: col_a
             description: ""
           - name: col_b
