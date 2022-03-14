@@ -1,4 +1,4 @@
-{% macro get_tables_in_schema(schema_name, table_pattern, database_name=target.database) %}
+{% macro get_tables_in_schema(schema_name, table_pattern='%', database_name=target.database) %}
     
     {% set tables=dbt_utils.get_relations_by_pattern(
         database=database_name,
