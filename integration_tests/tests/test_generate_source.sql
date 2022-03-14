@@ -11,6 +11,7 @@ sources:
   - name: {{ raw_schema | trim }}
     tables:
       - name: data__a_relation
+      - name: data__b_relation
 {% endset %}
 
 
