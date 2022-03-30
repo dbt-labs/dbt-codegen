@@ -128,6 +128,7 @@ schema.yml file.
 
 ### Arguments:
 * `model_name` (required): The model you wish to generate YAML for.
+* `upstream_descriptions` (optional, default=False): Whether you want to include descriptions for identical column names from upstream models.
 
 ### Usage:
 1. Create a model.
