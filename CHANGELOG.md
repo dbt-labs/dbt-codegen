@@ -1,3 +1,7 @@
+# Unreleased
+## New features
+- Add support for importing descriptions from columns with the same names in upstream models. It is available by setting the parameter `upstream_descriptions` to `True` in `generate_model_yaml` ([#61](https://github.com/dbt-labs/dbt-codegen/pull/61))
+
 # dbt-codegen v0.6.0
 
 This release creates breaking changes to the `generate_source.sql` macro.
