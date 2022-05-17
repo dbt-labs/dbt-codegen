@@ -1,6 +1,7 @@
-{% macro generate_model_yaml(model_name) %}
+{% macro generate_model_yaml(model_name, upstream_descriptions=False) %}
 
 {% set model_yaml=[] %}
+{% set column_desc_dict =  codegen.build_dict_column_descriptions(model_name) if upstream_descriptions else {} %}
 
 {% do model_yaml.append('version: 2') %}
 {% do model_yaml.append('') %}
@@ -14,7 +15,7 @@
 
 {% for column in columns %}
     {% do model_yaml.append('      - name: ' ~ column.name | lower ) %}
-    {% do model_yaml.append('        description: ""') %}
+    {% do model_yaml.append('        description: "' ~ column_desc_dict.get(column.name | lower,'') ~ '"') %}
     {% do model_yaml.append('') %}
 {% endfor %}
 
