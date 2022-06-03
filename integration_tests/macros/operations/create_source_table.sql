@@ -25,4 +25,21 @@ create table {{ target_schema }}.codegen_integration_tests__data_source_table as
 
 {{ run_query(create_table_sql) }}
 
+{% set drop_table_sql_case_sensitive %}
+drop table if exists {{ target_schema }}.codegen_integration_tests__data_source_table_case_sensitive
+{% endset %}
+
+{{ run_query(drop_table_sql_case_sensitive) }}
+
+
+{% set create_table_sql_case_sensitive %}
+create table {{ target_schema }}.codegen_integration_tests__data_source_table_case_sensitive as (
+    select
+        1 as "My_Integer_Col",
+        true as "My_Bool_Col"
+)
+{% endset %}
+
+{{ run_query(create_table_sql_case_sensitive) }}
+
 {% endmacro %}

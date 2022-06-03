@@ -1,4 +1,4 @@
-{% macro generate_base_model(source_name, table_name, leading_commas=False) %}
+{% macro generate_base_model(source_name, table_name, leading_commas=False, case_sensitive_cols=False) %}
 
 {%- set source_relation = source(source_name, table_name) -%}
 
@@ -16,11 +16,11 @@ renamed as (
     select
         {%- if leading_commas -%}
         {%- for column in column_names %}
-        {{", " if not loop.first}}{{ column | lower }}
+        {{", " if not loop.first}}{{ column | lower if not case_sensitive_cols else "\"" ~ column ~ "\"" }}
         {%- endfor %}
         {%- else -%}
         {%- for column in column_names %}
-        {{ column | lower }}{{"," if not loop.last}}
+        {{ column | lower if not case_sensitive_cols else "\"" ~ column ~ "\"" }}{{"," if not loop.last}}
         {%- endfor -%}
         {%- endif %}
 
