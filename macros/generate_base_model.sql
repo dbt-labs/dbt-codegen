@@ -16,11 +16,11 @@ renamed as (
     select
         {%- if leading_commas -%}
         {%- for column in column_names %}
-        {{", " if not loop.first}}{{ column | lower if not case_sensitive_cols else "\"" ~ column ~ "\"" }}
+        {{", " if not loop.first}}{% if not case_sensitive_cols %}{{ column | lower }}{% elif target.type == "bigquery" %}{{ column }}{% else %}{{ "\"" ~ column ~ "\"" }}{% endif %}
         {%- endfor %}
         {%- else -%}
         {%- for column in column_names %}
-        {{ column | lower if not case_sensitive_cols else "\"" ~ column ~ "\"" }}{{"," if not loop.last}}
+        {% if not case_sensitive_cols %}{{ column | lower }}{% elif target.type == "bigquery" %}{{ column }}{% else %}{{ "\"" ~ column ~ "\"" }}{% endif %}{{"," if not loop.last}}
         {%- endfor -%}
         {%- endif %}
 

@@ -48,8 +48,8 @@ set enable_case_sensitive_identifier to true;
 {% set create_table_sql_case_sensitive %}
 create table {{ target_schema }}.codegen_integration_tests__data_source_table_case_sensitive as (
     select
-        1 as "My_Integer_Col",
-        true as "My_Bool_Col"
+        1 as {% if target.type == "bigquery" %}My_Integer_Col{% else %}"My_Integer_Col"{% endif %},
+        true as {% if target.type == "bigquery" %}My_Bool_Col{% else %}"My_Bool_Col"{% endif %}
 )
 {% endset %}
 
