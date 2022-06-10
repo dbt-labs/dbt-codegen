@@ -8,7 +8,7 @@
 version: 2
 
 sources:
-  - name: 'raw'
+  - name: raw
     schema: {{ raw_schema | trim }}
     tables:
       - name: data__a_relation
