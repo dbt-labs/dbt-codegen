@@ -3,6 +3,7 @@
 -- test all args
 {% set actual_source_yaml = codegen.generate_source(
     schema_name=raw_schema,
+    name = schema_name,
     table_pattern='%',
     exclude='',
     database_name=target.database,
@@ -17,8 +18,10 @@ version: 2
 
 sources:
   - name: {{ raw_schema | trim }}
+    description: ""
     tables:
       - name: data__a_relation
+        description: ""
         columns:
           - name: col_a
             description: ""
@@ -26,6 +29,7 @@ sources:
             description: ""
 
       - name: data__b_relation
+        description: ""
         columns:
           - name: col_a
             description: ""
