@@ -19,6 +19,7 @@ which you can then paste into a schema file.
 
 ### Arguments
 * `schema_name` (required): The schema name that contains your source data
+* `name` (optional, default = schema_name): The name of your source
 * `database_name` (optional, default=target.database): The database that your
 source data is in.
 * `generate_columns` (optional, default=False): Whether you want to add the
