@@ -1,6 +1,8 @@
 # Unreleased
 ## New features
 - Add support for importing descriptions from columns with the same names in upstream models. It is available by setting the parameter `upstream_descriptions` to `True` in `generate_model_yaml` ([#61](https://github.com/dbt-labs/dbt-codegen/pull/61))
+- Add support for including description placeholders for the source and table, which changes the behavior of `generate_source` when `include_descriptions` is set to `True`. Previous logic only created description placeholders for the columns. 
+- Add optional `name` arg to `generate_source`
 
 # dbt-codegen v0.6.0
 
