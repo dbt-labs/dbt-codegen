@@ -32,7 +32,7 @@
 {%- set columns = adapter.get_columns_in_relation(relation) -%}
 
 {% for column in columns %}
-    {% set model_yaml = generate_column_yaml(column, model_yaml, column_desc_dict) %}
+    {% set model_yaml = codegen.generate_column_yaml(column, model_yaml, column_desc_dict) %}
 {% endfor %}
 
 {% if execute %}
