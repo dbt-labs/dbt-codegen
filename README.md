@@ -77,6 +77,7 @@ model.
 * `source_name` (required): The source you wish to generate base model SQL for.
 * `table_name` (required): The source table you wish to generate base model SQL for.
 * `leading_commas` (optional, default=False): Whether you want your commas to be leading (vs trailing).
+* `case_sensitive_cols ` (optional, default=False): Whether your source table has case sensitive column names. If true, keeps the case of the column names from the source.
 
 
 ### Usage:
