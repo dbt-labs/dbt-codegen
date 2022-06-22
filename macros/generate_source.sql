@@ -15,7 +15,7 @@
 
 
 ---
-{% macro generate_source(schema_name, name = schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, table_pattern='%', exclude='') %}
+{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, table_pattern='%', exclude='', name=schema_name) %}
 
 {% set sources_yaml=[] %}
 {% do sources_yaml.append('version: 2') %}
