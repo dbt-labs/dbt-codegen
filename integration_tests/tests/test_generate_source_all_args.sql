@@ -7,7 +7,8 @@
     exclude='',
     database_name=target.database,
     generate_columns=True,
-    include_descriptions=True
+    include_descriptions=True,
+    name=raw_schema
 ) %}
 
 
@@ -17,8 +18,10 @@ version: 2
 
 sources:
   - name: {{ raw_schema | trim | lower }}
+    description: ""
     tables:
       - name: data__a_relation
+        description: ""
         columns:
           - name: col_a
             description: ""
@@ -26,6 +29,7 @@ sources:
             description: ""
 
       - name: data__b_relation
+        description: ""
         columns:
           - name: col_a
             description: ""

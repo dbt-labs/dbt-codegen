@@ -15,17 +15,24 @@
 
 
 ---
-{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, table_pattern='%', exclude='') %}
+{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, table_pattern='%', exclude='', name=schema_name) %}
 
 {% set sources_yaml=[] %}
-
 {% do sources_yaml.append('version: 2') %}
 {% do sources_yaml.append('') %}
 {% do sources_yaml.append('sources:') %}
-{% do sources_yaml.append('  - name: ' ~ schema_name | lower) %}
+{% do sources_yaml.append('  - name: ' ~ name | lower) %}
+
+{% if include_descriptions %}
+    {% do sources_yaml.append('    description: ""' ) %}
+{% endif %}
 
 {% if database_name != target.database %}
 {% do sources_yaml.append('    database: ' ~ database_name | lower) %}
+{% endif %}
+
+{% if schema_name != name %}
+{% do sources_yaml.append('    schema: ' ~ schema_name | lower) %}
 {% endif %}
 
 {% do sources_yaml.append('    tables:') %}
@@ -34,7 +41,9 @@
 
 {% for table in tables %}
     {% do sources_yaml.append('      - name: ' ~ table | lower ) %}
-
+    {% if include_descriptions %}
+        {% do sources_yaml.append('        description: ""' ) %}
+    {% endif %}
     {% if generate_columns %}
     {% do sources_yaml.append('        columns:') %}
 
