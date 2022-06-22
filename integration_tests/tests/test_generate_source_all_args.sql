@@ -3,7 +3,7 @@
 -- test all args
 {% set actual_source_yaml = codegen.generate_source(
     schema_name=raw_schema,
-    name = raw_schema,
+    name=raw_schema,
     table_pattern='%',
     exclude='',
     database_name=target.database,
