@@ -40,7 +40,7 @@
 {% if table_names is none %}
 {% set tables=codegen.get_tables_in_schema(schema_name, database_name, table_pattern, exclude) %}
 {% else %}
-{% set tables=table_names %}
+{% set tables = table_names %}
 {% endif %}
 
 {% for table in tables %}

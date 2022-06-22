@@ -21,7 +21,7 @@ which you can then paste into a schema file.
 * `schema_name` (required): The schema name that contains your source data
 * `database_name` (optional, default=target.database): The database that your
 source data is in.
-* `table_names` (optional, default=None): A list of tables that you want to generate the source definitions for.
+* `table_names` (optional, default=none): A list of tables that you want to generate the source definitions for.
 * `generate_columns` (optional, default=False): Whether you want to add the
 column names to your source definition.
 * `include_descriptions` (optional, default=False): Whether you want to add 
@@ -48,7 +48,7 @@ or
 
 ```
 # for multiple arguments, use the dict syntax
-$ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "database_name": "raw", "table_names":"[table_1, table_2]"}'
+$ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "database_name": "raw", "table_names":["table_1", "table_2"]}'
 ```
 
 2. The YAML for the source will be logged to the command line
