@@ -1,9 +1,22 @@
-# dbt-codegen 0.5.1
+# Unreleased
+
+## New features
+- Add support for importing descriptions from columns with the same names in upstream models. It is available by setting the parameter `upstream_descriptions` to `True` in `generate_model_yaml` ([#61](https://github.com/dbt-labs/dbt-codegen/pull/61))
+- Add support for including description placeholders for the source and table, which changes the behavior of `generate_source` when `include_descriptions` is set to `True`. Previous logic only created description placeholders for the columns. 
+- Add optional `name` arg to `generate_source`
+- Add optional `table_names` arg to `generate_source` (#50 @rahulj51)
 
 ## Fixes
 - generate_model_yaml now correctly handles nested bigquery fields (#27)
 
-# dbt-codegen 0.5.0
+# dbt-codegen v0.6.0
+
+This release creates breaking changes to the `generate_source.sql` macro.
+
+## Features
+- add optional `table_pattern` argument to `generate_source.sql` macro. Default value is '%' to pull all tables in the raw data schema to preserve existing behavior if the `table_pattern` argument is not specified by the user.
+
+# dbt-codegen v0.5.0
 
 This release supports any version (minor and patch) of v1, which means far less need for compatibility releases in the future.
 
