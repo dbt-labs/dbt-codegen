@@ -15,8 +15,10 @@ version: 2
 
 sources:
   - name: {{ raw_schema | trim }}
+    description: ""
     tables:
       - name: data__a_relation
+        description: ""
         columns:
           - name: col_a
             description: ""
