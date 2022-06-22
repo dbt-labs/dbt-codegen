@@ -26,6 +26,10 @@ source data is in.
 column names to your source definition.
 * `include_descriptions` (optional, default=False): Whether you want to add 
 description placeholders to your source definition.
+* `table_pattern` (optional, default='%'): A table prefix / postfix that you 
+want to subselect from all available tables within a given schema.
+* `exclude` (optional, default=''): A string you want to exclude from the selection criteria
+* `name` (optional, default=schema_name): The name of your source
 
 ### Usage:
 1. Copy the macro into a statement tab in the dbt Cloud IDE, or into an analysis file, and compile your code
@@ -74,6 +78,7 @@ model.
 * `source_name` (required): The source you wish to generate base model SQL for.
 * `table_name` (required): The source table you wish to generate base model SQL for.
 * `leading_commas` (optional, default=False): Whether you want your commas to be leading (vs trailing).
+* `case_sensitive_cols ` (optional, default=False): Whether your source table has case sensitive column names. If true, keeps the case of the column names from the source.
 
 
 ### Usage:
@@ -126,6 +131,7 @@ schema.yml file.
 
 ### Arguments:
 * `model_name` (required): The model you wish to generate YAML for.
+* `upstream_descriptions` (optional, default=False): Whether you want to include descriptions for identical column names from upstream models.
 
 ### Usage:
 1. Create a model.
