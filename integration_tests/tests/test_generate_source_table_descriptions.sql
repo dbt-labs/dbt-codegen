@@ -15,6 +15,8 @@ sources:
         description: ""
       - name: data__b_relation
         description: ""
+      - name: data__campaign_analytics
+        description: ""
 {% endset %}
 
 

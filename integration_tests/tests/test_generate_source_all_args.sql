@@ -36,6 +36,20 @@ sources:
           - name: col_b
             description: ""
 
+      - name: data__campaign_analytics
+        description: ""
+        columns:
+          - name: source
+            description: ""
+          - name: medium
+            description: ""
+          - name: source_medium
+            description: ""
+          - name: analytics
+            description: ""
+          - name: col_x
+            description: ""
+
 {% endset %}
 
 {{ assert_equal (actual_source_yaml | trim, expected_source_yaml | trim) }}
