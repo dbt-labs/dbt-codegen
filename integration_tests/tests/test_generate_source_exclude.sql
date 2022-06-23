@@ -11,6 +11,7 @@ sources:
   - name: {{ raw_schema | trim | lower}}
     tables:
       - name: data__b_relation
+      - name: data__campaign_analytics
 {% endset %}
 
 

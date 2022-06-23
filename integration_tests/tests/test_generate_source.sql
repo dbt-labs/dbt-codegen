@@ -12,6 +12,7 @@ sources:
     tables:
       - name: data__a_relation
       - name: data__b_relation
+      - name: data__campaign_analytics
 {% endset %}
 
 

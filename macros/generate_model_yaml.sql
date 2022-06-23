@@ -8,9 +8,10 @@
     {% do model_yaml.append('      - name: ' ~ column.name | lower ) %}
     {% do model_yaml.append('        description: "' ~ column_desc_dict.get(column.name | lower,'') ~ '"') %}
     {% do model_yaml.append('') %}
+
     {% if column.fields|length > 0 %}
         {% for child_column in column.fields %}
-            {% set model_yaml = generate_column_yaml(child_column, model_yaml, column_desc_dict, parent_column_name=column_name) %}
+            {% set model_yaml = codegen.generate_column_yaml(child_column, model_yaml, column_desc_dict, parent_column_name=column_name) %}
         {% endfor %}
     {% endif %}
     {% do return(model_yaml) %}
