@@ -1,0 +1,79 @@
+{% set actual_model_with_import_ctes = codegen.generate_model_import_ctes(
+    model_name = 'model_without_import_ctes',
+  )
+%}
+
+{% set expected_model_with_import_ctes %}
+with codegen_integration_tests__data_source_table as (
+
+    select * from codegen_integration_tests__data_source_schema.codegen_integration_tests__data_source_table
+    -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
+  
+),
+codegen_integration_tests__data_source_table_case_sensitive as (
+
+    select * from {% raw %}{{ source('codegen_integration_tests__data_source_schema', 'codegen_integration_tests__data_source_table_case_sensitive') }}{% endraw %} 
+    -- CAUTION: It's best practice to create staging layer for raw sources
+  
+),
+data__a_relation as (
+
+    select * from {% raw %}{{ ref('data__a_relation') }}{% endraw %}
+  
+),
+data__b_relation as (
+
+    select * from {% raw %}{{ ref('data__b_relation') }}{% endraw %}
+  
+),
+raw_relation_1 as (
+
+    select * from `raw_relation_1`
+    -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
+  
+),
+raw_relation_2 as (
+
+    select * from "raw_relation_2"
+    -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
+  
+),
+raw_relation_3 as (
+
+    select * from [raw_relation_3]
+    -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
+  
+),
+my_first_cte as (
+    select
+        a.col_a,
+        b.col_b
+    from data__a_relation as a
+    left join      data__b_relation as b
+    on a.col_a = b.col_b
+    left join data__a_relation as aa
+    on a.col_a = aa.col_b
+),
+my_second_cte as (
+    select
+        1 as id
+    from codegen_integration_tests__data_source_table
+    union all
+    select
+        2 as id
+    from codegen_integration_tests__data_source_table_case_sensitive  
+)
+-- my_third_cte as (
+--     select
+--         a.col_a,
+--         b.col_b
+--     from raw_relation_1 as a
+--     left join raw_relation_2 as b
+--     on a.col_a = b.col_b
+--     left join raw_relation_3 as aa
+--     on a.col_a = aa.col_b
+-- )
+select * from my_second_cte
+{% endset %}
+
+{{ assert_equal (actual_model_with_import_ctes | trim, expected_model_with_import_ctes | trim) }}

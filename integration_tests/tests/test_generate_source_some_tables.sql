@@ -14,7 +14,7 @@
 version: 2
 
 sources:
-  - name: {{ raw_schema | trim }}
+  - name: {{ raw_schema | trim | lower }}
     description: ""
     tables:
       - name: data__a_relation
