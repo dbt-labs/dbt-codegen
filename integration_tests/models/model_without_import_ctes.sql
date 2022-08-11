@@ -4,9 +4,9 @@ with my_first_cte as (
         b.col_b
     from {{ ref('data__a_relation') }} as a
     left join      {{ ref('data__b_relation') }} as b
-    on a.col_a = b.col_b
+    on a.col_a = b.col_a
     left join {{ ref('data__a_relation') }} as aa
-    on a.col_a = aa.col_b
+    on a.col_a = aa.col_a
 ),
 my_second_cte as (
     select

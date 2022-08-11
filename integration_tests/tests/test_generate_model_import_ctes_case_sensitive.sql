@@ -51,9 +51,9 @@ with codegen_integration_tests__data_source_table as (
         b.col_b
     from data__a_relation as a
     left join      data__b_relation as b
-    on a.col_a = b.col_b
+    on a.col_a = b.col_a
     left join data__a_relation as aa
-    on a.col_a = aa.col_b
+    on a.col_a = aa.col_a
 ),
 my_second_cte as (
     select
