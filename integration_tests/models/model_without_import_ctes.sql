@@ -1,3 +1,7 @@
+/*
+    This is my model!
+*/
+
 {{ config(
     materialized='table',
 ) }}

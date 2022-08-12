@@ -30,7 +30,7 @@
         - matches (from or join) followed by some spaces and then (` or [ or ")<something>(` or ] or ")
 
         # config block
-        - matches some spaces followed by {{config(<something>)}}
+        - matches the start of the file followed by anything and then {{config(<something>)}}
 
     -#}
     
@@ -39,7 +39,7 @@
         'from_source':'(?i)(from|join)\s+({{\s*source\s*\([^)]+,)([^)]+)(\)\s*}})',
         'from_table_1':'(?i)(from|join)\s+([\[`\"]?\w+[\]`\"]?\.)([\[`\"]?\w+[\]`\"]?)',
         'from_table_2':'(?i)(from|join)\s+([\[`\"])([\w ]+)([\]`\"])',
-        'config_block':'(?i)\s*{{\s*config\s*\([^)]+\)\s*}}'
+        'config_block':'(?i)(?s)^.*{{\s*config\s*\([^)]+\)\s*}}'
     } -%}
 
     {%- set re = modules.re -%}

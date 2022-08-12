@@ -5,6 +5,10 @@
 %}
 
 {% set expected_model_with_import_ctes %}
+/*
+    This is my model!
+*/
+
 {% raw %}{{ config(
     materialized='table',
 ) }}{% endraw %}
