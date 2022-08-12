@@ -75,9 +75,7 @@
 
     {%- endfor -%}
 
-    {%- set unique_from_list = set(from_list) -%}
-
-{%- if unique_from_list|length > 0 -%}
+{%- if from_list|length > 0 -%}
 
 {%- set ns = namespace(model_sql = model_raw_sql) -%}
 
@@ -91,7 +89,7 @@
 
 {% endfor -%}
 
-    {%- for from_obj in unique_from_list|sort -%}
+    {%- for from_obj in from_list|unique|sort -%}
         
         {%- set ns.model_sql = ns.model_sql|replace(from_obj[1], from_obj[0]) -%}
 
