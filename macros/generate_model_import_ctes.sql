@@ -48,16 +48,17 @@
     {%- set does_raw_sql_contain_cte = re.search(with_regex, model_raw_sql) -%}
 
     {%- set from_regexes = {
-        'from_ref':'(?i)(from|join)\s+({{\s*ref\s*\()([^)]+)(\)\s*}})',
-        'from_source':'(?i)(from|join)\s+({{\s*source\s*\([^)]+,)([^)]+)(\)\s*}})',
-        'from_table_1':'(?i)(from|join)\s+([\[`\"]?\w+[\]`\"]?)\.([\[`\"]?\w+[\]`\"]?)',
-        'from_table_2':'(?i)(from|join)\s+([\[`\"]?\w+[\]`\"]?)\.([\[`\"]?\w+[\]`\"]?)\.([\[`\"]?\w+[\]`\"]?)',
+        'from_ref':'(?i)(from|join)\s+({{\s*ref\s*\(\s*\'|\")([^)\'\"]+)(\'|\"\s*)(\)\s*}})',
+        'from_source':'(?i)(from|join)\s+({{\s*source\s*\(\s*\'|\")([^)\'\"]+)(\'|\"\s*)(,)(\s*\'|\")([^)\'\"]+)(\'|\"\s*)(\)\s*}})',
+        'from_table_1':'(?i)(from|join)\s+([\[`\"]?\w+[\]`\"]?)(\.)([\[`\"]?\w+[\]`\"]?)(?=\s|$)',
+        'from_table_2':'(?i)(from|join)\s+([\[`\"]?\w+[\]`\"]?)(\.)([\[`\"]?\w+[\]`\"]?)(\.)([\[`\"]?\w+[\]`\"]?)(?=\s|$)',
         'from_table_3':'(?i)(from|join)\s+([\[`\"])([\w ]+)([\]`\"])',
         'config_block':'(?i)(?s)^.*{{\s*config\s*\([^)]+\)\s*}}'
     } -%}
 
     {%- set from_list = [] -%}
     {%- set config_list = [] -%}
+    {%- set ns = namespace(model_sql = model_raw_sql) -%}
 
     {%- for regex_name, regex_pattern in from_regexes.items() -%}
 
@@ -68,25 +69,44 @@
             {%- if regex_name == 'config_block' -%}
                 {%- set match_tuple = (match|trim, regex_name) -%}
                 {%- do config_list.append(match_tuple) -%}
-            {%- elif regex_name == 'from_table_1' or regex_name == 'from_table_2' -%}
-                {%- set full_from_clause = match[1:]|join('.')|trim -%}
-                {%- set cte_name = match[1:]|join('_')|trim|lower -%}
+            {%- elif regex_name == 'from_source' -%}    
+                {%- set full_from_clause = match[1:]|join|trim -%}
+                {%- set cte_name = 'source_' + match[6]|lower -%}
                 {%- set match_tuple = (cte_name, full_from_clause, regex_name) -%}
-                {%- do from_list.append(match_tuple) -%}            
+                {%- do from_list.append(match_tuple) -%} 
+            {%- elif regex_name == 'from_table_1' -%}
+                {%- set full_from_clause = match[1:]|join()|trim -%}
+                {%- set cte_name = match[1]|lower + '_' + match[3]|lower -%}
+                {%- set match_tuple = (cte_name, full_from_clause, regex_name) -%}
+                {%- do from_list.append(match_tuple) -%}   
+            {%- elif regex_name == 'from_table_2' -%}
+                {%- set full_from_clause = match[1:]|join()|trim -%}
+                {%- set cte_name = match[1]|lower + '_' + match[3]|lower + '_' + match[5]|lower -%}
+                {%- set match_tuple = (cte_name, full_from_clause, regex_name) -%}
+                {%- do from_list.append(match_tuple) -%}                     
             {%- else -%}
                 {%- set full_from_clause = match[1:]|join|trim -%}
-                {%- set cte_name = match[2]|replace("'","")|trim|lower -%}
+                {%- set cte_name = match[2]|trim|lower -%}
                 {%- set match_tuple = (cte_name, full_from_clause, regex_name) -%}
                 {%- do from_list.append(match_tuple) -%}
             {%- endif -%}
 
         {%- endfor -%}
 
+        {%- if regex_name == 'config_block' -%}
+        {%- elif regex_name == 'from_source' -%}
+            {%- set ns.model_sql = re.sub(regex_pattern, '\g<1> source_\g<7>', ns.model_sql) -%}            
+        {%- elif regex_name == 'from_table_1' -%}
+            {%- set ns.model_sql = re.sub(regex_pattern, '\g<1> \g<2>_\g<4>', ns.model_sql) -%}     
+        {%- elif regex_name == 'from_table_2' -%}
+            {%- set ns.model_sql = re.sub(regex_pattern, '\g<1> \g<2>_\g<4>_\g<6>', ns.model_sql) -%} 
+        {%- else -%}   
+            {%- set ns.model_sql = re.sub(regex_pattern, '\g<1> \g<3>', ns.model_sql) -%}         
+        {% endif %}
+
     {%- endfor -%}
 
 {%- if from_list|length > 0 -%}
-
-{%- set ns = namespace(model_sql = model_raw_sql) -%}
 
 {%- set model_import_ctes -%}
 
@@ -99,8 +119,6 @@
 {% endfor -%}
 
     {%- for from_obj in from_list|unique|sort -%}
-        
-        {%- set ns.model_sql = ns.model_sql|replace(from_obj[1], from_obj[0]) -%}
 
 {%- if loop.first -%}with {% else -%}{%- if leading_commas -%},{%- endif -%}{%- endif -%}{{ from_obj[0] }} as (
 
@@ -114,13 +132,12 @@
 ){%- if does_raw_sql_contain_cte and not leading_commas -%},{%- endif %}
 {% endfor -%}
 
-{%- if leading_commas -%}
-{%- set replace_with = ',' -%}
-{%- else -%}
-{%- set replace_with = '\g<1>' -%}
-{%- endif -%}
-
 {%- if does_raw_sql_contain_cte -%}
+    {%- if leading_commas -%}
+        {%- set replace_with = '\g<1>,' -%}
+    {%- else -%}
+        {%- set replace_with = '\g<1>' -%}
+    {%- endif -%}
 {{ re.sub(with_regex, replace_with, ns.model_sql, 1)|trim }}
 {%- else -%}
 {{ ns.model_sql|trim }}

@@ -19,12 +19,6 @@ with codegen_integration_tests__data_source_schema_codegen_integration_tests__da
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 )
-,codegen_integration_tests__data_source_table as (
-
-    select * from {% raw %}{{ source('codegen_integration_tests__data_source_schema', 'codegen_integration_tests__data_source_table') }}{% endraw %} 
-    -- CAUTION: It's best practice to create staging layer for raw sources
-  
-)
 ,data__a_relation as (
 
     select * from {% raw %}{{ ref('data__a_relation') }}{% endraw %}
@@ -33,6 +27,12 @@ with codegen_integration_tests__data_source_schema_codegen_integration_tests__da
 ,data__b_relation as (
 
     select * from {% raw %}{{ ref('data__b_relation') }}{% endraw %}
+  
+)
+,development_codegen_integration_tests__data_source_schema_codegen_integration_tests__data_source_table as (
+
+    select * from development.codegen_integration_tests__data_source_schema.codegen_integration_tests__data_source_table
+    -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 )
 ,raw_relation_1 as (
@@ -53,12 +53,19 @@ with codegen_integration_tests__data_source_schema_codegen_integration_tests__da
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 )
+,source_codegen_integration_tests__data_source_table as (
+
+    select * from {% raw %}{{ source('codegen_integration_tests__data_source_schema', 'codegen_integration_tests__data_source_table') }}{% endraw %} 
+    -- CAUTION: It's best practice to create staging layer for raw sources
+  
+)
+-- I love this cte
 ,my_first_cte as (
     select
         a.col_a,
         b.col_b
     from data__a_relation as a
-    left join      data__b_relation as b
+    left join data__b_relation as b
     on a.col_a = b.col_a
     left join data__a_relation as aa
     on a.col_a = aa.col_a
@@ -70,7 +77,11 @@ my_second_cte as (
     union all
     select
         2 as id
-    from codegen_integration_tests__data_source_table  
+    from source_codegen_integration_tests__data_source_table
+    union all 
+    select
+        3 as id
+    from development_codegen_integration_tests__data_source_schema_codegen_integration_tests__data_source_table
 )
 -- my_third_cte as (
 --     select
