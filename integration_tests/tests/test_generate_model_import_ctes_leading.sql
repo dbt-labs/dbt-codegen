@@ -5,6 +5,10 @@
 %}
 
 {% set expected_model_with_import_ctes %}
+{% raw %}{{ config(
+    materialized='table',
+) }}{% endraw %}
+
 with codegen_integration_tests__data_source_table as (
 
     select * from codegen_integration_tests__data_source_schema.codegen_integration_tests__data_source_table

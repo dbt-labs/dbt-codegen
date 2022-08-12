@@ -1,3 +1,7 @@
+{{ config(
+    materialized='table',
+) }}
+
 with my_first_cte as (
     select
         a.col_a,
