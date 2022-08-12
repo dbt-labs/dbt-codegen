@@ -77,10 +77,10 @@ my_second_cte as (
     select
         2 as id
     from source_codegen_integration_tests__data_source_table
-    union all 
-    select
-        3 as id
-    from development_codegen_integration_tests__data_source_schema_codegen_integration_tests__data_source_table
+    -- union all 
+    -- select
+    --     3 as id
+    -- from development_codegen_integration_tests__data_source_schema_codegen_integration_tests__data_source_table
 )
 -- my_third_cte as (
 --     select
