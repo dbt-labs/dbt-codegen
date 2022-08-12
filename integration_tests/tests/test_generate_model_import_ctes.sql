@@ -1,5 +1,5 @@
 {% set actual_model_with_import_ctes = codegen.generate_model_import_ctes(
-    model_name = 'model_without_import_ctes',
+    model_name = 'model_without_import_ctes'
   )
 %}
 

@@ -17,6 +17,11 @@
 
         REGEX Explanations
 
+        # with_regex
+        - matches (start of file followed by anything then whitespace
+        or whitespace
+        or a comma) followed by the word with then a space   
+
         # from_ref 
         - matches (from or join) followed by some spaces and then {{ref(<something>)}}
 
@@ -33,7 +38,12 @@
         - matches the start of the file followed by anything and then {{config(<something>)}}
 
     -#}
-    
+
+    {%- set re = modules.re -%}
+
+    {%- set with_regex = '(?i)(?s)(^.*\s+|\s+|,)with\s' -%}
+    {%- set does_raw_sql_contain_cte = re.search(with_regex, model_raw_sql) -%}
+
     {%- set from_regexes = {
         'from_ref':'(?i)(from|join)\s+({{\s*ref\s*\()([^)]+)(\)\s*}})',
         'from_source':'(?i)(from|join)\s+({{\s*source\s*\([^)]+,)([^)]+)(\)\s*}})',
@@ -41,8 +51,6 @@
         'from_table_2':'(?i)(from|join)\s+([\[`\"])([\w ]+)([\]`\"])',
         'config_block':'(?i)(?s)^.*{{\s*config\s*\([^)]+\)\s*}}'
     } -%}
-
-    {%- set re = modules.re -%}
 
     {%- set from_list = [] -%}
     {%- set config_list = [] -%}
@@ -96,16 +104,20 @@
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
     {%- endif %}
   
-){%- if not leading_commas -%},{%- endif %}
+){%- if does_raw_sql_contain_cte and not leading_commas -%},{%- endif %}
 {% endfor -%}
 
 {%- if leading_commas -%}
 {%- set replace_with = ',' -%}
 {%- else -%}
-{%- set replace_with = '' -%}
+{%- set replace_with = '\g<1>' -%}
 {%- endif -%}
 
-{{ re.sub('(?i)with\s', replace_with, ns.model_sql, 1)|trim }}
+{%- if does_raw_sql_contain_cte -%}
+{{ re.sub(with_regex, replace_with, ns.model_sql, 1)|trim }}
+{%- else -%}
+{{ ns.model_sql|trim }}
+{%- endif -%}
 
 {%- endset -%}
 
