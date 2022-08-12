@@ -8,7 +8,7 @@
         | selectattr('resource_type', 'equalto', 'model')
         | list).pop() -%}
 
-    {%- set model_raw_sql = model.raw_sql -%}
+    {%- set model_raw_sql = model.raw_sql or model.raw_code -%}
     {%- else -%}
     {%- set model_raw_sql = '' -%}
     {%- endif -%}
