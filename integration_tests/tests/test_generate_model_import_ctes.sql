@@ -12,15 +12,15 @@
     materialized='table',
 ) }}{% endraw %}
 
-with codegen_integration_tests__data_source_table as (
+with codegen_integration_tests__data_source_schema_codegen_integration_tests__data_source_table as (
 
     select * from codegen_integration_tests__data_source_schema.codegen_integration_tests__data_source_table
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 ),
-codegen_integration_tests__data_source_table_case_sensitive as (
+codegen_integration_tests__data_source_table as (
 
-    select * from {% raw %}{{ source('codegen_integration_tests__data_source_schema', 'codegen_integration_tests__data_source_table_case_sensitive') }}{% endraw %} 
+    select * from {% raw %}{{ source('codegen_integration_tests__data_source_schema', 'codegen_integration_tests__data_source_table') }}{% endraw %} 
     -- CAUTION: It's best practice to create staging layer for raw sources
   
 ),
@@ -65,11 +65,11 @@ my_first_cte as (
 my_second_cte as (
     select
         1 as id
-    from codegen_integration_tests__data_source_table
+    from codegen_integration_tests__data_source_schema_codegen_integration_tests__data_source_table
     union all
     select
         2 as id
-    from codegen_integration_tests__data_source_table_case_sensitive  
+    from codegen_integration_tests__data_source_table  
 )
 -- my_third_cte as (
 --     select

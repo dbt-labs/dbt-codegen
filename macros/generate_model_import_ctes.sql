@@ -32,6 +32,9 @@
         - matches (from or join) followed by some spaces and then <something>.<something_else>
 
         # from_table_2
+        - matches (from or join) followed by some spaces and then <something>.<something_else>.<something_different>
+
+        # from_table_3
         - matches (from or join) followed by some spaces and then (` or [ or ")<something>(` or ] or ")
 
         # config block
@@ -41,14 +44,15 @@
 
     {%- set re = modules.re -%}
 
-    {%- set with_regex = '(?i)(?s)(^.*\s+|\s+|,)with\s' -%}
+    {%- set with_regex = '(?i)(?s)(^.*\s*|\s+|,)with\s' -%}
     {%- set does_raw_sql_contain_cte = re.search(with_regex, model_raw_sql) -%}
 
     {%- set from_regexes = {
         'from_ref':'(?i)(from|join)\s+({{\s*ref\s*\()([^)]+)(\)\s*}})',
         'from_source':'(?i)(from|join)\s+({{\s*source\s*\([^)]+,)([^)]+)(\)\s*}})',
-        'from_table_1':'(?i)(from|join)\s+([\[`\"]?\w+[\]`\"]?\.)([\[`\"]?\w+[\]`\"]?)',
-        'from_table_2':'(?i)(from|join)\s+([\[`\"])([\w ]+)([\]`\"])',
+        'from_table_1':'(?i)(from|join)\s+([\[`\"]?\w+[\]`\"]?)\.([\[`\"]?\w+[\]`\"]?)',
+        'from_table_2':'(?i)(from|join)\s+([\[`\"]?\w+[\]`\"]?)\.([\[`\"]?\w+[\]`\"]?)\.([\[`\"]?\w+[\]`\"]?)',
+        'from_table_3':'(?i)(from|join)\s+([\[`\"])([\w ]+)([\]`\"])',
         'config_block':'(?i)(?s)^.*{{\s*config\s*\([^)]+\)\s*}}'
     } -%}
 
@@ -64,6 +68,11 @@
             {%- if regex_name == 'config_block' -%}
                 {%- set match_tuple = (match|trim, regex_name) -%}
                 {%- do config_list.append(match_tuple) -%}
+            {%- elif regex_name == 'from_table_1' or regex_name == 'from_table_2' -%}
+                {%- set full_from_clause = match[1:]|join('.')|trim -%}
+                {%- set cte_name = match[1:]|join('_')|trim|lower -%}
+                {%- set match_tuple = (cte_name, full_from_clause, regex_name) -%}
+                {%- do from_list.append(match_tuple) -%}            
             {%- else -%}
                 {%- set full_from_clause = match[1:]|join|trim -%}
                 {%- set cte_name = match[2]|replace("'","")|trim|lower -%}
@@ -98,7 +107,7 @@
     select * from {{ from_obj[1] }}
     {%- if from_obj[2] == 'from_source' and from_list|length > 1 %} 
     -- CAUTION: It's best practice to create staging layer for raw sources
-    {%- elif from_obj[2] == 'from_table_1' or from_obj[2] == 'from_table_2' %}
+    {%- elif from_obj[2] == 'from_table_1' or from_obj[2] == 'from_table_2' or from_obj[2] == 'from_table_3' %}
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
     {%- endif %}
   

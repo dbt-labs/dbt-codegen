@@ -23,7 +23,7 @@ my_second_cte as (
     union all
     select
         2 as id
-    from {{ source('codegen_integration_tests__data_source_schema', 'codegen_integration_tests__data_source_table_case_sensitive') }}  
+    from {{ source('codegen_integration_tests__data_source_schema', 'codegen_integration_tests__data_source_table') }}  
 )
 -- my_third_cte as (
 --     select
