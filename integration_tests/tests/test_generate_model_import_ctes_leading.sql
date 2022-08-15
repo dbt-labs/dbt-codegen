@@ -41,6 +41,12 @@ with codegen_integration_tests__data_source_schema_codegen_integration_tests__da
     -- CAUTION: It's best practice to use the ref or source function instead of a var
   
 )
+,my_schema_raw_relation_5 as (
+
+    select * from 'my_schema'.'raw_relation_5'
+    -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
+  
+)
 ,my_table_reference as (
 
     select * from {% raw %}{{ var("my_table_reference") }}{% endraw %}
@@ -62,6 +68,12 @@ with codegen_integration_tests__data_source_schema_codegen_integration_tests__da
 ,raw_relation_3 as (
 
     select * from [raw_relation_3]
+    -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
+  
+)
+,raw_relation_4 as (
+
+    select * from 'raw_relation_4'
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 )
@@ -112,6 +124,10 @@ my_second_cte as (
 --     on a.col_a = b.col_b
 --     left join raw_relation_3 as aa
 --     on a.col_a = aa.col_b
+--     left join raw_relation_4 as ab
+--     on a.col_a = ab.col_b
+--     left join my_schema_raw_relation_5 as ac
+--     on a.col_a = ac.col_b
 -- )
 select * from my_second_cte
 {% endset %}

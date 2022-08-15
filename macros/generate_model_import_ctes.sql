@@ -36,12 +36,15 @@
 
         # from_table_1
         - matches (from or join) followed by some spaces and then <something>.<something_else>
+          where each <something> is enclosed by (` or [ or " or ' or nothing)
 
         # from_table_2
         - matches (from or join) followed by some spaces and then <something>.<something_else>.<something_different>
+          where each <something> is enclosed by (` or [ or " or ' or nothing)
 
         # from_table_3
-        - matches (from or join) followed by some spaces and then (` or [ or ")<something>(` or ] or ")
+        - matches (from or join) followed by some spaces and then <something>
+          where <something> is enclosed by (` or [ or " or ')
 
         # config block
         - matches the start of the file followed by anything and then {{config(<something>)}}
@@ -54,13 +57,13 @@
     {%- set does_raw_sql_contain_cte = re.search(with_regex, model_raw_sql) -%}
 
     {%- set from_regexes = {
-        'from_ref':'(?i)(from|join)\s+({{\s*ref\s*\(\s*(?:\'|\"))([^)\'\"]+)((?:\'|\")\s*)(\)\s*}})',
-        'from_source':'(?i)(from|join)\s+({{\s*source\s*\(\s*(?:\'|\"))([^)\'\"]+)((?:\'|\")\s*)(,)(\s*(?:\'|\"))([^)\'\"]+)((?:\'|\")\s*)(\)\s*}})',
-        'from_var_1':'(?i)(from|join)\s+({{\s*var\s*\(\s*(?:\'|\"))([^)\'\"]+)((?:\'|\")\s*)(\)\s*}})',
-        'from_var_2':'(?i)(from|join)\s+({{\s*var\s*\(\s*(?:\'|\"))([^)\'\"]+)((?:\'|\")\s*)(,)(\s*(?:\'|\"))([^)\'\"]+)((?:\'|\")\s*)(\)\s*}})',
-        'from_table_1':'(?i)(from|join)\s+([\[`\"]?\w+[\]`\"]?)(\.)([\[`\"]?\w+[\]`\"]?)(?=\s|$)',
-        'from_table_2':'(?i)(from|join)\s+([\[`\"]?\w+[\]`\"]?)(\.)([\[`\"]?\w+[\]`\"]?)(\.)([\[`\"]?\w+[\]`\"]?)(?=\s|$)',
-        'from_table_3':'(?i)(from|join)\s+([\[`\"])([\w ]+)([\]`\"])',
+        'from_ref':'(?i)(from|join)\s+({{\s*ref\s*\(\s*[\'\"]?)([^)\'\"]+)([\'\"]?\s*)(\)\s*}})',
+        'from_source':'(?i)(from|join)\s+({{\s*source\s*\(\s*[\'\"]?)([^)\'\"]+)([\'\"]?\s*)(,)(\s*[\'\"]?)([^)\'\"]+)([\'\"]?\s*)(\)\s*}})',
+        'from_var_1':'(?i)(from|join)\s+({{\s*var\s*\(\s*[\'\"]?)([^)\'\"]+)([\'\"]?\s*)(\)\s*}})',
+        'from_var_2':'(?i)(from|join)\s+({{\s*var\s*\(\s*[\'\"]?)([^)\'\"]+)([\'\"]?\s*)(,)(\s*[\'\"]?)([^)\'\"]+)([\'\"]?\s*)(\)\s*}})',
+        'from_table_1':'(?i)(from|join)\s+([\[`\"\']?)(\w+)([\]`\"\']?)(\.)([\[`\"\']?)(\w+)([\]`\"\']?)(?=\s|$)',
+        'from_table_2':'(?i)(from|join)\s+([\[`\"\']?)(\w+)([\]`\"\']?)(\.)([\[`\"\']?)(\w+)([\]`\"\']?)(\.)([\[`\"\']?)(\w+)([\]`\"\']?)(?=\s|$)',
+        'from_table_3':'(?i)(from|join)\s+([\[`\"\'])([\w ]+)([\]`\"\'])(?=\s|$)',
         'config_block':'(?i)(?s)^.*{{\s*config\s*\([^)]+\)\s*}}'
     } -%}
 
@@ -84,12 +87,12 @@
                 {%- do from_list.append(match_tuple) -%} 
             {%- elif regex_name == 'from_table_1' -%}
                 {%- set full_from_clause = match[1:]|join()|trim -%}
-                {%- set cte_name = match[1]|lower + '_' + match[3]|lower -%}
+                {%- set cte_name = match[2]|lower + '_' + match[6]|lower -%}
                 {%- set match_tuple = (cte_name, full_from_clause, regex_name) -%}
                 {%- do from_list.append(match_tuple) -%}   
             {%- elif regex_name == 'from_table_2' -%}
                 {%- set full_from_clause = match[1:]|join()|trim -%}
-                {%- set cte_name = match[1]|lower + '_' + match[3]|lower + '_' + match[5]|lower -%}
+                {%- set cte_name = match[2]|lower + '_' + match[6]|lower + '_' + match[10]|lower -%}
                 {%- set match_tuple = (cte_name, full_from_clause, regex_name) -%}
                 {%- do from_list.append(match_tuple) -%}                     
             {%- else -%}
@@ -105,9 +108,9 @@
         {%- elif regex_name == 'from_source' -%}
             {%- set ns.model_sql = re.sub(regex_pattern, '\g<1> source_\g<7>', ns.model_sql) -%}            
         {%- elif regex_name == 'from_table_1' -%}
-            {%- set ns.model_sql = re.sub(regex_pattern, '\g<1> \g<2>_\g<4>', ns.model_sql) -%}     
+            {%- set ns.model_sql = re.sub(regex_pattern, '\g<1> \g<3>_\g<7>', ns.model_sql) -%}     
         {%- elif regex_name == 'from_table_2' -%}
-            {%- set ns.model_sql = re.sub(regex_pattern, '\g<1> \g<2>_\g<4>_\g<6>', ns.model_sql) -%} 
+            {%- set ns.model_sql = re.sub(regex_pattern, '\g<1> \g<3>_\g<7>_\g<11>', ns.model_sql) -%} 
         {%- else -%}   
             {%- set ns.model_sql = re.sub(regex_pattern, '\g<1> \g<3>', ns.model_sql) -%}         
         {% endif %}

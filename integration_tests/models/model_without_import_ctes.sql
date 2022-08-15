@@ -47,5 +47,9 @@ my_second_cte as (
 --     on a.col_a = b.col_b
 --     left join [raw_relation_3] as aa
 --     on a.col_a = aa.col_b
+--     left join 'raw_relation_4' as ab
+--     on a.col_a = ab.col_b
+--     left join 'my_schema'.'raw_relation_5' as ac
+--     on a.col_a = ac.col_b
 -- )
 select * from my_second_cte
