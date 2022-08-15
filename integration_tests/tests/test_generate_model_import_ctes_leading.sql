@@ -26,13 +26,25 @@ with codegen_integration_tests__data_source_schema_codegen_integration_tests__da
 )
 ,data__b_relation as (
 
-    select * from {% raw %}{{ ref('data__b_relation') }}{% endraw %}
+    select * from {% raw %}{{ ref("data__b_relation") }}{% endraw %}
   
 )
 ,development_codegen_integration_tests__data_source_schema_codegen_integration_tests__data_source_table as (
 
     select * from development.codegen_integration_tests__data_source_schema.codegen_integration_tests__data_source_table
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
+  
+)
+,my_other_table_reference as (
+
+    select * from {% raw %}{{ var("my_other_table_reference", "table_d") }}{% endraw %}
+    -- CAUTION: It's best practice to use the ref or source function instead of a var
+  
+)
+,my_table_reference as (
+
+    select * from {% raw %}{{ var("my_table_reference") }}{% endraw %}
+    -- CAUTION: It's best practice to use the ref or source function instead of a var
   
 )
 ,raw_relation_1 as (
@@ -82,6 +94,14 @@ my_second_cte as (
     -- select
     --     3 as id
     -- from development_codegen_integration_tests__data_source_schema_codegen_integration_tests__data_source_table
+    -- union all
+    -- select
+    --     4 as id
+    -- from my_table_reference
+    -- union all
+    -- select
+    --     5 as id
+    -- from my_other_table_reference
 )
 -- my_third_cte as (
 --     select

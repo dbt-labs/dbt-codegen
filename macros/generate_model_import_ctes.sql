@@ -28,6 +28,12 @@
         # from_source 
         - matches (from or join) followed by some spaces and then {{source(<something>,<something_else>)}}
 
+        # from_var_1
+        - matches (from or join) followed by some spaces and then {{var(<something>)}}
+
+        # from_var_2
+        - matches (from or join) followed by some spaces and then {{var(<something>,<something_else>)}}
+
         # from_table_1
         - matches (from or join) followed by some spaces and then <something>.<something_else>
 
@@ -48,8 +54,10 @@
     {%- set does_raw_sql_contain_cte = re.search(with_regex, model_raw_sql) -%}
 
     {%- set from_regexes = {
-        'from_ref':'(?i)(from|join)\s+({{\s*ref\s*\(\s*\'|\")([^)\'\"]+)(\'|\"\s*)(\)\s*}})',
-        'from_source':'(?i)(from|join)\s+({{\s*source\s*\(\s*\'|\")([^)\'\"]+)(\'|\"\s*)(,)(\s*\'|\")([^)\'\"]+)(\'|\"\s*)(\)\s*}})',
+        'from_ref':'(?i)(from|join)\s+({{\s*ref\s*\(\s*(?:\'|\"))([^)\'\"]+)((?:\'|\")\s*)(\)\s*}})',
+        'from_source':'(?i)(from|join)\s+({{\s*source\s*\(\s*(?:\'|\"))([^)\'\"]+)((?:\'|\")\s*)(,)(\s*(?:\'|\"))([^)\'\"]+)((?:\'|\")\s*)(\)\s*}})',
+        'from_var_1':'(?i)(from|join)\s+({{\s*var\s*\(\s*(?:\'|\"))([^)\'\"]+)((?:\'|\")\s*)(\)\s*}})',
+        'from_var_2':'(?i)(from|join)\s+({{\s*var\s*\(\s*(?:\'|\"))([^)\'\"]+)((?:\'|\")\s*)(,)(\s*(?:\'|\"))([^)\'\"]+)((?:\'|\")\s*)(\)\s*}})',
         'from_table_1':'(?i)(from|join)\s+([\[`\"]?\w+[\]`\"]?)(\.)([\[`\"]?\w+[\]`\"]?)(?=\s|$)',
         'from_table_2':'(?i)(from|join)\s+([\[`\"]?\w+[\]`\"]?)(\.)([\[`\"]?\w+[\]`\"]?)(\.)([\[`\"]?\w+[\]`\"]?)(?=\s|$)',
         'from_table_3':'(?i)(from|join)\s+([\[`\"])([\w ]+)([\]`\"])',
@@ -127,6 +135,8 @@
     -- CAUTION: It's best practice to create staging layer for raw sources
     {%- elif from_obj[2] == 'from_table_1' or from_obj[2] == 'from_table_2' or from_obj[2] == 'from_table_3' %}
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
+    {%- elif from_obj[2] == 'from_var_1' or from_obj[2] == 'from_var_2' %}
+    -- CAUTION: It's best practice to use the ref or source function instead of a var
     {%- endif %}
   
 ){%- if does_raw_sql_contain_cte and not leading_commas -%},{%- endif %}
