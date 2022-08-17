@@ -28,7 +28,7 @@ sources:
             data_type: INTEGER
             description: ""
           - name: col_b
-            data_type: TEXT
+            data_type: {{ text_type_value(1) }}
             description: ""
 
       - name: data__b_relation
@@ -38,26 +38,26 @@ sources:
             data_type: INTEGER
             description: ""
           - name: col_b
-            data_type: TEXT
+            data_type: {{ text_type_value(1) }}
             description: ""
 
       - name: data__campaign_analytics
         description: ""
         columns:
           - name: source
-            data_type: TEXT
+            data_type: {{ text_type_value(8) }}
             description: ""
           - name: medium
-            data_type: TEXT
+            data_type: {{ text_type_value(8) }}
             description: ""
           - name: source_medium
-            data_type: TEXT
+            data_type: {{ text_type_value(2) }}
             description: ""
           - name: analytics
             data_type: INTEGER
             description: ""
           - name: col_x
-            data_type: TEXT
+            data_type: {{ text_type_value(1) }}
             description: ""
 
 {% endset %}
