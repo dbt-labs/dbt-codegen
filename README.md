@@ -26,6 +26,8 @@ source data is in.
 column names to your source definition.
 * `include_descriptions` (optional, default=False): Whether you want to add 
 description placeholders to your source definition.
+* `include_include_data_types` (optional, default=False): Whether you want to add
+data types to your source columns definitions.
 * `table_pattern` (optional, default='%'): A table prefix / postfix that you 
 want to subselect from all available tables within a given schema.
 * `exclude` (optional, default=''): A string you want to exclude from the selection criteria
