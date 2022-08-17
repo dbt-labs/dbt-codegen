@@ -8,6 +8,7 @@
     database_name=target.database,
     generate_columns=True,
     include_descriptions=True,
+    include_data_types=True,
     name=raw_schema
 ) %}
 
@@ -24,30 +25,39 @@ sources:
         description: ""
         columns:
           - name: col_a
+            data_type: INTEGER
             description: ""
           - name: col_b
+            data_type: TEXT
             description: ""
 
       - name: data__b_relation
         description: ""
         columns:
           - name: col_a
+            data_type: INTEGER
             description: ""
           - name: col_b
+            data_type: TEXT
             description: ""
 
       - name: data__campaign_analytics
         description: ""
         columns:
           - name: source
+            data_type: TEXT
             description: ""
           - name: medium
+            data_type: TEXT
             description: ""
           - name: source_medium
+            data_type: TEXT
             description: ""
           - name: analytics
+            data_type: INTEGER
             description: ""
           - name: col_x
+            data_type: TEXT
             description: ""
 
 {% endset %}
