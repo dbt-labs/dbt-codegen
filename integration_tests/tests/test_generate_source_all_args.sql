@@ -25,7 +25,7 @@ sources:
         description: ""
         columns:
           - name: col_a
-            data_type: INTEGER
+            data_type: {{ integer_type_value() }}
             description: ""
           - name: col_b
             data_type: {{ text_type_value(1) }}
@@ -35,7 +35,7 @@ sources:
         description: ""
         columns:
           - name: col_a
-            data_type: INTEGER
+            data_type: {{ integer_type_value() }}
             description: ""
           - name: col_b
             data_type: {{ text_type_value(1) }}
@@ -54,7 +54,7 @@ sources:
             data_type: {{ text_type_value(2) }}
             description: ""
           - name: analytics
-            data_type: INTEGER
+            data_type: {{ integer_type_value() }}
             description: ""
           - name: col_x
             data_type: {{ text_type_value(1) }}
