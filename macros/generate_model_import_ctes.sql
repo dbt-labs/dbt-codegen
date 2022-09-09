@@ -142,7 +142,7 @@
     -- CAUTION: It's best practice to use the ref or source function instead of a var
     {%- endif %}
   
-){%- if (loop.last and does_raw_sql_contain_cte) or (not loop.last) and (not leading_commas) -%},{%- endif %}
+){%- if ((loop.last and does_raw_sql_contain_cte) or (not loop.last)) and not leading_commas -%},{%- endif %}
 {% endfor -%}
 
 {%- if does_raw_sql_contain_cte -%}
