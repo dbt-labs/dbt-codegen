@@ -79,6 +79,7 @@ model.
 * `table_name` (required): The source table you wish to generate base model SQL for.
 * `leading_commas` (optional, default=False): Whether you want your commas to be leading (vs trailing).
 * `case_sensitive_cols ` (optional, default=False): Whether your source table has case sensitive column names. If true, keeps the case of the column names from the source.
+* `materialize_as_view` (optional, default=False): Whether you want the base model to be a view.
 
 
 ### Usage:
@@ -88,7 +89,8 @@ model.
 ```
 {{ codegen.generate_base_model(
     source_name='raw_jaffle_shop',
-    table_name='customers'
+    table_name='customers',
+    materialize_as_view=True
 ) }}
 ```
 
