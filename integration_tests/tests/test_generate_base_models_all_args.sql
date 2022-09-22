@@ -9,7 +9,7 @@
 %}
 
 {% set expected_base_model %}
-{{ "{{ config(materialized='"+materialization+"' }}" }}
+{{ "{{ config(materialized='view' }}" }}
 
 with source as (
 
