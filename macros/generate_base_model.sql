@@ -6,7 +6,7 @@
 {% set column_names=columns | map(attribute='name') %}
 {% set base_model_sql %}
 
-{{ "{{ config(materialized='"+materialization+"' }}" }}
+{{ "{{ config(materialized='"+materialization+"') }}" }}
 
 with source as (
 
