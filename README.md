@@ -3,10 +3,22 @@
 Macros that generate dbt code, and log it to the command line.
 
 # Contents
-* [generate_source](#generate_source-source)
-* [generate_base_model](#generate_base_model-source)
-* [generate_model_yaml](#generate_model_yaml-source)
-* [generate_model_import_ctes](#generate_model_import_ctes-source)
+- [dbt-codegen](#dbt-codegen)
+- [Contents](#contents)
+- [Installation instructions](#installation-instructions)
+- [Macros](#macros)
+  - [generate_source (source)](#generate_source-source)
+    - [Arguments](#arguments)
+    - [Usage:](#usage)
+  - [generate_base_model (source)](#generate_base_model-source)
+    - [Arguments:](#arguments-1)
+    - [Usage:](#usage-1)
+  - [generate_model_yaml (source)](#generate_model_yaml-source)
+    - [Arguments:](#arguments-2)
+    - [Usage:](#usage-2)
+  - [generate_model_import_ctes (source)](#generate_model_import_ctes-source)
+    - [Arguments:](#arguments-3)
+    - [Usage:](#usage-3)
 
 # Installation instructions
 New to dbt packages? Read more about them [here](https://docs.getdbt.com/docs/building-a-dbt-project/package-management/).
@@ -177,7 +189,7 @@ This macro generates the SQL for a given model with all references pulled up int
 1. Copy the macro into a statement tab in the dbt Cloud IDE, or into an analysis file, and compile your code.
 
 ```
-{{ generate_model_import_ctes(
+{{ codegen.generate_model_import_ctes(
     model_name = 'my_dbt_model'
 ) }}
 ```
