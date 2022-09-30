@@ -143,6 +143,7 @@
     {%- endif %}
   
 ){%- if ((loop.last and does_raw_sql_contain_cte) or (not loop.last)) and not leading_commas -%},{%- endif %}
+
 {% endfor -%}
 
 {%- if does_raw_sql_contain_cte -%}

@@ -19,70 +19,82 @@ with codegen_integration_tests__data_source_schema_codegen_integration_tests__da
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 )
+
 ,data__a_relation as (
 
     select * from {% raw %}{{ ref('data__a_relation') }}{% endraw %}
   
 )
+
 ,data__b_relation as (
 
     select * from {% raw %}{{ ref("data__b_relation") }}{% endraw %}
   
 )
+
 ,development_codegen_integration_tests__data_source_schema_codegen_integration_tests__data_source_table as (
 
     select * from development.codegen_integration_tests__data_source_schema.codegen_integration_tests__data_source_table
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 )
+
 ,my_other_table_reference as (
 
     select * from {% raw %}{{ var("my_other_table_reference", "table_d") }}{% endraw %}
     -- CAUTION: It's best practice to use the ref or source function instead of a var
   
 )
+
 ,my_schema_raw_relation_5 as (
 
     select * from 'my_schema'.'raw_relation_5'
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 )
+
 ,my_table_reference as (
 
     select * from {% raw %}{{ var("my_table_reference") }}{% endraw %}
     -- CAUTION: It's best practice to use the ref or source function instead of a var
   
 )
+
 ,raw_relation_1 as (
 
     select * from `raw_relation_1`
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 )
+
 ,raw_relation_2 as (
 
     select * from "raw_relation_2"
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 )
+
 ,raw_relation_3 as (
 
     select * from [raw_relation_3]
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 )
+
 ,raw_relation_4 as (
 
     select * from 'raw_relation_4'
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 )
+
 ,source_codegen_integration_tests__data_source_table as (
 
     select * from {% raw %}{{ source('codegen_integration_tests__data_source_schema', 'codegen_integration_tests__data_source_table') }}{% endraw %} 
     -- CAUTION: It's best practice to create staging layer for raw sources
   
 )
+
 -- I love this cte
 ,my_first_cte as (
     select
