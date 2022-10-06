@@ -3,9 +3,22 @@
 Macros that generate dbt code, and log it to the command line.
 
 # Contents
-* [generate_source](#generate_source-source)
-* [generate_base_model](#generate_base_model-source)
-* [generate_model_yaml](#generate_model_yaml-source)
+- [dbt-codegen](#dbt-codegen)
+- [Contents](#contents)
+- [Installation instructions](#installation-instructions)
+- [Macros](#macros)
+  - [generate_source (source)](#generate_source-source)
+    - [Arguments](#arguments)
+    - [Usage:](#usage)
+  - [generate_base_model (source)](#generate_base_model-source)
+    - [Arguments:](#arguments-1)
+    - [Usage:](#usage-1)
+  - [generate_model_yaml (source)](#generate_model_yaml-source)
+    - [Arguments:](#arguments-2)
+    - [Usage:](#usage-2)
+  - [generate_model_import_ctes (source)](#generate_model_import_ctes-source)
+    - [Arguments:](#arguments-3)
+    - [Usage:](#usage-3)
 
 # Installation instructions
 New to dbt packages? Read more about them [here](https://docs.getdbt.com/docs/building-a-dbt-project/package-management/).
@@ -164,3 +177,94 @@ models:
 ```
 
 4. Paste the output in to a schema.yml file, and refactor as required.
+
+## generate_model_import_ctes ([source](macros/generate_model_import_ctes.sql))
+This macro generates the SQL for a given model with all references pulled up into import CTEs, which you can then paste back into the model.
+
+### Arguments:
+* `model_name` (required): The model you wish to generate SQL with import CTEs for.
+* `leading_commas` (optional, default = false): Whether you want your commas to be leading (vs trailing).
+
+### Usage:
+1. Create a model with your original SQL query
+2. Copy the macro into a statement tab in the dbt Cloud IDE, or into an analysis file, and compile your code
+
+```
+{{ codegen.generate_model_import_ctes(
+    model_name = 'my_dbt_model'
+) }}
+```
+
+Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
+
+```
+$ dbt run-operation generate_model_import_ctes --args '{"model_name": "my_dbt_model"}'
+```
+
+3. The new SQL - with all references pulled up into import CTEs - will be logged to the command line
+
+```
+with customers as (
+
+    select * from {{ ref('stg_customers') }}
+
+),
+
+orders as (
+
+    select * from {{ ref('stg_orders') }}
+
+),
+
+payments as (
+
+    select * from {{ ref('stg_payments') }}
+
+),
+
+customer_orders as (
+
+    select
+        customer_id,
+        min(order_date) as first_order,
+        max(order_date) as most_recent_order,
+        count(order_id) as number_of_orders
+    from orders
+    group by customer_id
+
+),
+
+customer_payments as (
+
+    select
+        orders.customer_id,
+        sum(amount) as total_amount
+    from payments
+    left join orders on
+         payments.order_id = orders.order_id
+    group by orders.customer_id
+
+),
+
+final as (
+
+    select
+        customers.customer_id,
+        customers.first_name,
+        customers.last_name,
+        customer_orders.first_order,
+        customer_orders.most_recent_order,
+        customer_orders.number_of_orders,
+        customer_payments.total_amount as customer_lifetime_value
+    from customers
+    left join customer_orders
+        on customers.customer_id = customer_orders.customer_id
+    left join customer_payments
+        on  customers.customer_id = customer_payments.customer_id
+
+)
+
+select * from final
+```
+
+4. Replace the contents of the model's current SQL file with the compiled or logged code

@@ -9,7 +9,7 @@ version: 2
 
 sources:
   - name: raw
-    schema: {{ raw_schema | trim }}
+    schema: {{ raw_schema | trim | lower }}
     tables:
       - name: data__a_relation
       - name: data__b_relation
