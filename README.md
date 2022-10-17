@@ -6,6 +6,7 @@ Macros that generate dbt code, and log it to the command line.
 * [generate_source](#generate_source-source)
 * [generate_base_model](#generate_base_model-source)
 * [create_base_models](#create_base_models-source)
+* [base_model_creation](#base_model_creation-source)
 * [generate_model_yaml](#generate_model_yaml-source)
 
 # Installation instructions
