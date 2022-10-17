@@ -7,7 +7,7 @@ This macro generates a series of terminal commands (appended w) bash script whic
 - Addition of the [base_model_creation](bash_scripts/base_model_creation.sh) bash script which allows users to input multiple tables as a list and generate a terminal command that will combine **all** [create_base_models](macros/create_base_models.sql) commands. This way, you can generate base models for all your sources at once.
 
 ## Contributors:
-- [@fivetran-joemarkiewicz](https://github.com/fivetran-joemarkiewicz) (#XXX)
+- [@fivetran-joemarkiewicz](https://github.com/fivetran-joemarkiewicz) (#83)
 # dbt-codegen v0.4.0
 
 ## Breaking changes
