@@ -1,9 +1,10 @@
 # Unreleased
 ## New features
-- Addition of the [base_model_creation]() bash script which creates a new file in your dbt project based off the results of the [create_base_model]() macro. Therefore, instead of outputting in the terminal, it will create the file for you.
+- Addition of the [create_base_models](macros/create_base_models.sql)
+This macro generates a series of terminal commands (appended w) bash script which creates a new file in your dbt project based off the results of the [generate_base_model](macros/generate_base_model.sql) macro. Therefore, instead of outputting in the terminal, it will create the file for you.
 
 ## Quality of life
-- Addition of the [base_model_creation]() bash script which allows users to input multiple tables as a list and generate a terminal command that will combine **all** [base_model_creation]() commands. This way, you can generate base models for all your sources at once.
+- Addition of the [base_model_creation](bash_scripts/base_model_creation.sh) bash script which allows users to input multiple tables as a list and generate a terminal command that will combine **all** [create_base_models](macros/create_base_models.sql) commands. This way, you can generate base models for all your sources at once.
 
 ## Contributors:
 - [@fivetran-joemarkiewicz](https://github.com/fivetran-joemarkiewicz) (#XXX)

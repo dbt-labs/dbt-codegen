@@ -1,8 +1,8 @@
-{% macro create_base_models(source_schema, tables) %}
+{% macro create_base_models(source_name, tables) %}
 
-{% set source_schema = ""~ source_schema ~"" %}
+{% set source_name = ""~ source_name ~"" %}
 
-{% set zsh_command_models = "source dbt_packages/codegen/bash_scripts/base_model_creation.sh """~ source_schema ~""" " %}
+{% set zsh_command_models = "source dbt_packages/codegen/bash_scripts/base_model_creation.sh """~ source_name ~""" " %}
 
 {%- set models_array = [] -%}
 
