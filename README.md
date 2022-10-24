@@ -146,6 +146,12 @@ schema.yml file.
 Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
 
 ```
+$ dbt run-operation generate_model_yaml --args '{"model_name": "customers"}'
+```
+
+or
+
+```
 $ dbt run-operation generate_model_yaml --args '{"model_name": ["customers", "orders"]}'
 ```
 
