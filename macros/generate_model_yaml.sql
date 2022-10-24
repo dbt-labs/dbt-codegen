@@ -17,24 +17,34 @@
     {% do return(model_yaml) %}
 {% endmacro %}
 
-{% macro generate_model_yaml(model_name, upstream_descriptions=False) %}
+{% macro generate_model_yaml(model_name=[], upstream_descriptions=False) %}
 
-{% set model_yaml=[] %}
-{% set column_desc_dict =  codegen.build_dict_column_descriptions(model_name) if upstream_descriptions else {} %}
+    {% set model_yaml=[] %}
+    {% set column_desc_dict =  codegen.build_dict_column_descriptions(model_name) if upstream_descriptions else {} %}
 
-{% do model_yaml.append('version: 2') %}
-{% do model_yaml.append('') %}
-{% do model_yaml.append('models:') %}
-{% do model_yaml.append('  - name: ' ~ model_name | lower) %}
-{% do model_yaml.append('    description: ""') %}
-{% do model_yaml.append('    columns:') %}
+    {% do model_yaml.append('version: 2') %}
+    {% do model_yaml.append('') %}
+    {% do model_yaml.append('models:') %}
 
-{% set relation=ref(model_name) %}
-{%- set columns = adapter.get_columns_in_relation(relation) -%}
+    {% if model_name is string %}
+        {% set model_name_list=[] %}
+        {% do model_name_list.append(model_name) %}
+    {% else %}
+        {% set model_name_list=model_name %}
+    {% endif %}
 
-{% for column in columns %}
-    {% set model_yaml = codegen.generate_column_yaml(column, model_yaml, column_desc_dict) %}
-{% endfor %}
+    {% for model in model_name_list %}
+        {% do model_yaml.append('  - name: ' ~ model | lower) %}
+        {% do model_yaml.append('    description: ""') %}
+        {% do model_yaml.append('    columns:') %}
+
+        {% set relation=ref(model) %}
+        {%- set columns = adapter.get_columns_in_relation(relation) -%}
+
+        {% for column in columns %}
+            {% set model_yaml = codegen.generate_column_yaml(column, model_yaml, column_desc_dict) %}
+        {% endfor %}
+    {% endfor %}
 
 {% if execute %}
 
