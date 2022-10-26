@@ -167,7 +167,7 @@
 
 {%- if execute -%}
 
-{{ log(model_import_ctes, info=True) }}
+{{ print(model_import_ctes) }}
 {% do return(model_import_ctes) %}
 
 {% endif %}

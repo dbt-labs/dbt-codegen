@@ -10,6 +10,16 @@
 - [@handle](https://github.com/handle) (#XXX)
 --->
 
+# Unreleased
+## Breaking changes
+## New features
+## Quality of life
+- Now uses `print` instead of `log` to output the generated text into the console. This enables you to invoke dbt with the `--quiet` flag and directly pipe the codegen output into a new file, ending up with valid yaml
+
+## Under the hood
+## Contributors:
+- [@JorgenG](https://github.com/JorgenG) (#86)
+
 # dbt-codegen v0.7.0
 
 ## 🚨 Breaking change
