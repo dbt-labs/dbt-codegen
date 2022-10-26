@@ -44,6 +44,13 @@ want to subselect from all available tables within a given schema.
 * `exclude` (optional, default=''): A string you want to exclude from the selection criteria
 * `name` (optional, default=schema_name): The name of your source
 
+### Outputting to a file
+If you use the `dbt run-operation` approach it is possible to output directly to a file by piping the output to a new file and using the `--quiet` CLI flag:
+
+```
+dbt --quiet run-operation generate_model_yaml --args '{"model_name": "stg_jaffle_shop__orders"}' > models/staging/jaffle_shop/stg_jaffle_shop__orders.yml
+```
+
 ### Usage:
 1. Copy the macro into a statement tab in the dbt Cloud IDE, or into an analysis file, and compile your code
 
