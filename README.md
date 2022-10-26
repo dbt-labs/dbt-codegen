@@ -155,7 +155,7 @@ or
 $ dbt run-operation generate_model_yaml --args '{"model_name": ["customers", "orders"]}'
 ```
 
-3. The YAML for a base model will be logged to the command line
+3. The YAML for the model(s) will be logged to the command line
 
 ```
 version: 2
