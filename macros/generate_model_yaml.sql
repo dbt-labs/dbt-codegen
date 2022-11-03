@@ -29,13 +29,13 @@
         {{ exceptions.raise_compiler_error("The name argument to ref() must be a list, got <class 'string'>: " ~ number) }}
     {% else %}
         {% for model in model_names %}
-            {% set column_desc_dict =  codegen.build_dict_column_descriptions(model) if upstream_descriptions else {} %}
             {% do model_yaml.append('  - name: ' ~ model | lower) %}
             {% do model_yaml.append('    description: ""') %}
             {% do model_yaml.append('    columns:') %}
 
             {% set relation=ref(model) %}
             {%- set columns = adapter.get_columns_in_relation(relation) -%}
+            {% set column_desc_dict =  codegen.build_dict_column_descriptions(model) if upstream_descriptions else {} %}
 
             {% for column in columns %}
                 {% set model_yaml = codegen.generate_column_yaml(column, model_yaml, column_desc_dict) %}
