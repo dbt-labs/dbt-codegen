@@ -20,7 +20,6 @@
 {% macro generate_model_yaml(model_names=[], upstream_descriptions=False) %}
 
     {% set model_yaml=[] %}
-    {% set column_desc_dict =  codegen.build_dict_column_descriptions(model_name) if upstream_descriptions else {} %}
 
     {% do model_yaml.append('version: 2') %}
     {% do model_yaml.append('') %}
@@ -30,6 +29,7 @@
         {{ exceptions.raise_compiler_error("The name argument to ref() must be a list, got <class 'string'>: " ~ number) }}
     {% else %}
         {% for model in model_names %}
+            {% set column_desc_dict =  codegen.build_dict_column_descriptions(model) if upstream_descriptions else {} %}
             {% do model_yaml.append('  - name: ' ~ model | lower) %}
             {% do model_yaml.append('    description: ""') %}
             {% do model_yaml.append('    columns:') %}
