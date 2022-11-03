@@ -17,7 +17,7 @@
     {% do return(model_yaml) %}
 {% endmacro %}
 
-{% macro generate_model_yaml(model_name=[], upstream_descriptions=False) %}
+{% macro generate_model_yaml(model_names=[], upstream_descriptions=False) %}
 
     {% set model_yaml=[] %}
     {% set column_desc_dict =  codegen.build_dict_column_descriptions(model_name) if upstream_descriptions else {} %}
@@ -26,25 +26,22 @@
     {% do model_yaml.append('') %}
     {% do model_yaml.append('models:') %}
 
-    {% if model_name is string %}
-        {% set model_name_list=[] %}
-        {% do model_name_list.append(model_name) %}
+    {% if model_names is string %}
+        {{ exceptions.raise_compiler_error("The name argument to ref() must be a list, got <class 'string'>: " ~ number) }}
     {% else %}
-        {% set model_name_list=model_name %}
-    {% endif %}
+        {% for model in model_names %}
+            {% do model_yaml.append('  - name: ' ~ model | lower) %}
+            {% do model_yaml.append('    description: ""') %}
+            {% do model_yaml.append('    columns:') %}
 
-    {% for model in model_name_list %}
-        {% do model_yaml.append('  - name: ' ~ model | lower) %}
-        {% do model_yaml.append('    description: ""') %}
-        {% do model_yaml.append('    columns:') %}
+            {% set relation=ref(model) %}
+            {%- set columns = adapter.get_columns_in_relation(relation) -%}
 
-        {% set relation=ref(model) %}
-        {%- set columns = adapter.get_columns_in_relation(relation) -%}
-
-        {% for column in columns %}
-            {% set model_yaml = codegen.generate_column_yaml(column, model_yaml, column_desc_dict) %}
+            {% for column in columns %}
+                {% set model_yaml = codegen.generate_column_yaml(column, model_yaml, column_desc_dict) %}
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
+    {% endif %}
 
 {% if execute %}
 

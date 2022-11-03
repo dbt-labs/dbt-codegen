@@ -126,11 +126,11 @@ select * from renamed
 4. Paste the output in to a model, and refactor as required.
 
 ## generate_model_yaml ([source](macros/generate_model_yaml.sql))
-This macro generates the YAML for a model or list of models, which you can then paste into a
+This macro generates the YAML for a list of model(s), which you can then paste into a
 schema.yml file.
 
 ### Arguments:
-* `model_name` (required): The model or list of models you wish to generate YAML for.
+* `model_names` (required): The model(s) you wish to generate YAML for.
 * `upstream_descriptions` (optional, default=False): Whether you want to include descriptions for identical column names from upstream models.
 
 ### Usage:
@@ -139,23 +139,23 @@ schema.yml file.
 
 ```
 {{ codegen.generate_model_yaml(
-    model_name='customers'
+    model_names=['customers']
 ) }}
 ```
 
 Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
 
 ```
-$ dbt run-operation generate_model_yaml --args '{"model_name": "customers"}'
+$ dbt run-operation generate_model_yaml --args '{"model_names": ["customers"]}'
 ```
 
 or
 
 ```
-$ dbt run-operation generate_model_yaml --args '{"model_name": ["customers", "orders"]}'
+$ dbt run-operation generate_model_yaml --args '{"model_names": ["customers", "orders"]}'
 ```
 
-3. The YAML for the model(s) will be logged to the command line
+3. The YAML for a base model(s) will be logged to the command line
 
 ```
 version: 2
