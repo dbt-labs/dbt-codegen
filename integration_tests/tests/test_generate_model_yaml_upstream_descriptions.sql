@@ -1,5 +1,5 @@
 {% set actual_model_yaml = codegen.generate_model_yaml(
-    model_name='child_model',
+    model_names=['child_model'],
     upstream_descriptions=True
   )
 %}

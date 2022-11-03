@@ -1,5 +1,5 @@
 {% set actual_model_yaml = codegen.generate_model_yaml(
-    model_name=['data__a_relation','data__b_relation']
+    model_names=['data__a_relation','data__b_relation']
   )
 %}
 
