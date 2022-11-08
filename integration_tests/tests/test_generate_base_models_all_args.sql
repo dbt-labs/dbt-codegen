@@ -4,12 +4,12 @@
     table_name='codegen_integration_tests__data_source_table_case_sensitive',
     leading_commas=True,
     case_sensitive_cols=True,
-    materialization='view'
+    materialization='table'
   )
 %}
 
 {% set expected_base_model %}
-{{ "{{ config(materialized='view' }}" }}
+{{ "{{ config(materialized='table' }}" }}
 
 with source as (
 
