@@ -10,7 +10,7 @@
     {{ "{{ config(materialized='" ~ materialized ~ "') }}" }}
 {%- else -%}
     {{ "{{ config(materialized='table') }}" }}
-{%- endif -%}
+{% endif %}
 
 with source as (
 
