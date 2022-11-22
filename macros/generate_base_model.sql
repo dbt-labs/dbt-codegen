@@ -1,4 +1,4 @@
-{% macro generate_base_model(source_name, table_name, leading_commas=False, case_sensitive_cols=False, materialization='table') %}
+{% macro generate_base_model(source_name, table_name, leading_commas=False, case_sensitive_cols=False, materialized=None) %}
 
 {%- set source_relation = source(source_name, table_name) -%}
 
@@ -6,7 +6,11 @@
 {% set column_names=columns | map(attribute='name') %}
 {% set base_model_sql %}
 
-{{ "{{ config(materialized='"+materialization+"') }}" }}
+{%- if materialized is not None -%}
+    {{ "{{ config(materialized='" ~ materialized ~ "') }}" }}
+{%- else -%}
+    {{ "{{ config(materialized='table') }}" }}
+{%- endif -%}
 
 with source as (
 
