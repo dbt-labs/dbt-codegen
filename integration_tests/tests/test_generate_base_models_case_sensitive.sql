@@ -6,7 +6,7 @@
 %}
 
 {% set expected_base_model %}
-{{ "{{ config(materialized=None) }}" }}
+{{ "{{ config(materialized='table') }}" }}
 
 with source as (
 
