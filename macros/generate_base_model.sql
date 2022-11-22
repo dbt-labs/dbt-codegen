@@ -6,7 +6,7 @@
 {% set column_names=columns | map(attribute='name') %}
 {% set base_model_sql %}
 
-{%- if materialized is not None -%}
+{%- if materialized is not none -%}
     {{ "{{ config(materialized='" ~ materialized ~ "') }}" }}
 {%- else -%}
     {{ "{{ config(materialized='table') }}" }}
