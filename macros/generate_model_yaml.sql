@@ -26,7 +26,7 @@
     {% do model_yaml.append('models:') %}
 
     {% if model_names is string %}
-        {{ exceptions.raise_compiler_error(("The `model_names` argument must always be a list, even if there is only one model.") }}
+        {{ exceptions.raise_compiler_error("The `model_names` argument must always be a list, even if there is only one model.") }}
     {% else %}
         {% for model in model_names %}
             {% do model_yaml.append('  - name: ' ~ model | lower) %}
