@@ -57,13 +57,242 @@
     {%- set does_raw_sql_contain_cte = re.search(with_regex, model_raw_sql) -%}
 
     {%- set from_regexes = {
-        'from_ref':'(?i)(from|join)\s+({{\s*ref\s*\(\s*[\'\"]?)([^)\'\"]+)([\'\"]?\s*)(\)\s*}})',
-        'from_source':'(?i)(from|join)\s+({{\s*source\s*\(\s*[\'\"]?)([^)\'\"]+)([\'\"]?\s*)(,)(\s*[\'\"]?)([^)\'\"]+)([\'\"]?\s*)(\)\s*}})',
-        'from_var_1':'(?i)(from|join)\s+({{\s*var\s*\(\s*[\'\"]?)([^)\'\"]+)([\'\"]?\s*)(\)\s*}})',
-        'from_var_2':'(?i)(from|join)\s+({{\s*var\s*\(\s*[\'\"]?)([^)\'\"]+)([\'\"]?\s*)(,)(\s*[\'\"]?)([^)\'\"]+)([\'\"]?\s*)(\)\s*}})',
-        'from_table_1':'(?i)(from|join)\s+([\[`\"\']?)(\w+)([\]`\"\']?)(\.)([\[`\"\']?)(\w+)([\]`\"\']?)(?=\s|$)',
-        'from_table_2':'(?i)(from|join)\s+([\[`\"\']?)(\w+)([\]`\"\']?)(\.)([\[`\"\']?)(\w+)([\]`\"\']?)(\.)([\[`\"\']?)(\w+)([\]`\"\']?)(?=\s|$)',
-        'from_table_3':'(?i)(from|join)\s+([\[`\"\'])([\w ]+)([\]`\"\'])(?=\s|$)',
+        'from_ref':
+            '(?ix)
+
+            # first matching group
+            # from or join followed by at least 1 whitespace character
+            (from|join)\s+
+
+            # second matching group
+            # opening {{, 0 or more whitespace character(s), ref, 0 or more whitespace character(s), an opening parenthesis, 0 or more whitespace character(s), 1 or 0 quotation mark
+            ({{\s*ref\s*\(\s*[\'\"]?)
+            
+            # third matching group
+            # at least 1 of anything except a parenthesis or quotation mark
+            ([^)\'\"]+)
+            
+            # fourth matching group
+            # 1 or 0 quotation mark, 0 or more whitespace character(s)
+            ([\'\"]?\s*)
+
+            # fifth matching group
+            # a closing parenthesis, 0 or more whitespace character(s), closing }}
+            (\)\s*}})
+        
+            ',
+        'from_source':
+            '(?ix)
+
+            # first matching group
+            # from or join followed by at least 1 whitespace character
+            (from|join)\s+
+
+            # second matching group
+            # opening {{, 0 or more whitespace character(s), source, 0 or more whitespace character(s), an opening parenthesis, 0 or more whitespace character(s), 1 or 0 quotation mark
+            ({{\s*source\s*\(\s*[\'\"]?)
+
+            # third matching group
+            # at least 1 of anything except a parenthesis or quotation mark
+            ([^)\'\"]+)
+
+            # fourth matching group
+            # 1 or 0 quotation mark, 0 or more whitespace character(s)
+            ([\'\"]?\s*)
+
+            # fifth matching group
+            # a comma
+            (,)
+
+            # sixth matching group
+            # 0 or more whitespace character(s), 1 or 0 quotation mark
+            (\s*[\'\"]?)
+
+            # seventh matching group
+            # at least 1 of anything except a parenthesis or quotation mark
+            ([^)\'\"]+)
+
+            # eighth matching group
+            # 1 or 0 quotation mark, 0 or more whitespace character(s)
+            ([\'\"]?\s*)
+
+            # ninth matching group
+            # a closing parenthesis, 0 or more whitespace character(s), closing }}
+            (\)\s*}})
+
+            ',
+        'from_var_1':
+            '(?ix)
+
+            # first matching group
+            # from or join followed by at least 1 whitespace character
+            (from|join)\s+
+
+            # second matching group
+            # opening {{, 0 or more whitespace character(s), var, 0 or more whitespace character(s), an opening parenthesis, 0 or more whitespace character(s), 1 or 0 quotation mark
+            ({{\s*var\s*\(\s*[\'\"]?)
+
+            # third matching group
+            # at least 1 of anything except a parenthesis or quotation mark
+            ([^)\'\"]+)
+
+            # fourth matching group
+            # 1 or 0 quotation mark, 0 or more whitespace character(s)
+            ([\'\"]?\s*)
+
+            # fifth matching group
+            # a closing parenthesis, 0 or more whitespace character(s), closing }}
+            (\)\s*}})
+            
+            ',
+        'from_var_2':
+            '(?ix)
+
+            # first matching group
+            # from or join followed by at least 1 whitespace character
+            (from|join)\s+
+            
+            # second matching group
+            # opening {{, 0 or more whitespace character(s), var, 0 or more whitespace character(s), an opening parenthesis, 0 or more whitespace character(s), 1 or 0 quotation mark
+            ({{\s*var\s*\(\s*[\'\"]?)
+
+            # third matching group
+            # at least 1 of anything except a parenthesis or quotation mark            
+            ([^)\'\"]+)
+            
+            # fourth matching group
+            # 1 or 0 quotation mark, 0 or more whitespace character(s)
+            ([\'\"]?\s*)
+
+            # fifth matching group
+            # a comma
+            (,)
+
+            # sixth matching group
+            # 0 or more whitespace character(s), 1 or 0 quotation mark            
+            (\s*[\'\"]?)
+
+            # seventh matching group
+            # at least 1 of anything except a parenthesis or quotation mark            
+            ([^)\'\"]+)
+
+            # eighth matching group
+            # 1 or 0 quotation mark, 0 or more whitespace character(s)            
+            ([\'\"]?\s*)
+
+            # ninth matching group
+            # a closing parenthesis, 0 or more whitespace character(s), closing }}            
+            (\)\s*}})
+            
+            ',
+        'from_table_1':
+            '(?ix)
+            
+            # first matching group
+            # from or join followed by at least 1 whitespace character            
+            (from|join)\s+
+            
+            # second matching group
+            # 1 or 0 of (opening bracket, backtick, or quotation mark)
+            ([\[`\"\']?)
+            
+            # third matching group
+            # at least 1 word character
+            (\w+)
+            
+            # fouth matching group
+            # 1 or 0 of (closing bracket, backtick, or quotation mark)
+            ([\]`\"\']?)
+            
+            # fifth matching group
+            # a period
+            (\.)
+            
+            # sixth matching group
+            # 1 or 0 of (opening bracket, backtick, or quotation mark)
+            ([\[`\"\']?)
+            
+            # seventh matching group
+            # at least 1 word character
+            (\w+)
+            
+            # eighth matching group
+            # 1 or 0 of (closing bracket, backtick, or quotation mark) folowed by a whitespace character or end of string
+            ([\]`\"\']?)(?=\s|$)
+            
+            ',
+        'from_table_2':
+            '(?ix)
+
+            # first matching group
+            # from or join followed by at least 1 whitespace character 
+            (from|join)\s+
+            
+            # second matching group
+            # 1 or 0 of (opening bracket, backtick, or quotation mark)            
+            ([\[`\"\']?)
+            
+            # third matching group
+            # at least 1 word character
+            (\w+)
+
+            # fouth matching group
+            # 1 or 0 of (closing bracket, backtick, or quotation mark)            
+            ([\]`\"\']?)
+            
+            # fifth matching group
+            # a period            
+            (\.)
+            
+            # sixth matching group
+            # 1 or 0 of (opening bracket, backtick, or quotation mark)
+            ([\[`\"\']?)
+
+            # seventh matching group
+            # at least 1 word character            
+            (\w+)
+            
+            # eighth matching group
+            # 1 or 0 of (closing bracket, backtick, or quotation mark) 
+            ([\]`\"\']?)
+            
+            # ninth matching group
+            # a period             
+            (\.)
+            
+            # tenth matching group
+            # 1 or 0 of (closing bracket, backtick, or quotation mark)             
+            ([\[`\"\']?)
+            
+            # eleventh matching group
+            # at least 1 word character   
+            (\w+)
+
+            # twelfth matching group
+            # 1 or 0 of (closing bracket, backtick, or quotation mark) folowed by a whitespace character or end of string
+            ([\]`\"\']?)(?=\s|$)
+            
+            ',
+        'from_table_3':
+            '(?ix)
+
+            # first matching group
+            # from or join followed by at least 1 whitespace character             
+            (from|join)\s+
+            
+            # second matching group
+            # 1 or 0 of (opening bracket, backtick, or quotation mark)            
+            ([\[`\"\'])
+            
+            # third matching group
+            # at least 1 word character or space 
+            ([\w ]+)
+
+            # fourth matching group
+            # 1 or 0 of (closing bracket, backtick, or quotation mark) folowed by a whitespace character or end of string
+            ([\]`\"\'])(?=\s|$)
+            
+            ',
         'config_block':'(?i)(?s)^.*{{\s*config\s*\([^)]+\)\s*}}'
     } -%}
 
