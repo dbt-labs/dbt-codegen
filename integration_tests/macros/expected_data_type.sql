@@ -10,7 +10,7 @@
     {%- set column = api.Column.create(none, data_type) -%}
   {%- endif -%}
   {{ column.dtype }}
-  {%- if column.string_size() and string_size != 256 -%}({{ column.string_size() }})
+  {%- if column.is_string() and string_size != 256 -%}({{ column.string_size() }})
   {%- elif column.numeric_precision and column.numeric_scale -%}({{
     column.numeric_precision }},{{ column.numeric_scale }})
   {%- endif -%}
