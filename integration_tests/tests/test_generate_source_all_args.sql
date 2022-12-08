@@ -25,39 +25,39 @@ sources:
         description: ""
         columns:
           - name: col_a
-            data_type: {{ expected_data_type(type_int()) }}
+            data_type: {{ integer_type_value() }}
             description: ""
           - name: col_b
-            data_type: {{ expected_data_type(type_string(), 1) }}
+            data_type: {{ text_type_value(1) }}
             description: ""
 
       - name: data__b_relation
         description: ""
         columns:
           - name: col_a
-            data_type: {{ expected_data_type(type_int()) }}
+            data_type: {{ integer_type_value() }}
             description: ""
           - name: col_b
-            data_type: {{ expected_data_type(type_string(), 1) }}
+            data_type: {{ text_type_value(1) }}
             description: ""
 
       - name: data__campaign_analytics
         description: ""
         columns:
           - name: source
-            data_type: {{ expected_data_type(type_string(), 8) }}
+            data_type: {{ text_type_value(8) }}
             description: ""
           - name: medium
-            data_type: {{ expected_data_type(type_string(), 8) }}
+            data_type: {{ text_type_value(8) }}
             description: ""
           - name: source_medium
-            data_type: {{ expected_data_type(type_string(), 2) }}
+            data_type: {{ text_type_value(2) }}
             description: ""
           - name: analytics
-            data_type: {{ expected_data_type(type_int()) }}
+            data_type: {{ integer_type_value() }}
             description: ""
           - name: col_x
-            data_type: {{ expected_data_type(type_string(), 1) }}
+            data_type: {{ text_type_value(1) }}
             description: ""
 
 {% endset %}
