@@ -7,6 +7,6 @@
       )
     }}
   {%- else -%}
-    {{ api.Column.create(data_type) }}
+    {{ api.Column.create(none, data_type) }}
   {%- endif -%}
 {%- endmacro -%}
