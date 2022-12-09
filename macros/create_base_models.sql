@@ -11,6 +11,6 @@
     {{ models_array.append(help_command) }}
 {% endfor %}
 
-{{ log(columns_array|join(' && \n') + ' && \n' + models_array|join(' && \n'), info=True) }}
+{{ log("Run these commands in your shell to generate the models:\n" ~ models_array|join(' && \n'), info=True) }}
 
 {% endmacro %}
