@@ -13,12 +13,18 @@ Macros that generate dbt code, and log it to the command line.
   - [generate_base_model (source)](#generate_base_model-source)
     - [Arguments:](#arguments-1)
     - [Usage:](#usage-1)
-  - [generate_model_yaml (source)](#generate_model_yaml-source)
+  - [create_base_models (source)](#create_base_models-source)
     - [Arguments:](#arguments-2)
     - [Usage:](#usage-2)
-  - [generate_model_import_ctes (source)](#generate_model_import_ctes-source)
+  - [base_model_creation (source)](#base_model_creation-source)
     - [Arguments:](#arguments-3)
     - [Usage:](#usage-3)
+  - [generate_model_yaml (source)](#generate_model_yaml-source)
+    - [Arguments:](#arguments-4)
+    - [Usage:](#usage-4)
+  - [generate_model_import_ctes (source)](#generate_model_import_ctes-source)
+    - [Arguments:](#arguments-5)
+    - [Usage:](#usage-5)
 
 # Installation instructions
 New to dbt packages? Read more about them [here](https://docs.getdbt.com/docs/building-a-dbt-project/package-management/).
@@ -139,6 +145,37 @@ select * from renamed
 ```
 
 4. Paste the output in to a model, and refactor as required.
+
+## create_base_models ([source](macros/create_base_models.sql))
+This macro generates a series of terminal commands (appended with the `&&` to allow for subsequent execution) that execute the [base_model_creation](#base_model_creation-source) bash script. This bash script will write the output of the [generate_base_model](#generate_base_model-source) macro into a new model file in your local dbt project.
+>**Note**: This macro is not compatible with the dbt Cloud IDE.
+
+### Arguments:
+* `source_name` (required): The source you wish to generate base model SQL for.
+* `tables` (required): A list of all tables you want to generate the base models for.
+
+### Usage:
+1. Create a source for the table you wish to create a base model on top of.
+2. Copy the macro into a statement tab into your local IDE, and run your code
+
+```sql
+dbt run-operation codegen.create_base_models --args '{source_name: my-source, tables: ["this-table","that-table"]}'
+```
+## base_model_creation ([source](bash_scripts/base_model_creation.sh))
+This bash script when executed from your local IDE will create model files in your dbt project instance that contain the outputs of the [generate_base_model](macros/generate_base_model.sql) macro.
+>**Note**: This macro is not compatible with the dbt Cloud IDE.
+
+### Arguments:
+* `source_name` (required): The source you wish to generate base model SQL for.
+* `tables` (required): A list of all tables you want to generate the base models for.
+
+### Usage:
+1. Create a source for the table you wish to create a base model on top of.
+2. Copy the macro into a statement tab into your local IDE, and run your code
+
+```bash
+source dbt_packages/codegen/bash_scripts/base_model_creation.sh "source_name" ["this-table","that-table"]
+```
 
 ## generate_model_yaml ([source](macros/generate_model_yaml.sql))
 This macro generates the YAML for a list of model(s), which you can then paste into a
