@@ -1,5 +1,6 @@
 {% set actual_model_yaml = codegen.generate_model_yaml(
-    model_names=['data__a_relation']
+    model_names=['child_model'],
+    upstream_descriptions=True
   )
 %}
 
@@ -7,11 +8,11 @@
 version: 2
 
 models:
-  - name: data__a_relation
+  - name: child_model
     description: ""
     columns:
       - name: col_a
-        description: ""
+        description: "description column a"
 
       - name: col_b
         description: ""

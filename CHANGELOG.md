@@ -1,3 +1,15 @@
+<!--- Copy, paste, and uncomment the following headers as-needed for unreleased features
+# Unreleased
+## Breaking changes
+## New features
+- XXX ([#XXX](https://github.com/dbt-labs/dbt-codegen/issues/XXX), [#XXX](https://github.com/dbt-labs/dbt-codegen/pull/XXX))
+## Fixes
+## Quality of life
+## Under the hood
+## Contributors:
+- [@handle](https://github.com/handle) (#XXX)
+--->
+
 # Unreleased
 ## New features
 - Addition of the [create_base_models](macros/create_base_models.sql)
@@ -8,6 +20,55 @@ This macro generates a series of terminal commands (appended w) bash script whic
 
 ## Contributors:
 - [@fivetran-joemarkiewicz](https://github.com/fivetran-joemarkiewicz) (#83)
+
+# dbt-codegen v0.9.0
+
+# dbt-codegen v0.8.1
+
+# dbt-codegen v0.8.0
+
+# dbt-codegen v0.7.0
+
+## 🚨 Breaking change
+- Add support for including description placeholders for the source and table, which changes the behavior of `generate_source` when `include_descriptions` is set to `True`. Previous logic only created description placeholders for the columns ([#64](https://github.com/dbt-labs/dbt-codegen/issues/64), [#66](https://github.com/dbt-labs/dbt-codegen/pull/66))
+
+## New features
+- Add optional `table_names` arg to `generate_source` ([#50](https://github.com/dbt-labs/dbt-codegen/issues/50), [#51](https://github.com/dbt-labs/dbt-codegen/pull/51))
+- Add support for importing descriptions from columns with the same names in upstream models. It is available by setting the parameter `upstream_descriptions` to `True` in `generate_model_yaml` ([#61](https://github.com/dbt-labs/dbt-codegen/pull/61))
+- Added `case_sensitive_cols` argument to `generate_base_model` macro ([#63](https://github.com/dbt-labs/dbt-codegen/pull/63))
+- Add optional `name` arg to `generate_source` ([#64](https://github.com/dbt-labs/dbt-codegen/issues/64), [#66](https://github.com/dbt-labs/dbt-codegen/pull/66))
+
+## Fixes
+- `generate_model_yaml` now correctly handles nested (`STRUCT`) fields in BigQuery ([#27](https://github.com/dbt-labs/dbt-codegen/issues/27), [#54](https://github.com/dbt-labs/dbt-codegen/pull/54))
+
+## Contributors:
+- [@rahulj51](https://github.com/rahulj51) (#51)
+- [@bodschut](https://github.com/bodschut) (#54)
+- [@b-per](https://github.com/b-per) (#61)
+- [@graciegoheen](https://github.com/graciegoheen) (#63)
+- [@kbrock91](https://github.com/kbrock91) (#66)
+
+# dbt-codegen v0.6.0
+
+This release creates breaking changes to the `generate_source.sql` macro.
+
+## Features
+- add optional `table_pattern` argument to `generate_source.sql` macro. Default value is '%' to pull all tables in the raw data schema to preserve existing behavior if the `table_pattern` argument is not specified by the user.
+
+# dbt-codegen v0.5.0
+
+This release supports any version (minor and patch) of v1, which means far less need for compatibility releases in the future.
+
+## Under the hood
+- Change `require-dbt-version` to `[">=1.0.0", "<2.0.0"]`
+- Bump dbt-utils dependency
+- Replace `source-paths` and `data-paths` with `model-paths` and `seed-paths` respectively
+- Rename `data` and `analysis` directories to `seeds` and `analyses` respectively
+- Replace `dbt_modules` with `dbt_packages` in `clean-targets`
+
+# dbt-codegen v0.4.1
+🚨 This is a compatibility release in preparation for `dbt-core` v1.0.0 (🎉). Projects using this version with `dbt-core` v1.0.x can expect to see a deprecation warning. This will be resolved in the next minor release.
+
 # dbt-codegen v0.4.0
 
 ## Breaking changes
