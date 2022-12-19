@@ -20,8 +20,8 @@
         {% set column_name = column.name %}
     {% endif %}
 
-    {% do model_yaml.append('         - name: ' ~ column_name | lower ) %}
-    {% do model_yaml.append('           description: "' ~ '"') %}
+    {% do model_yaml.append('          - name: ' ~ column_name | lower ) %}
+    {% do model_yaml.append('            description: "' ~ '"') %}
 
     {% if column.fields|length > 0 %}
         {% for child_column in column.fields %}

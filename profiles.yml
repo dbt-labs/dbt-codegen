@@ -1,0 +1,20 @@
+config:
+  partial_parse: true
+  use_colors: true
+  printer_width: 80
+  send_anonymous_usage_stats: false
+
+astrafy:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: internal-data-aaa
+      execution_project: astrafy-gke
+      schema: na
+      threads: 4
+      timeout_seconds: 300
+      location: EU
+      priority: interactive
+      retries: 1
