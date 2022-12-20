@@ -1,6 +1,6 @@
 {% if target.type == "bigquery" %}
 
-    {#--- This exists to test the BigQuery-specific behavior reqeusted in #27 -#}
+    {#--- This exists to test the BigQuery-specific behavior requested in #27 -#}
     select
         STRUCT(
             source,
