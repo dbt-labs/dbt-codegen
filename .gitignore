@@ -3,3 +3,5 @@ target/
 dbt_modules/
 dbt_packages/
 logs/
+env/
+integration_tests/profiles.yml
