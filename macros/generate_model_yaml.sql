@@ -1,4 +1,4 @@
-{% macro generate_column_yaml(column, model_yaml, column_desc_dict, parent_column_name="") %}
+{% macro generate_column_yaml(column, model_yaml, column_desc_dict, parent_column_name="",constraints_enabled) %}
     {% if parent_column_name %}
         {% set column_name = parent_column_name ~ "." ~ column.name %}
     {% else %}
@@ -6,6 +6,9 @@
     {% endif %}
 
     {% do model_yaml.append('      - name: ' ~ column.name | lower ) %}
+    {%- if constraints_enabled -%}
+    {% do model_yaml.append('        data_type: ' ~ column.data_type | lower ) %}
+    {%- endif %}
     {% do model_yaml.append('        description: "' ~ column_desc_dict.get(column.name | lower,'') ~ '"') %}
     {% do model_yaml.append('') %}
 
@@ -17,7 +20,7 @@
     {% do return(model_yaml) %}
 {% endmacro %}
 
-{% macro generate_model_yaml(model_names=[], upstream_descriptions=False) %}
+{% macro generate_model_yaml(model_names=[], upstream_descriptions=False,constraints_enabled=False) %}
 
     {% set model_yaml=[] %}
 
@@ -30,6 +33,10 @@
     {% else %}
         {% for model in model_names %}
             {% do model_yaml.append('  - name: ' ~ model | lower) %}
+            {%- if constraints_enabled -%}
+            {% do model_yaml.append('    config: ') %}
+            {% do model_yaml.append('      constraints_enabled: true') %}
+            {%- endif %}
             {% do model_yaml.append('    description: ""') %}
             {% do model_yaml.append('    columns:') %}
 
@@ -38,7 +45,7 @@
             {% set column_desc_dict =  codegen.build_dict_column_descriptions(model) if upstream_descriptions else {} %}
 
             {% for column in columns %}
-                {% set model_yaml = codegen.generate_column_yaml(column, model_yaml, column_desc_dict) %}
+                {% set model_yaml = codegen.generate_column_yaml(column, model_yaml, column_desc_dict, constraints_enabled) %}
             {% endfor %}
         {% endfor %}
     {% endif %}
