@@ -5,7 +5,7 @@
         {% set column_name = column.name %}
     {% endif %}
 
-    {% do model_yaml.append('      - name: ' ~ column.name | lower ) %}
+    {% do model_yaml.append('      - name: ' ~ column_name  | lower ) %}
     {% do model_yaml.append('        description: "' ~ column_desc_dict.get(column.name | lower,'') ~ '"') %}
     {% do model_yaml.append('') %}
 
