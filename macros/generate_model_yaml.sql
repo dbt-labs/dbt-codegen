@@ -1,4 +1,4 @@
-{% macro generate_column_yaml(column, model_yaml, column_desc_dict, parent_column_name="",constraints_enabled) %}
+{% macro generate_column_yaml(column, model_yaml, column_desc_dict, parent_column_name="", constraints_enabled=False) %}
     {% if parent_column_name %}
         {% set column_name = parent_column_name ~ "." ~ column.name %}
     {% else %}
