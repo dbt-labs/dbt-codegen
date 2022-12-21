@@ -18,3 +18,6 @@ clean-targets:
 seeds:
   +schema: raw_data
   +quote_columns: false
+
+vars:
+  my_table_reference: table_c
