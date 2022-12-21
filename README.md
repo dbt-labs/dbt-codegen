@@ -50,7 +50,9 @@ source data is in.
 column names to your source definition.
 * `include_descriptions` (optional, default=False): Whether you want to add 
 description placeholders to your source definition.
-* `table_pattern` (optional, default='%'): A table prefix / postfix that you 
+* `include_data_types` (optional, default=False): Whether you want to add data
+types to your source columns definitions.
+* `table_pattern` (optional, default='%'): A table prefix / postfix that you
 want to subselect from all available tables within a given schema.
 * `exclude` (optional, default=''): A string you want to exclude from the selection criteria
 * `name` (optional, default=schema_name): The name of your source
@@ -73,6 +75,12 @@ or
 ```
 # for multiple arguments, use the dict syntax
 $ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "database_name": "raw", "table_names":["table_1", "table_2"]}'
+```
+
+Including data types:
+
+```
+$ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "generate_columns": "true", "include_data_types": "true"}'
 ```
 
 2. The YAML for the source will be logged to the command line
