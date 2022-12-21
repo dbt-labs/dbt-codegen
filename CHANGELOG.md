@@ -14,6 +14,7 @@
 ## New features
 - Addition of the [create_base_models](macros/create_base_models.sql)
 This macro generates a series of terminal commands (appended w) bash script which creates a new file in your dbt project based off the results of the [generate_base_model](macros/generate_base_model.sql) macro. Therefore, instead of outputting in the terminal, it will create the file for you.
+- Add `include_data_types` flag to `generate_source` macro ([#76](https://github.com/dbt-labs/dbt-codegen/pull/76))
 
 ## Quality of life
 - Addition of the [base_model_creation](bash_scripts/base_model_creation.sh) bash script which allows users to input multiple tables as a list and generate a terminal command that will combine **all** [create_base_models](macros/create_base_models.sql) commands. This way, you can generate base models for all your sources at once.
@@ -21,6 +22,7 @@ This macro generates a series of terminal commands (appended w) bash script whic
 
 ## Contributors:
 - [@fivetran-joemarkiewicz](https://github.com/fivetran-joemarkiewicz) (#83)
+- [@GSokol](https://github.com/GSokol) (#76)
 
 # dbt-codegen v0.9.0
 
