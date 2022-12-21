@@ -28,7 +28,12 @@ Macros that generate dbt code, and log it to the command line.
 
 # Installation instructions
 New to dbt packages? Read more about them [here](https://docs.getdbt.com/docs/building-a-dbt-project/package-management/).
-1. Include this package in your `packages.yml` file — check [here](https://hub.getdbt.com/dbt-labs/codegen/latest/) for the latest version number.
+1. Include this package in your `packages.yml` file — check [here](https://hub.getdbt.com/dbt-labs/codegen/latest/) for the latest version number:
+```yml
+packages:
+  - package: dbt-labs/codegen
+    version: X.X.X ## update to latest version here
+```
 2. Run `dbt deps` to install the package.
 
 # Macros
