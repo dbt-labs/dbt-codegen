@@ -80,7 +80,6 @@ $ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "data
 Including data types:
 
 ```
-# for multiple arguments, use the dict syntax
 $ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "generate_columns": "true", "include_data_types": "true"}'
 ```
 
