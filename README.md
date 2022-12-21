@@ -77,6 +77,13 @@ or
 $ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "database_name": "raw", "table_names":["table_1", "table_2"]}'
 ```
 
+Including data types:
+
+```
+# for multiple arguments, use the dict syntax
+$ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "generate_columns": "true", "include_data_types": "true"}'
+```
+
 2. The YAML for the source will be logged to the command line
 
 ```
