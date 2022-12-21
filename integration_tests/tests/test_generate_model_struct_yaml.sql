@@ -14,6 +14,33 @@
   )
 %}
 
+{% if target.type == "bigquery" %}
+
+{% set expected_source_yaml %}
+version: 2
+
+models:
+  - name: model_struct
+    description: ""
+    columns:
+      - name: analytics
+        description: ""
+
+      - name: analytics.source
+        description: ""
+
+      - name: analytics.medium
+        description: ""
+
+      - name: analytics.source_medium
+        description: ""
+
+      - name: col_x
+        description: ""
+
+{% endset %}
+
+{% else %}
 
 {% set expected_source_yaml %}
 version: 2
@@ -38,5 +65,7 @@ models:
         description: ""
 
 {% endset %}
+
+{% endif %}
 
 {{ assert_equal (actual_source_yaml | trim, expected_source_yaml | trim) }}

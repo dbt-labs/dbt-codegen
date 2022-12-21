@@ -16,6 +16,9 @@
 This macro generates a series of terminal commands (appended w) bash script which creates a new file in your dbt project based off the results of the [generate_base_model](macros/generate_base_model.sql) macro. Therefore, instead of outputting in the terminal, it will create the file for you.
 - Add `include_data_types` flag to `generate_source` macro ([#76](https://github.com/dbt-labs/dbt-codegen/pull/76))
 
+## Fixes
+- Fix handling of nested `STRUCT` fields in BigQuery ([#98](https://github.com/dbt-labs/dbt-codegen/issues/98), [#105](https://github.com/dbt-labs/dbt-codegen/pull/105))
+
 ## Quality of life
 - Addition of the [base_model_creation](bash_scripts/base_model_creation.sh) bash script which allows users to input multiple tables as a list and generate a terminal command that will combine **all** [create_base_models](macros/create_base_models.sql) commands. This way, you can generate base models for all your sources at once.
 - Instructions for contributing ([#99](https://github.com/dbt-labs/dbt-codegen/issues/99), [#104](https://github.com/dbt-labs/dbt-codegen/pull/104))
@@ -42,7 +45,7 @@ This macro generates a series of terminal commands (appended w) bash script whic
 - Add optional `name` arg to `generate_source` ([#64](https://github.com/dbt-labs/dbt-codegen/issues/64), [#66](https://github.com/dbt-labs/dbt-codegen/pull/66))
 
 ## Fixes
-- `generate_model_yaml` now correctly handles nested (`STRUCT`) fields in BigQuery ([#27](https://github.com/dbt-labs/dbt-codegen/issues/27), [#54](https://github.com/dbt-labs/dbt-codegen/pull/54))
+- `generate_model_yaml` now correctly handles nested `STRUCT` fields in BigQuery ([#27](https://github.com/dbt-labs/dbt-codegen/issues/27), [#54](https://github.com/dbt-labs/dbt-codegen/pull/54))
 
 ## Contributors:
 - [@rahulj51](https://github.com/rahulj51) (#51)
