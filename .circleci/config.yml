@@ -91,3 +91,13 @@ jobs:
           key: deps1-{{ .Branch }}
           paths:
             - "dbt_venv"
+
+workflows:
+  version: 2
+  test-all:
+    jobs:
+      - build:
+          context:
+            - profile-redshift
+            - profile-snowflake
+            - profile-bigquery
