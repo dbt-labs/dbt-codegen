@@ -14,30 +14,6 @@
 version: 2
 
 models:
-  - name: model_without_import_ctes
-    description: ""
-    columns:
-  - name: model_without_any_ctes
-    description: ""
-    columns:
-  - name: model_struct
-    description: ""
-    columns:
-      - name: analytics
-        description: ""
-
-      - name: analytics.source
-        description: ""
-
-      - name: analytics.medium
-        description: ""
-
-      - name: analytics.source_medium
-        description: ""
-
-      - name: col_x
-        description: ""
-
   - name: model_data_a
     description: ""
     columns:
@@ -45,6 +21,42 @@ models:
         description: ""
 
       - name: col_b
+        description: ""
+
+  - name: model_struct
+    description: ""
+    columns:
+      - name: analytics
+        description: ""
+
+      - name: source
+        description: ""
+
+      - name: medium
+        description: ""
+
+      - name: source_medium
+        description: ""
+
+      - name: col_x
+        description: ""
+
+  - name: model_without_any_ctes
+    description: ""
+    columns:
+      - name: id
+        description: ""
+
+      - name: col_a
+        description: ""
+
+      - name: col2
+        description: ""
+
+  - name: model_without_import_ctes
+    description: ""
+    columns:
+      - name: id
         description: ""
 
 {% endset %}
