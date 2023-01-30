@@ -1,5 +1,5 @@
 {% set actual_model_yaml = codegen.generate_model_yaml(
-    model_names= codegen.get_modelsd(prefix='data__')
+    model_names= codegen.get_models(prefix='data__')
   )
 %}
 
