@@ -11,4 +11,4 @@
 ['model_data_a', 'model_struct', 'model_without_any_ctes', 'model_without_import_ctes']
 {% endset %}
 
-{{ assert_equal (actual_list | trim, expected_list | trim) }}
+{{ assert_equal (actual_list, expected_list) }}
