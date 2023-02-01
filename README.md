@@ -208,6 +208,15 @@ schema.yml file.
 ) }}
 ```
 
+You can use the helper function codegen.get_models and specify a directory and/or prefix to get a list of all matching models, to be passed into model_names list.
+
+```
+{% set models_to_generate = codegen.get_models(directory='marts', prefix='fct_') %}
+{{ codegen.generate_model_yaml(
+    model_names = models_to_generate
+) }}
+```
+
 Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
 
 ```
