@@ -161,7 +161,7 @@ schema.yml file.
 Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
 
 ```
-$ dbt run-operation generate_model_yaml --args '{"model_names": ["customers"]}'
+$ dbt run-operation generate_model_yaml --args '{"model_names": "customers"}'
 ```
 
 3. The YAML for a base model(s) will be logged to the command line
