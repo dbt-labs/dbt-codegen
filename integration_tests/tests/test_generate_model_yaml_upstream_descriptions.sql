@@ -12,9 +12,11 @@ models:
     description: ""
     columns:
       - name: col_a
+        data_type: integer
         description: "description column a"
 
       - name: col_b
+        data_type: text
         description: ""
 
 {% endset %}
