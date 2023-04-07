@@ -6,6 +6,7 @@
     {% endif %}
 
     {% do model_yaml.append('      - name: ' ~ column_name  | lower ) %}
+    {% do model_yaml.append('        data_type: ' ~ column.data_type | lower) %}
     {% do model_yaml.append('        description: "' ~ column_desc_dict.get(column.name | lower,'') ~ '"') %}
     {% do model_yaml.append('') %}
 
