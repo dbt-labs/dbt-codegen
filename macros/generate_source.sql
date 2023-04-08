@@ -62,7 +62,7 @@
         {% for column in columns %}
             {% do sources_yaml.append('          - name: ' ~ column.name | lower ) %}
             {% if include_data_types %}
-                {% do sources_yaml.append('            data_type: ' ~ (column.data_type | upper ) ) %}
+                {% do sources_yaml.append('            data_type: ' ~ (column.data_type | lower ) ) %}
             {% endif %}
             {% if include_descriptions %}
                 {% do sources_yaml.append('            description: ""' ) %}
