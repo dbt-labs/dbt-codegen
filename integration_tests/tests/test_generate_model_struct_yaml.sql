@@ -10,7 +10,8 @@
 ) %}
 
 {% set actual_source_yaml = codegen.generate_model_yaml(
-    model_names=['model_struct']
+    model_names=['model_struct'],
+    include_data_types=False
   )
 %}
 
@@ -24,23 +25,18 @@ models:
     description: ""
     columns:
       - name: analytics
-        data_type: int64
         description: ""
 
       - name: analytics.source
-        data_type: string
         description: ""
 
       - name: analytics.medium
-        data_type: string
         description: ""
 
       - name: analytics.source_medium
-        data_type: string
         description: ""
 
       - name: col_x
-        data_type: string
         description: ""
 
 {% endset %}
@@ -55,23 +51,18 @@ models:
     description: ""
     columns:
       - name: analytics
-        data_type: integer
         description: ""
 
       - name: source
-        data_type: text
         description: ""
 
       - name: medium
-        data_type: text
         description: ""
 
       - name: source_medium
-        data_type: text
         description: ""
 
       - name: col_x
-        data_type: text
         description: ""
 
 {% endset %}

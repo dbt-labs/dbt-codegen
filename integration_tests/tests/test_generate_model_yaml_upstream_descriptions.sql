@@ -1,6 +1,7 @@
 {% set actual_model_yaml = codegen.generate_model_yaml(
     model_names=['child_model'],
-    upstream_descriptions=True
+    upstream_descriptions=True,
+    include_data_types=False
   )
 %}
 
@@ -12,11 +13,9 @@ models:
     description: ""
     columns:
       - name: col_a
-        data_type: integer
         description: "description column a"
 
       - name: col_b
-        data_type: text
         description: ""
 
 {% endset %}
