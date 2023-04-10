@@ -91,6 +91,7 @@ version: 2
 sources:
   - name: raw_jaffle_shop
     database: raw
+    schema: raw_jaffle_shop
     tables:
       - name: customers
         description: ""

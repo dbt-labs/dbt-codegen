@@ -27,13 +27,9 @@
     {% do sources_yaml.append('    description: ""' ) %}
 {% endif %}
 
-{% if database_name != target.database %}
 {% do sources_yaml.append('    database: ' ~ database_name | lower) %}
-{% endif %}
 
-{% if schema_name != name %}
 {% do sources_yaml.append('    schema: ' ~ schema_name | lower) %}
-{% endif %}
 
 {% do sources_yaml.append('    tables:') %}
 

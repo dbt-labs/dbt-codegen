@@ -9,6 +9,7 @@ version: 2
 
 sources:
   - name: raw
+    database: analytics
     schema: {{ raw_schema | trim | lower }}
     tables:
       - name: data__a_relation

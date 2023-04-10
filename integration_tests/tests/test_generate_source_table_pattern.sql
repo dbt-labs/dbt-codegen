@@ -9,6 +9,8 @@ version: 2
 
 sources:
   - name: {{ raw_schema | trim | lower }}
+    database: analytics
+    schema: codegen_integration_tests_snowflake_raw_data
     tables:
       - name: data__b_relation
 {% endset %}
