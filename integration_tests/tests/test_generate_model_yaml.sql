@@ -11,11 +11,11 @@ models:
     description: ""
     columns:
       - name: col_a
-        data_type: {{ integer_type_value }}
+        data_type: {{ integer_type_value() }}
         description: ""
 
       - name: col_b
-        data_type: {{ text_type_value }}
+        data_type: {{ text_type_value() }}
         description: ""
 
 {% endset %}
