@@ -68,7 +68,7 @@
                 {% else %}
                     {% set formatted = adapter.dispatch('format_column', 'dbt')(column) %}
                 {% endif %}
-                {% do model_yaml.append('        data_type: ' ~ formatted['data_type'] | lower) %}
+                {% do sources_yaml.append('        data_type: ' ~ formatted['data_type'] | lower) %}
             {% endif %}
             {% if include_descriptions %}
                 {% do sources_yaml.append('            description: ""' ) %}
