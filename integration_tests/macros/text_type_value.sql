@@ -1,6 +1,8 @@
 {%- macro text_type_value() -%}
-{%- if target.type == "redshift" or target.type == "snowflake" -%}
+{%- if target.type == "redshift"-%}
 character varying
+{%- if target.type == "snowflake" -%}
+varchar
 {%- elif target.type == "bigquery" -%}
 string
 {%- else -%}
