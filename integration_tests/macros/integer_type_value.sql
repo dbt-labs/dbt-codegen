@@ -1,6 +1,6 @@
-{%- macro integer_type_value() -%}
+{%- macro integer_type_value -%}
 {%- if target.type == "snowflake" -%}
-number(38,0)
+number
 {%- elif target.type == "bigquery" -%}
 int64
 {%- else -%}
