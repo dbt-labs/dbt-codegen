@@ -62,7 +62,13 @@
         {% for column in columns %}
             {% do sources_yaml.append('          - name: ' ~ column.name | lower ) %}
             {% if include_data_types %}
-                {% do sources_yaml.append('            data_type: ' ~ (column.data_type | lower ) ) %}
+                {% set version = (dbt_version.split('.')[0] ~ '.' ~  dbt_version.split('.')[1]) | float %}
+                {% if version < 1.5 %}
+                    {% set formatted = format_column(column) %}
+                {% else %}
+                    {% set formatted = adapter.dispatch('format_column', 'dbt')(column) %}
+                {% endif %}
+                {% do model_yaml.append('        data_type: ' ~ formatted['data_type'] | lower) %}
             {% endif %}
             {% if include_descriptions %}
                 {% do sources_yaml.append('            description: ""' ) %}
