@@ -1,4 +1,3 @@
-
 {% set raw_schema = generate_schema_name('raw_data') %}
 
 -- test default args
@@ -9,8 +8,6 @@ version: 2
 
 sources:
   - name: {{ raw_schema | trim | lower }}
-    database: analytics
-    schema: codegen_integration_tests_snowflake_raw_data
     tables:
       - name: data__a_relation
       - name: data__b_relation

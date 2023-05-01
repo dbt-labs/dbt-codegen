@@ -9,7 +9,10 @@
     generate_columns=True,
     include_descriptions=True,
     include_data_types=True,
-    name=raw_schema
+    name=raw_schema,
+    table_names=None,
+    include_database_property=True,
+    include_schema_property=True
 ) %}
 
 

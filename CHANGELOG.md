@@ -16,7 +16,7 @@
 This macro generates a series of terminal commands (appended w) bash script which creates a new file in your dbt project based off the results of the [generate_base_model](macros/generate_base_model.sql) macro. Therefore, instead of outputting in the terminal, it will create the file for you.
 - Add `include_data_types` flag to `generate_source` macro ([#76](https://github.com/dbt-labs/dbt-codegen/pull/76))
 - Add `get_models` macro in helper macros. This macro retrieves a list of models with specified prefix at the specified directory. It is designed to make creating yamls for multiple models easier.
-- Always include database and schema properties in `sources.yml` generated from `generate_source` ([#123](https://github.com/dbt-labs/dbt-codegen/issues/123))
+- Add optional arguments to include database and schema properties in `sources.yml` generated from `generate_source` ([#123](https://github.com/dbt-labs/dbt-codegen/issues/123))
 
 ## Fixes
 - Fix handling of nested `STRUCT` fields in BigQuery ([#98](https://github.com/dbt-labs/dbt-codegen/issues/98), [#105](https://github.com/dbt-labs/dbt-codegen/pull/105))
