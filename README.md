@@ -56,6 +56,10 @@ types to your source columns definitions.
 want to subselect from all available tables within a given schema.
 * `exclude` (optional, default=''): A string you want to exclude from the selection criteria
 * `name` (optional, default=schema_name): The name of your source
+* `include_database_property` (optional, default=False): Whether you want to add
+the database property to your source definition
+* `include_schema_property` (optional, default=False): Whether you want to add
+the schema property to your source definition
 
 ### Usage:
 1. Copy the macro into a statement tab in the dbt Cloud IDE, or into an analysis file, and compile your code
