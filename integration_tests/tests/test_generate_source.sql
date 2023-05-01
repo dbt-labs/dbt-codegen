@@ -1,3 +1,4 @@
+
 {% set raw_schema = generate_schema_name('raw_data') %}
 
 -- test default args

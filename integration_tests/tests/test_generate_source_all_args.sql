@@ -11,8 +11,8 @@
     include_data_types=True,
     name=raw_schema,
     table_names=None,
-    include_database_property=True,
-    include_schema_property=True
+    include_database=True,
+    include_schema=True
 ) %}
 
 

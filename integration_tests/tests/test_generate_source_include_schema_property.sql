@@ -1,7 +1,7 @@
 
 {% set raw_schema = generate_schema_name('raw_data') %}
 
-{% set actual_source_yaml = codegen.generate_source(raw_schema, include_schema_property=True) %}
+{% set actual_source_yaml = codegen.generate_source(raw_schema, include_schema=True) %}
 
 {% set expected_source_yaml %}
 version: 2
