@@ -68,6 +68,12 @@ the schema to your source definition
 {{ codegen.generate_source('raw_jaffle_shop') }}
 ```
 
+  or for multiple arguments
+  
+```
+{{ codegen.generate_source(schema_name= 'jaffle_shop', database_name= 'raw') }}
+```
+
 Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
 
 ```
