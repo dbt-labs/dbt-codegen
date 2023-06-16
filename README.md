@@ -199,6 +199,9 @@ source dbt_packages/codegen/bash_scripts/base_model_creation.sh "source_name" ["
 This macro generates the YAML for a list of model(s), which you can then paste into a
 schema.yml file.
 
+NB: The YAML gets generated based on the columns in database, not the current version of model code.
+To get the latest list of columns, run the model first.
+
 ### Arguments:
 * `model_names` (required): The model(s) you wish to generate YAML for.
 * `upstream_descriptions` (optional, default=False): Whether you want to include descriptions for identical column names from upstream models.
