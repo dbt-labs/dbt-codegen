@@ -8,7 +8,7 @@ version: 2
 
 sources:
   - name: {{ raw_schema | trim | lower }}
-    database: analytics
+    database: {{ target.database }}
     tables:
       - name: data__a_relation
       - name: data__b_relation

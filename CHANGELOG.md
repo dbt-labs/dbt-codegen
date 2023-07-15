@@ -19,6 +19,7 @@ This macro generates a series of terminal commands (appended w) bash script whic
 - Add optional arguments to include database and schema properties in `sources.yml` generated from `generate_source` ([#123](https://github.com/dbt-labs/dbt-codegen/issues/123))
 
 ## Fixes
+- Fix only selecting nodes that are models when using the `generate_model_yaml` macro with `upstream_descriptions=True`
 - Fix handling of nested `STRUCT` fields in BigQuery ([#98](https://github.com/dbt-labs/dbt-codegen/issues/98), [#105](https://github.com/dbt-labs/dbt-codegen/pull/105))
 
 ## Quality of life
@@ -26,6 +27,7 @@ This macro generates a series of terminal commands (appended w) bash script whic
 - Instructions for contributing ([#99](https://github.com/dbt-labs/dbt-codegen/issues/99), [#104](https://github.com/dbt-labs/dbt-codegen/pull/104))
 
 ## Contributors:
+- [@gsaiz](https://github.com/gsaiz) ([#132](https://github.com/dbt-labs/dbt-codegen/pull/132))
 - [@fivetran-joemarkiewicz](https://github.com/fivetran-joemarkiewicz) (#83)
 - [@GSokol](https://github.com/GSokol) (#76)
 

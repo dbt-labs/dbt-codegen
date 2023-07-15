@@ -1,6 +1,8 @@
 {# retrieve models directly upstream from a given model #}
 {% macro get_model_dependencies(model_name) %}
-    {% for node in graph.nodes.values() | selectattr('name', "equalto", model_name) %}
+    {% for node in graph.nodes.values()
+        | selectattr('resource_type', 'equalto', 'model')
+        | selectattr('name', 'equalto', model_name) %}
         {{ return(node.depends_on.nodes) }}
     {% endfor %}
 {% endmacro %}
@@ -8,7 +10,9 @@
 
 {# add to an input dictionary entries containing all the column descriptions of a given model #}
 {% macro add_model_column_descriptions_to_dict(model_name,dict_with_descriptions={}) %}
-    {% for node in graph.nodes.values() | selectattr('name', "equalto", model_name) %}
+    {% for node in graph.nodes.values()
+        | selectattr('resource_type', 'equalto', 'model')
+        | selectattr('name', 'equalto', model_name) %}
         {% for col_name, col_values in node.columns.items() %}
             {% do dict_with_descriptions.update( {col_name: col_values.description} ) %}
         {% endfor %}
@@ -32,7 +36,7 @@
 {# filter by directory or prefix arguments, if provided #}
 {% macro get_models(directory=None, prefix=None) %}
     {% set model_names=[] %}
-    {% set models = graph.nodes.values() | selectattr('resource_type', "equalto", 'model') %}
+    {% set models = graph.nodes.values() | selectattr('resource_type', 'equalto', 'model') %}
     {% if directory and prefix %}
         {% for model in models %}
             {% set model_path = "/".join(model.path.split("/")[:-1]) %}
