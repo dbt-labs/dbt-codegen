@@ -23,8 +23,8 @@ version: 2
 sources:
   - name: {{ raw_schema | trim | lower }}
     description: ""
-    database: analytics
-    schema: codegen_integration_tests_snowflake_raw_data
+    database: {{ target.database }}
+    schema: {{ raw_schema | trim | lower }}
     tables:
       - name: data__a_relation
         description: ""
