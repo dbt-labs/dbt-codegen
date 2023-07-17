@@ -23,7 +23,7 @@ version: 2
 sources:
   - name: {{ raw_schema | trim | lower }}
     description: ""
-    database: {{ target.database }}
+    database: {{ target.database | trim | lower }}
     schema: {{ raw_schema | trim | lower }}
     tables:
       - name: data__a_relation
