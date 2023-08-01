@@ -20,6 +20,7 @@ This macro generates a series of terminal commands (appended w) bash script whic
 
 ## Fixes
 - Fix handling of nested `STRUCT` fields in BigQuery ([#98](https://github.com/dbt-labs/dbt-codegen/issues/98), [#105](https://github.com/dbt-labs/dbt-codegen/pull/105))
+- Fix `generate_source` behavior of applying a lowercase function to all object names ([#112](https://github.com/dbt-labs/dbt-codegen/issues/112))
 
 ## Quality of life
 - Addition of the [base_model_creation](bash_scripts/base_model_creation.sh) bash script which allows users to input multiple tables as a list and generate a terminal command that will combine **all** [create_base_models](macros/create_base_models.sql) commands. This way, you can generate base models for all your sources at once.
