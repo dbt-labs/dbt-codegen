@@ -60,6 +60,10 @@ want to subselect from all available tables within a given schema.
 the database to your source definition
 * `include_schema` (optional, default=False): Whether you want to add
 the schema to your source definition
+* `case_sensitive_tables` (optional, default=False): Whether you want table names to be
+in lowercase, or to match the case in the source table
+* `case_sensitive_cols` (optional, default=False): Whether you want column names to be
+in lowercase, or to match the case in the source table
 
 ### Usage:
 1. Copy the macro into a statement tab in the dbt Cloud IDE, or into an analysis file, and compile your code
