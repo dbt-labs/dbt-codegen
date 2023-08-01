@@ -44,7 +44,7 @@
 {% endif %}
 
 {% for table in tables %}
-    {% do sources_yaml.append('      - name: ' ~ table | lower ) %}
+    {% do sources_yaml.append('      - name: ' ~ (table if case_sensitive_tables else table | lower)) %}
     {% if include_descriptions %}
         {% do sources_yaml.append('        description: ""' ) %}
     {% endif %}
@@ -60,7 +60,7 @@
         {% set columns=adapter.get_columns_in_relation(table_relation) %}
 
         {% for column in columns %}
-            {% do sources_yaml.append('          - name: ' ~ column.name | lower ) %}
+            {% do sources_yaml.append('          - name: ' ~ (column.name if case_sensitive_cols else column.name | lower)) %}
             {% if include_data_types %}
                 {% do sources_yaml.append('            data_type: ' ~ (column.data_type | upper ) ) %}
             {% endif %}
