@@ -17,6 +17,7 @@ This macro generates a series of terminal commands (appended w) bash script whic
 - Add `include_data_types` flag to `generate_source` macro ([#76](https://github.com/dbt-labs/dbt-codegen/pull/76))
 - Add `get_models` macro in helper macros. This macro retrieves a list of models with specified prefix at the specified directory. It is designed to make creating yamls for multiple models easier.
 - Add `include_data_types` flag to `generate_model_yaml` macro ([#122](https://github.com/dbt-labs/dbt-codegen/pull/122))
+- Add optional arguments to include database and schema properties in `sources.yml` generated from `generate_source` ([#123](https://github.com/dbt-labs/dbt-codegen/issues/123))
 
 ## Fixes
 - Fix handling of nested `STRUCT` fields in BigQuery ([#98](https://github.com/dbt-labs/dbt-codegen/issues/98), [#105](https://github.com/dbt-labs/dbt-codegen/pull/105))

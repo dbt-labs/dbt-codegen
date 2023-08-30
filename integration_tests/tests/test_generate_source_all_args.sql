@@ -9,7 +9,10 @@
     generate_columns=True,
     include_descriptions=True,
     include_data_types=True,
-    name=raw_schema
+    name=raw_schema,
+    table_names=None,
+    include_database=True,
+    include_schema=True
 ) %}
 
 
@@ -20,6 +23,8 @@ version: 2
 sources:
   - name: {{ raw_schema | trim | lower }}
     description: ""
+    database: {{ target.database | trim | lower }}
+    schema: {{ raw_schema | trim | lower }}
     tables:
       - name: data__a_relation
         description: ""

@@ -56,12 +56,22 @@ types to your source columns definitions.
 want to subselect from all available tables within a given schema.
 * `exclude` (optional, default=''): A string you want to exclude from the selection criteria
 * `name` (optional, default=schema_name): The name of your source
+* `include_database` (optional, default=False): Whether you want to add
+the database to your source definition
+* `include_schema` (optional, default=False): Whether you want to add
+the schema to your source definition
 
 ### Usage:
 1. Copy the macro into a statement tab in the dbt Cloud IDE, or into an analysis file, and compile your code
 
 ```
 {{ codegen.generate_source('raw_jaffle_shop') }}
+```
+
+  or for multiple arguments
+  
+```
+{{ codegen.generate_source(schema_name= 'jaffle_shop', database_name= 'raw') }}
 ```
 
 Alternatively, call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
@@ -91,6 +101,7 @@ version: 2
 sources:
   - name: raw_jaffle_shop
     database: raw
+    schema: raw_jaffle_shop
     tables:
       - name: customers
         description: ""
