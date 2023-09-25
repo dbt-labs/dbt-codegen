@@ -265,7 +265,7 @@ This macro generates the SQL for a given model with all references pulled up int
 
 ### Arguments:
 * `model_name` (required): The model you wish to generate SQL with import CTEs for.
-* `leading_commas` (optional, default = false): Whether you want your commas to be leading (vs trailing).
+* `leading_commas` (optional, default=False): Whether you want your commas to be leading (vs trailing).
 
 ### Usage:
 1. Create a model with your original SQL query
