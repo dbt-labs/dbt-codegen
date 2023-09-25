@@ -90,7 +90,7 @@ $ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "data
 or if you want to include column names and data types:
 
 ```
-$ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "generate_columns": "true"}'
+$ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "generate_columns": true}'
 ```
 
 2. The YAML for the source will be logged to the command line
