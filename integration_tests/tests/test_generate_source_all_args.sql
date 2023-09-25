@@ -33,7 +33,7 @@ sources:
             data_type: {{ integer_type_value() }}
             description: ""
           - name: col_b
-            data_type: {{ text_type_value(1) }}
+            data_type: {{ text_type_value() }}
             description: ""
 
       - name: data__b_relation
@@ -43,26 +43,26 @@ sources:
             data_type: {{ integer_type_value() }}
             description: ""
           - name: col_b
-            data_type: {{ text_type_value(1) }}
+            data_type: {{ text_type_value() }}
             description: ""
 
       - name: data__campaign_analytics
         description: ""
         columns:
           - name: source
-            data_type: {{ text_type_value(8) }}
+            data_type: {{ text_type_value() }}
             description: ""
           - name: medium
-            data_type: {{ text_type_value(8) }}
+            data_type: {{ text_type_value() }}
             description: ""
           - name: source_medium
-            data_type: {{ text_type_value(2) }}
+            data_type: {{ text_type_value() }}
             description: ""
           - name: analytics
             data_type: {{ integer_type_value() }}
             description: ""
           - name: col_x
-            data_type: {{ text_type_value(1) }}
+            data_type: {{ text_type_value() }}
             description: ""
 
 {% endset %}

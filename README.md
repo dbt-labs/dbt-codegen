@@ -50,7 +50,7 @@ source data is in.
 column names to your source definition.
 * `include_descriptions` (optional, default=False): Whether you want to add 
 description placeholders to your source definition.
-* `include_data_types` (optional, default=False): Whether you want to add data
+* `include_data_types` (optional, default=True): Whether you want to add data
 types to your source columns definitions.
 * `table_pattern` (optional, default='%'): A table prefix / postfix that you
 want to subselect from all available tables within a given schema.
@@ -87,10 +87,16 @@ or
 $ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "database_name": "raw", "table_names":["table_1", "table_2"]}'
 ```
 
-Including data types:
+or if you want to include column names and data types:
 
 ```
-$ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "generate_columns": "true", "include_data_types": "true"}'
+$ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "generate_columns": true}'
+```
+
+or if you want to include column names without data types (the behavior dbt-codegen <= v0.9.0):
+
+```
+$ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "generate_columns": true, "include_data_types": false}'
 ```
 
 2. The YAML for the source will be logged to the command line
@@ -208,6 +214,7 @@ schema.yml file.
 ### Arguments:
 * `model_names` (required): The model(s) you wish to generate YAML for.
 * `upstream_descriptions` (optional, default=False): Whether you want to include descriptions for identical column names from upstream models.
+* `include_data_types` (optional, default=True): Whether you want to add data types to your model column definitions.
 
 ### Usage:
 1. Create a model.
@@ -241,10 +248,13 @@ version: 2
 
 models:
   - name: customers
+    description: ""
     columns:
       - name: customer_id
+        data_type: integer
         description: ""
       - name: customer_name
+        data_type: text
         description: ""
 ```
 
@@ -255,7 +265,7 @@ This macro generates the SQL for a given model with all references pulled up int
 
 ### Arguments:
 * `model_name` (required): The model you wish to generate SQL with import CTEs for.
-* `leading_commas` (optional, default = false): Whether you want your commas to be leading (vs trailing).
+* `leading_commas` (optional, default=False): Whether you want your commas to be leading (vs trailing).
 
 ### Usage:
 1. Create a model with your original SQL query

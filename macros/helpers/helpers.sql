@@ -58,3 +58,23 @@
     {% endif %}
     {{ return(model_names) }}
 {% endmacro %}
+
+{% macro data_type_format_source(column) -%}
+  {{ return(adapter.dispatch('data_type_format_source', 'codegen')(column)) }}
+{%- endmacro %}
+
+{# format a column data type for a source #}
+{% macro default__data_type_format_source(column) %}
+    {% set formatted = codegen.format_column(column) %}
+    {{ return(formatted['data_type'] | lower) }}
+{% endmacro %}
+
+{% macro data_type_format_model(column) -%}
+  {{ return(adapter.dispatch('data_type_format_model', 'codegen')(column)) }}
+{%- endmacro %}
+
+{# format a column data type for a model #}
+{% macro default__data_type_format_model(column) %}
+    {% set formatted = codegen.format_column(column) %}
+    {{ return(formatted['data_type'] | lower) }}
+{% endmacro %}

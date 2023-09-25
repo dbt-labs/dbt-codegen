@@ -1,11 +1,11 @@
-{%- macro text_type_value(text_length) -%}
-{%- if target.type == "redshift" -%}
-CHARACTER VARYING({{ text_length }})
+{%- macro text_type_value() -%}
+{%- if target.type == "redshift"-%}
+character varying
 {%- elif target.type == "snowflake" -%}
-CHARACTER VARYING(16777216)
+varchar
 {%- elif target.type == "bigquery" -%}
-STRING
+string
 {%- else -%}
-TEXT
+text
 {%- endif -%}
 {%- endmacro -%}
