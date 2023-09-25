@@ -62,7 +62,7 @@
         {% for column in columns %}
             {% do sources_yaml.append('          - name: ' ~ column.name | lower ) %}
             {% if include_data_types %}
-                {% set formatted = format_column(column) %}
+                {% set formatted = codegen.format_column(column) %}
                 {% do sources_yaml.append('            data_type: ' ~ formatted['data_type'] | lower) %}
             {% endif %}
             {% if include_descriptions %}
