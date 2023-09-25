@@ -11,6 +11,12 @@
 --->
 
 # Unreleased
+
+## 🚨 Breaking change
+
+- `include_data_types` parameter added to `generate_model_yaml` and behavior changed for `generate_source`. Both default to `true`
+and are lowercase to align with the dbt style guide. Scale & precision are **not** included. Previous logic for `generate_source` defaulted to `false` and the resulting data types were uppercase and included scale & precision ([#122](https://github.com/dbt-labs/dbt-codegen/pull/122)).
+
 ## New features
 - Addition of the [create_base_models](macros/create_base_models.sql)
 This macro generates a series of terminal commands (appended w) bash script which creates a new file in your dbt project based off the results of the [generate_base_model](macros/generate_base_model.sql) macro. Therefore, instead of outputting in the terminal, it will create the file for you.
