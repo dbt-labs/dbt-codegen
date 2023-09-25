@@ -93,6 +93,12 @@ or if you want to include column names and data types:
 $ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "generate_columns": true}'
 ```
 
+or if you want to include column names without data types (the behavior dbt-codegen <= v0.9.0):
+
+```
+$ dbt run-operation generate_source --args '{"schema_name": "jaffle_shop", "generate_columns": true, "include_data_types": false}'
+```
+
 2. The YAML for the source will be logged to the command line
 
 ```
