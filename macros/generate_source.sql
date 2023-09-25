@@ -62,8 +62,7 @@
         {% for column in columns %}
             {% do sources_yaml.append('          - name: ' ~ column.name | lower ) %}
             {% if include_data_types %}
-                {% set formatted = codegen.format_column(column) %}
-                {% do sources_yaml.append('            data_type: ' ~ formatted['data_type'] | lower) %}
+                {% do sources_yaml.append('            data_type: ' ~ codegen.data_type_format_source(column)) %}
             {% endif %}
             {% if include_descriptions %}
                 {% do sources_yaml.append('            description: ""' ) %}

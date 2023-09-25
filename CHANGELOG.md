@@ -14,8 +14,23 @@
 
 ## 🚨 Breaking change
 
-- `include_data_types` parameter added to `generate_model_yaml` and behavior changed for `generate_source`. Both default to `true`
+`include_data_types` parameter added to `generate_model_yaml` and behavior changed for `generate_source`. Both default to `true`
 and are lowercase to align with the dbt style guide. Scale & precision are **not** included. Previous logic for `generate_source` defaulted to `false` and the resulting data types were uppercase and included scale & precision ([#122](https://github.com/dbt-labs/dbt-codegen/pull/122)).
+
+[Dispatch](https://docs.getdbt.com/reference/dbt-jinja-functions/dispatch) can be used to utilize the column data type formatting of previous versions. Namely, by adding this macro to your project:
+```sql
+{% macro default__data_type_format_source(column) %}
+    {{ return(column.data_type | upper) }}
+{% endmacro %}
+```
+
+And then adding this within `dbt_project.yml`:
+```yaml
+dispatch:
+  - macro_namespace: codegen
+    search_order: ['my_project', 'codegen']
+```
+
 
 ## New features
 - Addition of the [create_base_models](macros/create_base_models.sql)

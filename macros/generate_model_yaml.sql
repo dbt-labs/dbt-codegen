@@ -7,8 +7,7 @@
 
     {% do model_yaml.append('      - name: ' ~ column_name  | lower ) %}
     {% if include_data_types %}
-        {% set formatted = codegen.format_column(column) %}
-        {% do model_yaml.append('        data_type: ' ~ formatted['data_type'] | lower) %}
+        {% do model_yaml.append('        data_type: ' ~ codegen.data_type_format_model(column)) %}
     {% endif %}
     {% do model_yaml.append('        description: "' ~ column_desc_dict.get(column.name | lower,'') ~ '"') %}
     {% do model_yaml.append('') %}
