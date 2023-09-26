@@ -1,17 +1,3 @@
-<!--- Copy, paste, and uncomment the following headers as-needed for unreleased features
-# Unreleased
-## Breaking changes
-## New features
-- XXX ([#XXX](https://github.com/dbt-labs/dbt-codegen/issues/XXX), [#XXX](https://github.com/dbt-labs/dbt-codegen/pull/XXX))
-## Fixes
-## Quality of life
-## Under the hood
-## Contributors:
-- [@handle](https://github.com/handle) (#XXX)
---->
-
-# Unreleased
-
 # dbt-codegen v0.11.0
 
 ## 🚨 Breaking change
