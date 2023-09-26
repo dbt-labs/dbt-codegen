@@ -52,6 +52,26 @@ This macro generates a series of terminal commands (appended w) bash script whic
 - [@GSokol](https://github.com/GSokol) (#76)
 - [@linbug](https://github.com/linbug) (#120)
 
+# dbt-codegen v0.10.0
+
+## What's Changed
+* added comments to verbose regex in generate_model_import_ctes by @graciegoheen in https://github.com/dbt-labs/dbt-codegen/pull/93
+* Feature/hackathon model generator by @fivetran-joemarkiewicz in https://github.com/dbt-labs/dbt-codegen/pull/83
+* Suggestion to include packages.yml example in README.md  by @Maayan-s in https://github.com/dbt-labs/dbt-codegen/pull/77
+* Add include_data_types flag to generate_source macro by @GSokol in https://github.com/dbt-labs/dbt-codegen/pull/76
+* Expected result of nested struct in BigQuery by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/105
+* issue106/get_models helper macro by @erkanncelen in https://github.com/dbt-labs/dbt-codegen/pull/115
+* Feat/generate sources add database and schema by @jeremyholtzman in https://github.com/dbt-labs/dbt-codegen/pull/124
+
+## New Contributors
+* @fivetran-joemarkiewicz made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/83
+* @Maayan-s made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/77
+* @GSokol made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/76
+* @erkanncelen made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/115
+* @jeremyholtzman made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/124
+
+**Full Changelog**: https://github.com/dbt-labs/dbt-codegen/compare/0.9.0...0.10.0
+
 # dbt-codegen v0.9.0
 
 # dbt-codegen v0.8.1
