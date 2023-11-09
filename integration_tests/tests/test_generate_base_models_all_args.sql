@@ -4,7 +4,8 @@
     table_name='codegen_integration_tests__data_source_table_case_sensitive',
     leading_commas=True,
     case_sensitive_cols=True,
-    materialized='table'
+    materialized='table',
+    select_star=False
   )
 %}
 
