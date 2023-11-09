@@ -129,6 +129,7 @@ model.
 * `leading_commas` (optional, default=False): Whether you want your commas to be leading (vs trailing).
 * `case_sensitive_cols ` (optional, default=False): Whether your source table has case sensitive column names. If true, keeps the case of the column names from the source.
 * `materialized` (optional, default=None): Set materialization style (e.g. table, view, incremental) inside of the model's `config` block. If not set, materialization style will be controlled by `dbt_project.yml`
+* `select_star` (optional, default=False): When enabled, the base model will not explicitly select specific columns but instead `select *` all columns available in the source.
 
 
 ### Usage:
@@ -139,7 +140,8 @@ model.
 {{ codegen.generate_base_model(
     source_name='raw_jaffle_shop',
     table_name='customers',
-    materialized='table'
+    materialized='table',
+    select_star=True
 ) }}
 ```
 
