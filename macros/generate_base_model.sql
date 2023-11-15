@@ -1,4 +1,8 @@
 {% macro generate_base_model(source_name, table_name, leading_commas=False, case_sensitive_cols=False, materialized=None) %}
+  {{ return(adapter.dispatch('generate_base_model', 'codegen')(source_name, table_name, leading_commas, case_sensitive_cols, materialized)) }}
+{% endmacro %}
+
+{% macro default__generate_base_model(source_name, table_name, leading_commas, case_sensitive_cols, materialized) %}
 
 {%- set source_relation = source(source_name, table_name) -%}
 

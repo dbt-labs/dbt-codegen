@@ -1,4 +1,8 @@
-{% macro generate_model_import_ctes(model_name, leading_commas = false) %}
+{% macro generate_model_import_ctes(model_name, leading_commas = False) %}
+    {{ return(adapter.dispatch('generate_model_import_ctes', 'codegen')(model_name, leading_commas)) }}
+{% endmacro %}
+
+{% macro default__generate_model_import_ctes(model_name, leading_commas) %}
 
     {%- if execute -%}
     {%- set nodes = graph.nodes.values() -%}
