@@ -1,3 +1,5 @@
+--awk '/base_/{x=$0}{command = "tail -n+3 > " x; print | command }' batch-base-test.txt 
+
 {% macro batch_generate_bases(source_name, database_name, leading_commas=False, case_sensitive_cols=False, materialized=None, select_star=False) %}
 {%- set sources = graph.sources.values() -%}
 {%- set existing_node_list = (
@@ -11,7 +13,7 @@
 base_{{database_name}}__{{source_name}}_{{node.name}}.sql
 
 {{ codegen.generate_base_model(
-    'javascript', 
+    source_name, 
     node.name, 
     leading_commas, 
     case_sensitive_cols, 
