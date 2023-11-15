@@ -1,8 +1,8 @@
-{% macro generate_column_yaml(column, model_yaml, column_desc_dict, include_data_types, parent_column_name) %}
+{% macro generate_column_yaml(column, model_yaml, column_desc_dict, include_data_types, parent_column_name="") %}
   {{ return(adapter.dispatch('generate_column_yaml', 'codegen')(column, model_yaml, column_desc_dict, include_data_types, parent_column_name)) }}
 {% endmacro %}
 
-{% macro default__generate_column_yaml(column, model_yaml, column_desc_dict, include_data_types, parent_column_name="") %}
+{% macro default__generate_column_yaml(column, model_yaml, column_desc_dict, include_data_types, parent_column_name) %}
     {% if parent_column_name %}
         {% set column_name = parent_column_name ~ "." ~ column.name %}
     {% else %}
@@ -24,11 +24,11 @@
     {% do return(model_yaml) %}
 {% endmacro %}
 
-{% macro generate_model_yaml(model_names, upstream_descriptions, include_data_types) -%}
+{% macro generate_model_yaml(model_names=[], upstream_descriptions=False, include_data_types=True) -%}
   {{ return(adapter.dispatch('generate_model_yaml', 'codegen')(model_names, upstream_descriptions, include_data_types)) }}
 {%- endmacro %}
 
-{% macro default__generate_model_yaml(model_names=[], upstream_descriptions=False, include_data_types=True) %}
+{% macro default__generate_model_yaml(model_names, upstream_descriptions, include_data_types) %}
 
     {% set model_yaml=[] %}
 
