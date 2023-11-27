@@ -77,7 +77,7 @@
 {% if execute %}
 
     {% set joined = sources_yaml | join ('\n') %}
-    {{ log(joined, info=True) }}
+    {{ print(joined) }}
     {% do return(joined) %}
 
 {% endif %}
