@@ -13,9 +13,11 @@
 
 {% endmacro %}
 
-
----
 {% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, include_data_types=True, table_pattern='%', exclude='', name=schema_name, table_names=None, include_database=False, include_schema=False) %}
+    {{ return(adapter.dispatch('generate_source', 'codegen')(schema_name, database_name, generate_columns, include_descriptions, include_data_types, table_pattern, exclude, name, table_names, include_database, include_schema)) }}
+{% endmacro %}
+
+{% macro default__generate_source(schema_name, database_name, generate_columns, include_descriptions, include_data_types, table_pattern, exclude, name, table_names, include_database, include_schema) %}
 
 {% set sources_yaml=[] %}
 {% do sources_yaml.append('version: 2') %}
