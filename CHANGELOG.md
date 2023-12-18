@@ -1,3 +1,7 @@
+## New features
+
+* `generate_model_yaml` with `upstream_descriptions=True` now reads from upstream sources in addition to models. 
+
 # dbt-codegen v0.11.0
 
 ## 🚨 Breaking change
