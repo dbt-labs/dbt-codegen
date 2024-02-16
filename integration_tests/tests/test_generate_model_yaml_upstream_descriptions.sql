@@ -13,7 +13,7 @@ models:
     description: ""
     columns:
       - name: col_a
-        description: "description column a"
+        description: "description column \"a\""
 
       - name: col_b
         description: ""

@@ -1,3 +1,6 @@
+## Fixes
+- Column `description` fields are now correctly escaped in `generate_model_yaml` ([#142](https://github.com/dbt-labs/dbt-codegen/issues/142))
+
 # dbt-codegen v0.11.0
 
 ## 🚨 Breaking change
