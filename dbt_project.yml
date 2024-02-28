@@ -8,6 +8,3 @@ target-path: "target"
 clean-targets: ["target", "dbt_packages"]
 macro-paths: ["macros"]
 log-path: "logs"
-
-models:
-  +bind: false
