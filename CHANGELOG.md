@@ -1,3 +1,6 @@
+## New features
+- `generate_model_yaml` with `upstream_descriptions=True` now reads from upstream sources in addition to models. 
+
 ## Fixes
 - Column `description` fields are now correctly escaped in `generate_model_yaml` ([#142](https://github.com/dbt-labs/dbt-codegen/issues/142))
 
