@@ -16,7 +16,7 @@ reset enable_case_sensitive_identifier;
 {% do adapter.create_schema(target_schema) %}
 
 {% set drop_table_sql %}
-drop table if exists {{ target_schema }}.codegen_integration_tests__data_source_table
+drop table if exists {{ target_schema }}.codegen_integration_tests__data_source_table cascade
 {% endset %}
 
 {{ run_query(drop_table_sql) }}
@@ -33,7 +33,7 @@ create table {{ target_schema }}.codegen_integration_tests__data_source_table as
 {{ run_query(create_table_sql) }}
 
 {% set drop_table_sql_case_sensitive %}
-drop table if exists {{ target_schema }}.codegen_integration_tests__data_source_table_case_sensitive
+drop table if exists {{ target_schema }}.codegen_integration_tests__data_source_table_case_sensitive cascade
 {% endset %}
 
 {{ run_query(drop_table_sql_case_sensitive) }}
