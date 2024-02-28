@@ -13,7 +13,7 @@
     {% if include_data_types %}
         {% do model_yaml.append('        data_type: ' ~ codegen.data_type_format_model(column)) %}
     {% endif %}
-    {% do model_yaml.append('        description: "' ~ column_desc_dict.get(column.name | lower,'') ~ '"') %}
+    {% do model_yaml.append('        description: ' ~ (column_desc_dict.get(column.name | lower,'') | tojson)) %}
     {% do model_yaml.append('') %}
 
     {% if column.fields|length > 0 %}
