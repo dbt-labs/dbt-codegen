@@ -23,8 +23,8 @@ version: 2
 sources:
   - name: {{ raw_schema | trim | lower }}
     description: ""
-    database: {{ target.database }}
-    schema: {{ target.schema }}_raw_data
+    database: {{ target.database | trim | lower }}
+    schema: {{ raw_schema | trim | lower }}
     tables:
       - name: data__a_relation
         description: ""
@@ -33,7 +33,7 @@ sources:
             data_type: {{ integer_type_value() }}
             description: ""
           - name: col_b
-            data_type: {{ text_type_value(1) }}
+            data_type: {{ text_type_value() }}
             description: ""
 
       - name: data__b_relation
@@ -43,26 +43,26 @@ sources:
             data_type: {{ integer_type_value() }}
             description: ""
           - name: col_b
-            data_type: {{ text_type_value(1) }}
+            data_type: {{ text_type_value() }}
             description: ""
 
       - name: data__campaign_analytics
         description: ""
         columns:
           - name: source
-            data_type: {{ text_type_value(8) }}
+            data_type: {{ text_type_value() }}
             description: ""
           - name: medium
-            data_type: {{ text_type_value(8) }}
+            data_type: {{ text_type_value() }}
             description: ""
           - name: source_medium
-            data_type: {{ text_type_value(2) }}
+            data_type: {{ text_type_value() }}
             description: ""
           - name: analytics
             data_type: {{ integer_type_value() }}
             description: ""
           - name: col_x
-            data_type: {{ text_type_value(1) }}
+            data_type: {{ text_type_value() }}
             description: ""
 
 {% endset %}

@@ -4,4 +4,9 @@ sources:
   - name: codegen_integration_tests__data_source_schema
     tables:
       - name: codegen_integration_tests__data_source_table
+        columns:
+          - name: my_integer_col
+            description: My Integer Column
+          - name: my_bool_col
+            description: My Boolean Column
       - name: codegen_integration_tests__data_source_table_case_sensitive

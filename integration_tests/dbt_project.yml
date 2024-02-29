@@ -1,8 +1,8 @@
-name: 'codegen_integration_tests'
-version: '1.0'
+name: "codegen_integration_tests"
+version: "1.0"
 config-version: 2
 
-profile: 'integration_tests'
+profile: "integration_tests"
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
@@ -12,8 +12,8 @@ macro-paths: ["macros"]
 
 target-path: "target"
 clean-targets:
-    - "target"
-    - "dbt_packages"
+  - "target"
+  - "dbt_packages"
 
 seeds:
   +schema: raw_data
@@ -21,3 +21,7 @@ seeds:
 
 vars:
   my_table_reference: table_c
+
+models:
+  +bind: false
+

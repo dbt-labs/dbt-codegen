@@ -10,7 +10,8 @@
 ) %}
 
 {% set actual_source_yaml = codegen.generate_model_yaml(
-    model_names=['model_struct']
+    model_names=['model_struct'],
+    include_data_types=False
   )
 %}
 

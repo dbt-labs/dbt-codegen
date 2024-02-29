@@ -1,4 +1,8 @@
-{% macro generate_column_yaml(column, model_yaml, column_desc_dict, parent_column_name="") %}
+{% macro generate_column_yaml(column, model_yaml, column_desc_dict, include_data_types, parent_column_name="") %}
+  {{ return(adapter.dispatch('generate_column_yaml', 'codegen')(column, model_yaml, column_desc_dict, include_data_types, parent_column_name)) }}
+{% endmacro %}
+
+{% macro default__generate_column_yaml(column, model_yaml, column_desc_dict, include_data_types, parent_column_name) %}
     {% if parent_column_name %}
         {% set column_name = parent_column_name ~ "." ~ column.name %}
     {% else %}
@@ -6,18 +10,25 @@
     {% endif %}
 
     {% do model_yaml.append('      - name: ' ~ column_name  | lower ) %}
-    {% do model_yaml.append('        description: "' ~ column_desc_dict.get(column.name | lower,'') ~ '"') %}
+    {% if include_data_types %}
+        {% do model_yaml.append('        data_type: ' ~ codegen.data_type_format_model(column)) %}
+    {% endif %}
+    {% do model_yaml.append('        description: ' ~ (column_desc_dict.get(column.name | lower,'') | tojson)) %}
     {% do model_yaml.append('') %}
 
     {% if column.fields|length > 0 %}
         {% for child_column in column.fields %}
-            {% set model_yaml = codegen.generate_column_yaml(child_column, model_yaml, column_desc_dict, parent_column_name=column_name) %}
+            {% set model_yaml = codegen.generate_column_yaml(child_column, model_yaml, column_desc_dict, include_data_types, parent_column_name=column_name) %}
         {% endfor %}
     {% endif %}
     {% do return(model_yaml) %}
 {% endmacro %}
 
-{% macro generate_model_yaml(model_names=[], upstream_descriptions=False) %}
+{% macro generate_model_yaml(model_names=[], upstream_descriptions=False, include_data_types=True) -%}
+  {{ return(adapter.dispatch('generate_model_yaml', 'codegen')(model_names, upstream_descriptions, include_data_types)) }}
+{%- endmacro %}
+
+{% macro default__generate_model_yaml(model_names, upstream_descriptions, include_data_types) %}
 
     {% set model_yaml=[] %}
 
@@ -38,7 +49,7 @@
             {% set column_desc_dict =  codegen.build_dict_column_descriptions(model) if upstream_descriptions else {} %}
 
             {% for column in columns %}
-                {% set model_yaml = codegen.generate_column_yaml(column, model_yaml, column_desc_dict) %}
+                {% set model_yaml = codegen.generate_column_yaml(column, model_yaml, column_desc_dict, include_data_types) %}
             {% endfor %}
         {% endfor %}
     {% endif %}
@@ -46,7 +57,7 @@
 {% if execute %}
 
     {% set joined = model_yaml | join ('\n') %}
-    {{ log(joined, info=True) }}
+    {{ print(joined) }}
     {% do return(joined) %}
 
 {% endif %}
