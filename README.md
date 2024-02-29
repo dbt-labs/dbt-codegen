@@ -60,6 +60,10 @@ want to subselect from all available tables within a given schema.
 the database to your source definition
 * `include_schema` (optional, default=False): Whether you want to add
 the schema to your source definition
+* `case_sensitive_tables` (optional, default=False): Whether you want table names to be
+in lowercase, or to match the case in the source table
+* `case_sensitive_cols` (optional, default=False): Whether you want column names to be
+in lowercase, or to match the case in the source table
 
 ### Outputting to a file
 If you use the `dbt run-operation` approach it is possible to output directly to a file by piping the output to a new file and using the `--quiet` CLI flag:

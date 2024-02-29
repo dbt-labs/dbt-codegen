@@ -2,6 +2,8 @@
 - `generate_model_yaml` with `upstream_descriptions=True` now reads from upstream sources in addition to models. 
 
 ## Fixes
+- Fix handling of nested `STRUCT` fields in BigQuery ([#98](https://github.com/dbt-labs/dbt-codegen/issues/98), [#105](https://github.com/dbt-labs/dbt-codegen/pull/105))
+- Fix `generate_source` behavior of applying a lowercase function to all object names ([#112](https://github.com/dbt-labs/dbt-codegen/issues/112))
 - Column `description` fields are now correctly escaped in `generate_model_yaml` ([#142](https://github.com/dbt-labs/dbt-codegen/issues/142))
 
 # dbt-codegen v0.11.0
