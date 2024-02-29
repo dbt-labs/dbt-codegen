@@ -6,7 +6,8 @@
     database_name=target.database,
     table_names=['data__a_relation'],
     generate_columns=True,
-    include_descriptions=True
+    include_descriptions=True,
+    include_data_types=False
 ) %}
 
 

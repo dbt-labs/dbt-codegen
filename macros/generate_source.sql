@@ -13,9 +13,11 @@
 
 {% endmacro %}
 
+{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, include_data_types=True, table_pattern='%', exclude='', name=schema_name, table_names=None, include_database=False, include_schema=False, case_sensitive_tables=False, case_sensitive_cols=False) %}
+    {{ return(adapter.dispatch('generate_source', 'codegen')(schema_name, database_name, generate_columns, include_descriptions, include_data_types, table_pattern, exclude, name, table_names, include_database, include_schema, case_sensitive_tables, case_sensitive_cols)) }}
+{% endmacro %}
 
----
-{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, include_data_types=False, table_pattern='%', exclude='', name=schema_name, table_names=None, include_database=False, include_schema=False, case_sensitive_tables=False, case_sensitive_cols=False) %}
+{% macro default__generate_source(schema_name, database_name, generate_columns, include_descriptions, include_data_types, table_pattern, exclude, name, table_names, include_database, include_schema, case_sensitive_tables, case_sensitive_cols) %}
 
 {% set sources_yaml=[] %}
 {% do sources_yaml.append('version: 2') %}
@@ -62,7 +64,7 @@
         {% for column in columns %}
             {% do sources_yaml.append('          - name: ' ~ (column.name if case_sensitive_cols else column.name | lower)) %}
             {% if include_data_types %}
-                {% do sources_yaml.append('            data_type: ' ~ (column.data_type | upper ) ) %}
+                {% do sources_yaml.append('            data_type: ' ~ codegen.data_type_format_source(column)) %}
             {% endif %}
             {% if include_descriptions %}
                 {% do sources_yaml.append('            description: ""' ) %}
@@ -77,7 +79,7 @@
 {% if execute %}
 
     {% set joined = sources_yaml | join ('\n') %}
-    {{ log(joined, info=True) }}
+    {{ print(joined) }}
     {% do return(joined) %}
 
 {% endif %}

@@ -1,5 +1,5 @@
 {% set actual_model_yaml = codegen.generate_model_yaml(
-    model_names=['child_model'],
+    model_names=['model_from_source'],
     upstream_descriptions=True,
     include_data_types=False
   )
@@ -9,14 +9,14 @@
 version: 2
 
 models:
-  - name: child_model
+  - name: model_from_source
     description: ""
     columns:
-      - name: col_a
-        description: "description column \"a\""
+      - name: my_integer_col
+        description: "My Integer Column"
 
-      - name: col_b
-        description: ""
+      - name: my_bool_col
+        description: "My Boolean Column"
 
 {% endset %}
 

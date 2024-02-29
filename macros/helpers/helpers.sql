@@ -7,8 +7,16 @@
 
 
 {# add to an input dictionary entries containing all the column descriptions of a given model #}
-{% macro add_model_column_descriptions_to_dict(model_name,dict_with_descriptions={}) %}
-    {% for node in graph.nodes.values() | selectattr('name', "equalto", model_name) %}
+{% macro add_model_column_descriptions_to_dict(resource_type, model_name, dict_with_descriptions={}) %}
+    {% if resource_type == 'source' %}
+        {# sources aren't part of graph.nodes #}
+        {% set nodes = graph.sources %}
+    {% else %}
+        {% set nodes = graph.nodes %}
+    {% endif %}
+    {% for node in nodes.values()
+        | selectattr('resource_type', 'equalto', resource_type)
+        | selectattr('name', 'equalto', model_name) %}
         {% for col_name, col_values in node.columns.items() %}
             {% do dict_with_descriptions.update( {col_name: col_values.description} ) %}
         {% endfor %}
@@ -22,7 +30,9 @@
     {% if execute %}
         {% set glob_dict = {} %}
         {% for full_model in codegen.get_model_dependencies(model_name) %}
-            {% do codegen.add_model_column_descriptions_to_dict(full_model.split('.')[-1],glob_dict) %}
+            {% do codegen.add_model_column_descriptions_to_dict(
+                full_model.split('.')[0], full_model.split('.')[-1], glob_dict
+            ) %}
         {% endfor %}
         {{ return(glob_dict) }}
     {% endif %}
@@ -57,4 +67,24 @@
         {% endfor %}
     {% endif %}
     {{ return(model_names) }}
+{% endmacro %}
+
+{% macro data_type_format_source(column) -%}
+  {{ return(adapter.dispatch('data_type_format_source', 'codegen')(column)) }}
+{%- endmacro %}
+
+{# format a column data type for a source #}
+{% macro default__data_type_format_source(column) %}
+    {% set formatted = codegen.format_column(column) %}
+    {{ return(formatted['data_type'] | lower) }}
+{% endmacro %}
+
+{% macro data_type_format_model(column) -%}
+  {{ return(adapter.dispatch('data_type_format_model', 'codegen')(column)) }}
+{%- endmacro %}
+
+{# format a column data type for a model #}
+{% macro default__data_type_format_model(column) %}
+    {% set formatted = codegen.format_column(column) %}
+    {{ return(formatted['data_type'] | lower) }}
 {% endmacro %}

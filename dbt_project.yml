@@ -1,7 +1,7 @@
-name: 'codegen'
-version: '0.5.0'
+name: "codegen"
+version: "0.5.0"
 
-require-dbt-version: [">=1.0.0", "<2.0.0"]
+require-dbt-version: [">=1.1.0", "<2.0.0"]
 config-version: 2
 
 target-path: "target"

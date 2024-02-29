@@ -4,4 +4,4 @@ models:
   - name: model_data_a
     columns:
       - name: col_a
-        description: description column a
+        description: 'description column "a"'

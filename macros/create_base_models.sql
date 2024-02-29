@@ -1,4 +1,8 @@
 {% macro create_base_models(source_name, tables) %}
+    {{ return(adapter.dispatch('create_base_models', 'codegen')(source_name, tables)) }}
+{% endmacro %}
+
+{% macro default__create_base_models(source_name, tables) %}
 
 {% set source_name = ""~ source_name ~"" %}
 
