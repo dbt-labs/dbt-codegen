@@ -29,7 +29,7 @@ Packages in dbt are actually dbt projects themselves, you write SQL and Jinja, s
 If you add or modify functionality in any codegen macros, there should be corresponding changes to the integration tests. This README will walk you through this process. Let's outline the basic steps first:
 
 1. Set up your environment (credentials, virtual environment, dependencies, test database(s))
-2. Write or modify an integration test (you should expect to fail as you haven't implemented the functionality yet!)
+2. Write or modify an integration test (you should expect this to fail as you haven't implemented the functionality yet!)
 3. Implement the functionality in the new or modified macro, and run the tests to get them to pass.
 4. Commit your changes and open a pull request.
 
