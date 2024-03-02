@@ -1,12 +1,29 @@
 ## Table of Contents
 
+1. [Overview](#overview)
+   1. [Prerequisites](#prerequisites)
+   2. [Introduction](#introduction)
+2. [Setup](#setup)
+   1. [Configure credentials](#configure-credentials)
+   2. [Setup Postgres or other database targets](#setup-postgres-or-other-database-targets)
+   3. [Set up virtual environment](#set-up-virtual-environment)
+   4. [Install dependencies](#install-dependencies)
+3. [Write or modify an integration test](#write-or-modify-an-integration-test)
+   1. [Run the integration tests](#run-the-integration-tests)
+   2. [Creating a new integration test](#creating-a-new-integration-test)
+      1. [Add your integration test](#add-your-integration-test)
+      2. [Implement the functionality](#implement-the-functionality)
+      3. [Commit your changes and open a pull request](#commit-your-changes-and-open-a-pull-request)
+
 ## Overview
 
 ### Prerequisites
 
-- python3
-- make (Optional, but highly recommended for better development experience)
-- Docker (optional, but recommended for using Postgres as your target database easily)
+- [python3](https://www.python.org/)
+- [make](<https://en.wikipedia.org/wiki/Make_(software)>) (Optional, but highly recommended for better development experience)
+- [Docker](https://www.docker.com/) (optional, but recommended for using Postgres as your target database easily)
+
+### Introduction
 
 Packages in dbt are actually dbt projects themselves, you write SQL and Jinja, sometimes in macros, to add new functionality or models to another dbt project. As SQL and Jinja rely on input data, it's essential to have a functioning project to be able to test that the code works as expected. Constantly running the code, loading data, running bits and pieces, and hoping for the best is not a good development flow though, nor is it a reliable way to ensure that everything works. This is why our dbt packages have integration tests. These tests run all of the data loading, model building, and tests that are defined in the package inside testing environments, and check that the results are as expected.
 
@@ -23,13 +40,13 @@ If you add or modify functionality in any codegen macros, there should be corres
 
 You'll need to set environment variables with the credentials to access your target database. If you're using the recommended local development path of Postgres in Docker, these values are already filled in as they are generic. For the cloud warehouses listed, you'll need real credentials. You probably want to ensure you're building into a testing schema as well to keep the output of this codegen separate from any production data. We run against all the warehouses listed in the CI (implmented via CircleCI) when you open a PR, so feel free to test against Postgres while developing, and we'll ensure the code works against all the other targets.
 
-You can set these env vars a couple ways:
+You can set these env vars in a couple ways:
 
 > [!WARNING]
 > The files below are _not_ gitignored — never, ever put your credentials into them and commit them! If you do by accident, you'll need to rotate your credentials immediately!
 
 - Use the `.env/[TARGET].env` files in the `integration_tests` directory as a guide to set your own environment variables, you'll need one for every variable listed in the sample file. You run `export [VARIABLE_NAME]=[VALUE]` for each variable in the file.
-- **Most robust**: If you anticipate developing for multiple sessions, set these environment variables in your shell profile (like `~/.bashrc` or `~/.zshrc`). This way, you won't have to set them every time you open a new terminal.
+- **More robust**: If you anticipate developing for multiple sessions, set these environment variables in your shell profile (like `~/.bashrc` or `~/.zshrc`). This way, you won't have to set them every time you open a new terminal.
 
 ### Setup Postgres or other database targets
 
@@ -49,8 +66,7 @@ Or, alternatively:
 docker-compose up --detach postgres
 ```
 
-> [!NOTE]
-> `make` is a venerable build tool that is included in most Unix-like operating systems. It's not strictly necessary to use `make` to develop on this project, but there are several `make` commands that wrap more complex commands and make development easier. If you don't have `make` installed or don't want to use it, you can just run the commands in the `Makefile` directly. All the examples will show both options.
+> [!NOTE] > `make` is a venerable build tool that is included in most Unix-like operating systems. It's not strictly necessary to use `make` to develop on this project, but there are several `make` commands that wrap more complex commands and make development easier. If you don't have `make` installed or don't want to use it, you can just run the commands in the `Makefile` directly. All the examples will show both options.
 
 ### Set up virtual environment
 
@@ -146,10 +162,10 @@ Remember, typically you'll want to create a failing test _first_, then implement
 Okay finally, this is the fun part! You can now implement the functionality in the macro you're working on.The development flow should be something like:
 
 1. You've got a failing test, so you know what you need to implement.
-1. Implement some logic in the macro you're working on.
-1. Run the relevant tests to see if they pass.
-1. Repeat until the tests pass.
-1. Run the full test suite to ensure you didn't break anything else by accident.
+2. Implement some logic in the macro you're working on.
+3. Run the relevant tests to see if they pass.
+4. Repeat until the tests pass.
+5. Run the full test suite to ensure you didn't break anything else by accident.
 
 ## Commit your changes and open a pull request
 

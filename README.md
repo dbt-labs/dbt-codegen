@@ -26,6 +26,7 @@ Macros that generate dbt code, and log it to the command line.
   - [generate_model_import_ctes (source)](#generate_model_import_ctes-source)
     - [Arguments:](#arguments-5)
     - [Usage:](#usage-5)
+- [Contributing](#contributing)
 
 # Installation instructions
 
@@ -387,4 +388,4 @@ select * from final
 
 ## Contributing
 
-To contirbute code to this package, please follow the steps outlined in the `integration_tests` directory's[README](https://github.com/dbt-labs/dbt-codegen/blob/main/integration_tests/README.md) file.
+To contirbute code to this package, please follow the steps outlined in the `integration_tests` directory's [README](https://github.com/dbt-labs/dbt-codegen/blob/main/integration_tests/README.md) file.
