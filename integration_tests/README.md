@@ -1,60 +1,74 @@
-### Overview
-1. Prerequisites
-1. Configure credentials
-1. Setup Postgres (optional)
-1. Setup virtual environment
-1. Installation for development
-1. Run the integration tests
-1. Run tests
-1. Creating a new integration test
+## Table of Contents
+
+## Overview
 
 ### Prerequisites
+
 - python3
-- Docker (optional)
+- make (Optional, but highly recommended for better development experience)
+- Docker (optional, but recommended for using Postgres as your target database easily)
+
+Packages in dbt are actually dbt projects themselves, you write SQL and Jinja, sometimes in macros, to add new functionality or models to another dbt project. As SQL and Jinja rely on input data, it's essential to have a functioning project to be able to test that the code works as expected. Constantly running the code, loading data, running bits and pieces, and hoping for the best is not a good development flow though, nor is it a reliable way to ensure that everything works. This is why our dbt packages have integration tests. These tests run all of the data loading, model building, and tests that are defined in the package inside testing environments, and check that the results are as expected.
+
+If you add or modify functionality in any codegen macros, there should be corresponding changes to the integration tests. This README will walk you through this process. Let's outline the basic steps first:
+
+1. Set up your environment (credentials, virtual environment, dependencies, test database(s))
+2. Write or modify an integration test (you should expect to fail as you haven't implemented the functionality yet!)
+3. Implement the functionality in the new or modified macro, and run the tests to get them to pass.
+4. Commit your changes and open a pull request.
+
+## Setup
 
 ### Configure credentials
-Edit the env file for your TARGET in `integration_tests/.env/[TARGET].env`.
 
-Load the environment variables:
-```shell
-set -a; source integration_tests/.env/[TARGET].env; set +a
-```
+You'll need to set environment variables with the credentials to access your target database. If you're using the recommended local development path of Postgres in Docker, these values are already filled in as they are generic. For the cloud warehouses listed, you'll need real credentials. You probably want to ensure you're building into a testing schema as well to keep the output of this codegen separate from any production data. We run against all the warehouses listed in the CI (implmented via CircleCI) when you open a PR, so feel free to test against Postgres while developing, and we'll ensure the code works against all the other targets.
 
-or more specific:
-```shell
-set -a; source integration_tests/.env/postgres.env; set +a
-```
+You can set these env vars a couple ways:
 
-#### Setup Postgres (optional)
+> [!WARNING]
+> The files below are _not_ gitignored — never, ever put your credentials into them and commit them! If you do by accident, you'll need to rotate your credentials immediately!
 
-Docker and `docker-compose` are both used in testing. Specific instructions for your OS can be found [here](https://docs.docker.com/get-docker/).
+- Use the `.env/[TARGET].env` files in the `integration_tests` directory as a guide to set your own environment variables, you'll need one for every variable listed in the sample file. You run `export [VARIABLE_NAME]=[VALUE]` for each variable in the file.
+- **Most robust**: If you anticipate developing for multiple sessions, set these environment variables in your shell profile (like `~/.bashrc` or `~/.zshrc`). This way, you won't have to set them every time you open a new terminal.
 
-Postgres offers the easiest way to test most `dbt-codegen` functionality today. Its tests are the fastest to run, and the easiest to set up. To run the Postgres integration tests, you'll have to do one extra step of setting up the test database:
+### Setup Postgres or other database targets
+
+As mentioned, you'll need a target database to run the integration tests and develop against. You can use a cloud warehouse, but the easiest and free way to work is to use Postgres locally. We include a `docker-compose.yml` file that will spin up a Postgres container for you to make this easy.
+
+Specific instructions on installing and getting started with Docker for your OS can be found [here](https://docs.docker.com/get-docker/).
+
+To run the Postgres container, just run:
 
 ```shell
 make setup-db
 ```
-or, alternatively:
+
+Or, alternatively:
+
 ```shell
 docker-compose up --detach postgres
 ```
 
-### Setup virtual environment
+> [!NOTE]
+> `make` is a venerable build tool that is included in most Unix-like operating systems. It's not strictly necessary to use `make` to develop on this project, but there are several `make` commands that wrap more complex commands and make development easier. If you don't have `make` installed or don't want to use it, you can just run the commands in the `Makefile` directly. All the examples will show both options.
 
-We strongly recommend using virtual environments when developing code in `dbt-codegen`. We recommend creating this virtualenv
-in the root of the `dbt-codegen` repository. To create a new virtualenv, run:
+### Set up virtual environment
+
+We strongly recommend using virtual environments when developing code in `dbt-codegen`. We recommend creating this virtual environment in the root of the `dbt-codegen` repository. To create a new virtual environment, run:
+
 ```shell
-python3 -m venv env
-source env/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
 This will create and activate a new Python virtual environment.
 
-### Installation for development
+### Install dependencies
 
 First make sure that you set up your virtual environment as described above. Also ensure you have the latest version of pip and setuptools installed:
+
 ```
-python -m pip install --upgrade pip setuptools
+python3 -m pip install --upgrade pip setuptools
 ```
 
 Next, install `dbt-core` (and its dependencies) with:
@@ -62,20 +76,31 @@ Next, install `dbt-core` (and its dependencies) with:
 ```shell
 make dev target=[postgres|redshift|...]
 # or
-pip install --pre dbt-core dbt-[postgres|redshift|...]
+python3 -m pip install --pre dbt-core dbt-[postgres|redshift|...]
 ```
 
-or more specific:
+Or more specific:
 
 ```shell
 make dev target=postgres
 # or
-pip install --pre dbt-core dbt-postgres
+python3 -m pip install --pre dbt-core dbt-postgres
 ```
+
+> [!NOTE]
+> The `--pre` flag tells pip to install the latest pre-release version of whatever you pass to install. This ensures you're always using the latest version of dbt, so if your code interacts with dbt in a way that causes issues or test failures, we'll know about it ahead of a release.
+
+Make sure to reload your virtual environment after installing the dependencies:
+
+```shell
+source .venv/bin/activate
+```
+
+## Write or modify an integration test
 
 ### Run the integration tests
 
-To run all the integration tests on your local machine like they will get run in the CI (using CircleCI):
+To run all the integration tests on your local machine like they will get run in CI:
 
 ```shell
 make test target=[postgres|redshift|...]
@@ -83,7 +108,7 @@ make test target=[postgres|redshift|...]
 ./run_test.sh [postgres|redshift|...]
 ```
 
-or more specific:
+Or more specific:
 
 ```shell
 make test target=postgres
@@ -91,51 +116,41 @@ make test target=postgres
 ./run_test.sh postgres
 ```
 
-Where possible, targets can run in docker containers (this works for Postgres or in the future Spark for example). For managed services like Snowflake, BigQuery and Redshift this is not possible, hence your own configuration for these services has to be provided in the appropriate env files in `integration_tests/.env/[TARGET].env`
+Run all the tests _before_ you start developing to make sure everything is working as expected before you start making changes. Nothing is worse than spending a ton of time troubleshooting a failing test, only to realize it was failing before you touched anything. This will also ensure that you have the correct environment variables set up and that your database is running.
 
 ### Creating a new integration test
 
-#### Set up profiles
-Do one of the following:
-1. Use the `profiles.yml` in the current working directory for dbt Core 1.3 and above
-    ```shell
-    cp integration_tests/ci/sample.profiles.yml integration_tests/profiles.yml
-    ```
-1. Use `DBT_PROFILES_DIR`
-    ```shell
-    cp integration_tests/ci/sample.profiles.yml integration_tests/profiles.yml
-    export DBT_PROFILES_DIR=$(cd integration_tests && pwd)
-    ```
-1. Use `~/.dbt/profiles.yml`
-    - Copy contents from `integration_tests/ci/sample.profiles.yml` into `~/.dbt/profiles.yml`.
-
 #### Add your integration test
-This directory contains an example dbt project which tests the macros in the `dbt-codegen` package. An integration test typically involves making:
-1. a new seed file
-2. a new model file
-3. a generic test to assert anticipated behaviour.
 
-For an example of integration tests, check out the tests for the `get_url_parameter` macro in the `dbt-utils` project:
+Adding integration tests for new functionality typically involves making one or more of the following:
 
-1. [Macro definition](https://github.com/dbt-labs/dbt-utils/blob/main/macros/web/get_url_parameter.sql)
-2. [Seed file with fake data](https://github.com/dbt-labs/dbt-utils/blob/main/integration_tests/data/web/data_urls.csv)
-3. [Model to test the macro](https://github.com/dbt-labs/dbt-utils/blob/main/integration_tests/models/web/test_urls.sql)
-4. [A generic test to assert the macro works as expected](https://github.com/dbt-labs/dbt-utils/blob/main/integration_tests/models/web/schema.yml)
+- a new seed file of fixture data
+- a new model file to test against
+- a new test to assert anticipated behaviour
 
-Once you've added all of these files, you should be able to run:
+Once you've added and/or edited the necessary files, assuming you are in the sub-project in the `integration_tests` folder, you should be able to run and test your new additions specifically by running:
 
-Assuming you are in the `integration_tests` folder,
 ```shell
 dbt deps --target {your_target}
-dbt seed --target {your_target}
-dbt run --target {your_target} --model {your_model_name}
-dbt test --target {your_target} --model {your_model_name}
+dbt build --target {your_target} --select +{your_selection_criteria}
 ```
 
-Alternatively:
-```shell
-dbt deps --target {your_target}
-dbt build --target {your_target} --select +{your_model_name}
-```
+The `dbt build` command will handle seeding, running, and testing the selection in a single command. The `+` operator in the `--select` flag indicates we also want to build everything that this selection depends on.
 
-If the tests all pass, then you're good to go! All tests will be run automatically when you create a PR against this repo.
+Or simply `make dev target={your_target}` and then `make test target={your_target}` if you're okay with running the entire project and all tests.
+
+Remember, typically you'll want to create a failing test _first_, then implement the functionality to make it pass. This is called "test-driven development" (TDD) and it's a great way to ensure that your code really does what you expect it to. For example, let's imagine you wrote a test expecting it to fail, but it passed before you even implemented your logic! That would mean the test is not actually testing what you want, and you'd need to re-evaluate your assumptions. That's something you want to catch early in the development process, and what TDD is all about. So, expect this run of tests after you add your new logic to fail.
+
+## Implement the functionality
+
+Okay finally, this is the fun part! You can now implement the functionality in the macro you're working on.The development flow should be something like:
+
+1. You've got a failing test, so you know what you need to implement.
+1. Implement some logic in the macro you're working on.
+1. Run the relevant tests to see if they pass.
+1. Repeat until the tests pass.
+1. Run the full test suite to ensure you didn't break anything else by accident.
+
+## Commit your changes and open a pull request
+
+Once your tests are passing and you're happy with the code, you'll want to commit it and open a new PR on GitHub. Don't forget to run the full test suite against your target database before you open a PR to make sure you didn't accidentally break any existing functionality. When you open a PR, CircleCI will run the same test suite against all the database targets. If they're passing, we'll triage and review the code as soon as we can! Thank you for contributing to dbt-codegen!

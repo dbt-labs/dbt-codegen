@@ -1,4 +1,3 @@
-
 version: 2
 
 jobs:
@@ -27,15 +26,12 @@ jobs:
             python -m pip install --upgrade pip setuptools
             python -m pip install --pre dbt-core dbt-postgres dbt-redshift dbt-snowflake dbt-bigquery
 
-            mkdir -p ~/.dbt
-            cp integration_tests/ci/sample.profiles.yml ~/.dbt/profiles.yml
-
       - run:
           name: "Run Tests - Postgres"
           environment:
             POSTGRES_TEST_HOST: localhost
             POSTGRES_TEST_USER: root
-            POSTGRES_TEST_PASS: ''
+            POSTGRES_TEST_PASS: ""
             POSTGRES_TEST_PORT: 5432
             POSTGRES_TEST_DBNAME: circle_test
           command: |
@@ -74,7 +70,7 @@ jobs:
       - run:
           name: "Run Tests - BigQuery"
           environment:
-              BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
+            BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
 
           command: |
             . dbt_venv/bin/activate
@@ -85,7 +81,6 @@ jobs:
             dbt --warn-error seed --target bigquery --full-refresh
             dbt --warn-error run --target bigquery
             dbt --warn-error test --target bigquery
-
 
       - save_cache:
           key: deps1-{{ .Branch }}
