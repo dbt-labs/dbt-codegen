@@ -11,9 +11,8 @@
 3. [Write or modify an integration test](#write-or-modify-an-integration-test)
    1. [Run the integration tests](#run-the-integration-tests)
    2. [Creating a new integration test](#creating-a-new-integration-test)
-      1. [Add your integration test](#add-your-integration-test)
-      2. [Implement the functionality](#implement-the-functionality)
-      3. [Commit your changes and open a pull request](#commit-your-changes-and-open-a-pull-request)
+4. [Implement the functionality](#implement-the-functionality)
+5. [Commit your changes and open a pull request](#commit-your-changes-and-open-a-pull-request)
 
 ## Overview
 
@@ -135,8 +134,6 @@ make test target=postgres
 Run all the tests _before_ you start developing to make sure everything is working as expected before you start making changes. Nothing is worse than spending a ton of time troubleshooting a failing test, only to realize it was failing before you touched anything. This will also ensure that you have the correct environment variables set up and that your database is running.
 
 ### Creating a new integration test
-
-#### Add your integration test
 
 Adding integration tests for new functionality typically involves making one or more of the following:
 
