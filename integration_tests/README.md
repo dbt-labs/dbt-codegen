@@ -41,11 +41,38 @@ You'll need to set environment variables with the credentials to access your tar
 
 You can set these env vars in a couple ways:
 
-> [!WARNING]
-> The files below are _not_ gitignored — never, ever put your credentials into them and commit them! If you do by accident, you'll need to rotate your credentials immediately!
-
-- Use the `.env/[TARGET].env` files in the `integration_tests` directory as a guide to set your own environment variables, you'll need one for every variable listed in the sample file. You run `export [VARIABLE_NAME]=[VALUE]` for each variable in the file.
+- **Temporary**: Set these environment variables in your shell before running the tests. This is the easiest way to get started, but you'll have to set them every time you open a new terminal.
 - **More robust**: If you anticipate developing for multiple sessions, set these environment variables in your shell profile (like `~/.bashrc` or `~/.zshrc`). This way, you won't have to set them every time you open a new terminal.
+
+The environment variables you'll need to set for each adapter are:
+
+```bash
+# Postgres — these are the defaults for the Docker container so actually have values
+export POSTGRES_TEST_HOST=localhost
+export POSTGRES_TEST_USER=root
+export POSTGRES_TEST_PASS=''
+export POSTGRES_TEST_PORT=5432
+export POSTGRES_TEST_DBNAME=circle_test
+
+# BigQuery
+export BIGQUERY_SERVICE_KEY_PATH=
+export BIGQUERY_TEST_DATABASE=
+
+# Redshift
+export REDSHIFT_TEST_HOST=
+export REDSHIFT_TEST_USER=
+export REDSHIFT_TEST_PASS=
+export REDSHIFT_TEST_DBNAME=
+export REDSHIFT_TEST_PORT=
+
+# Snowflake
+export SNOWFLAKE_TEST_ACCOUNT=
+export SNOWFLAKE_TEST_USER=
+export SNOWFLAKE_TEST_PASSWORD=
+export SNOWFLAKE_TEST_ROLE=
+export SNOWFLAKE_TEST_DATABASE=
+export SNOWFLAKE_TEST_WAREHOUSE=
+```
 
 ### Setup Postgres or other database targets
 
