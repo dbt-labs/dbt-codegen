@@ -42,7 +42,7 @@ You'll need to set environment variables with the credentials to access your tar
 You can set these env vars in a couple ways:
 
 - **Temporary**: Set these environment variables in your shell before running the tests. This is the easiest way to get started, but you'll have to set them every time you open a new terminal.
-- **More robust**: If you anticipate developing for multiple sessions, set these environment variables in your shell profile (like `~/.bashrc` or `~/.zshrc`). This way, you won't have to set them every time you open a new terminal.
+- **Reusable**: If you anticipate developing for multiple sessions, set these environment variables in your shell profile (like `~/.bashrc` or `~/.zshrc`). This way, you won't have to set them every time you open a new terminal.
 
 The environment variables you'll need to set for each adapter are:
 
@@ -92,7 +92,8 @@ Or, alternatively:
 docker-compose up --detach postgres
 ```
 
-> [!NOTE] > `make` is a venerable build tool that is included in most Unix-like operating systems. It's not strictly necessary to use `make` to develop on this project, but there are several `make` commands that wrap more complex commands and make development easier. If you don't have `make` installed or don't want to use it, you can just run the commands in the `Makefile` directly. All the examples will show both options.
+> [!NOTE]
+> `make` is a venerable build tool that is included in most Unix-like operating systems. It's not strictly necessary to use `make` to develop on this project, but there are several `make` commands that wrap more complex commands and make development easier. If you don't have `make` installed or don't want to use it, you can just run the commands in the `Makefile` directly. All the examples will show both options.
 
 ### Set up virtual environment
 
