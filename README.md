@@ -65,7 +65,7 @@ the schema to your source definition
 If you use the `dbt run-operation` approach it is possible to output directly to a file by piping the output to a new file and using the `--quiet` CLI flag:
 
 ```
-dbt --quiet run-operation generate_model_yaml --args '{"model_name": "stg_jaffle_shop__orders"}' > models/staging/jaffle_shop/stg_jaffle_shop__orders.yml
+dbt --quiet run-operation generate_source --args '{"table_names": ["stg_jaffle_shop__orders"]}' > models/staging/jaffle_shop/stg_jaffle_shop__orders.yml
 ```
 
 ### Usage:
