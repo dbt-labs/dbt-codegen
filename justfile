@@ -124,22 +124,15 @@ alias gmic := dbt-generate-model-import-ctes
 
 # Verify the package manager logic is working.
 test-dbt-command:
-  @echo {{dbt}}
+  @echo "{{dbt}}"
 
-##############################################################################
-# End of developer recipes.
-##############################################################################
-
-##############################################################################
-# Package manager recipes.
-# You should not edit this unless you're adding a new package manager.
-##############################################################################
+# Package manager logic.
 va := if pm == "pip" {
     "source " + venv_name / "bin/activate &&"
   }  else if pm == "uv" {
     "source " + venv_name / "bin/activate &&"
   } else if pm == "poetry" {
-    "poetry run "
+    "poetry run"
   } else {
     error("Invalid package manager")
   }
@@ -168,10 +161,12 @@ deps := if pm == "pip" {
     error("Invalid package manager")
   }
 
+# Create a virtual environment.
 venv:
   @echo {{create_venv_label}}
   @[[ -d {{venv_name}} ]] || {{create_venv}}
 
+# Install dependencies into a virtual environment.
 deps: venv
   @echo {{deps_label}}
   @{{deps}}
