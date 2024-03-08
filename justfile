@@ -67,7 +67,7 @@ dbt-generate-source database schema:
 
 alias gso := dbt-generate-source
 
-# Generate the model sql for a table defined in your sources yml
+# Generate a sql model for a table defined in your sources YAML.
 dbt-generate-base-model source table:
     @{{dbt}} run-operation codegen.generate_base_model --args '{"source_name": "{{source}}", "table_name": "{{table}}"}'  > generated/stg_{{table}}.sql
     @awk '/with source as \(/{p=1} p' generated/stg_{{table}}.sql > temp && mv temp generated/stg_{{table}}.sql
@@ -75,7 +75,7 @@ dbt-generate-base-model source table:
 
 alias gbase := dbt-generate-base-model
 
-# Generate model yml with all columns from a model sql file.
+# Generate YAML config with all columns from a SQL model file.
 generated_default := 'generated'
 dbt-generate-model-yaml model_name generated_folder=generated_default:
     @if [ ! -d "{{generated_folder}}" ]; then \
@@ -87,7 +87,7 @@ dbt-generate-model-yaml model_name generated_folder=generated_default:
 
 alias gmy := dbt-generate-model-yaml
 
-# generate model yml with all columns for all sql files without accompanying yml files.
+# Generate YAML config for any unconfigured SQL models.
 # Optionally accepts a parameter for folder to search in.
 default_folder := 'models'
 dbt-generate-missing-yaml folder=default_folder:
@@ -103,7 +103,7 @@ dbt-generate-missing-yaml folder=default_folder:
 
 alias gmiss := dbt-generate-missing-yaml
 
-# Clean up model references in your sql files by generating 'import 'CTEs for models referenced.
+# Clean up model references in your SQL models by generating 'import CTEs' for all `{{ ref}}`s.
 dbt-generate-model-import-ctes model_name generated_folder=generated_default:
     @if [ ! -d "{{generated_folder}}" ]; then \
         mkdir -p {{generated_folder}}; \
