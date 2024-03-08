@@ -10,9 +10,10 @@
 #   ,88
 # 888P"
 ##############################################################################
-# Justfile created by @wjhrdy
+# This Justfile was created and open sourced by @wjhrdy.
 #
 # Contributors:
+# - @wjhrdy
 # - @gwenwindflower
 ##############################################################################
 # Configuration for the just task runner
