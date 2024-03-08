@@ -120,7 +120,7 @@ alias gmic := dbt-generate-model-import-ctes
 ##############################################################################
 
 ##############################################################################
-# Developer recipes for testing and debugging the justfile.
+# Developer recipes for configuration, testing, and debugging of the justfile.
 ##############################################################################
 
 # Verify the package manager logic is working.
