@@ -19,8 +19,8 @@
 ### Prerequisites
 
 - [python3](https://www.python.org/)
-- [make](<https://en.wikipedia.org/wiki/Make_(software)>) (Optional, but highly recommended for better development experience)
-- [Docker](https://www.docker.com/) (optional, but recommended for using Postgres as your target database easily)
+- [make](<https://en.wikipedia.org/wiki/Make_(software)>) (Optional, but recommended for better development experience)[^1]
+- [Docker](https://www.docker.com/) (Optional, but recommended for using Postgres as your target database easily)[^2]
 
 ### Introduction
 
@@ -78,8 +78,6 @@ export SNOWFLAKE_TEST_WAREHOUSE=
 
 As mentioned, you'll need a target database to run the integration tests and develop against. You can use a cloud warehouse, but the easiest and free way to work is to use Postgres locally. We include a `docker-compose.yml` file that will spin up a Postgres container for you to make this easy.
 
-Specific instructions on installing and getting started with Docker for your OS can be found [here](https://docs.docker.com/get-docker/).
-
 To run the Postgres container, just run:
 
 ```shell
@@ -92,8 +90,7 @@ Or, alternatively:
 docker-compose up --detach postgres
 ```
 
-> [!NOTE]
-> `make` is a venerable build tool that is included in most Unix-like operating systems. It's not strictly necessary to use `make` to develop on this project, but there are several `make` commands that wrap more complex commands and make development easier. If you don't have `make` installed or don't want to use it, you can just run the commands in the `Makefile` directly. All the examples will show both options.
+> [!NOTE] > `make` is a venerable build tool that is included in most Unix-like operating systems. It's not strictly necessary to use `make` to develop on this project, but there are several `make` commands that wrap more complex commands and make development easier. If you don't have `make` installed or don't want to use it, you can just run the commands in the `Makefile` directly. All the examples will show both options.
 
 ### Set up virtual environment
 
@@ -195,3 +192,6 @@ Okay finally, this is the fun part! You can now implement the functionality in t
 ## Commit your changes and open a pull request
 
 Once your tests are passing and you're happy with the code, you'll want to commit it and open a new PR on GitHub. Don't forget to run the full test suite against your target database before you open a PR to make sure you didn't accidentally break any existing functionality. When you open a PR, CircleCI will run the same test suite against all the database targets. If they're passing, we'll triage and review the code as soon as we can! Thank you for contributing to dbt-codegen!
+
+[^1]: If you're on a Mac, `make` is probably best installed with the XCode Command Line Tools, or you can install `make` via Homebrew with `brew install cmake`. If you're on Windows, you can either use the Windows Subsystem for Linux (WSL) or use `scoop` or `chocolatey` to install `make`. If you're on Linux, you probably already have `make` installed.
+[^2]: Specific instructions on installing and getting started with Docker for your OS can be found [here](https://docs.docker.com/get-docker/).
