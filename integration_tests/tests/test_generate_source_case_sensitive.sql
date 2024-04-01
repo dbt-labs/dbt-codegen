@@ -17,13 +17,13 @@ version: 2
 sources:
   - name: codegen_integration_tests_postgres_raw_data_case_sensitive
     database: circle_test
-    schema: codegen_integration_tests_postgres_raw_data_case_sensitive
+    schema: codegen_integration_tests_postgres_Raw_Data_Case_Sensitive
     tables:
-      - name: data__case_sensitive
+      - name: data__Case_Sensitive
         columns:
-          - name: col_a
+          - name: Col_A
             data_type: integer
-          - name: col_b
+          - name: Col_B
             data_type: text
 {% endset %}
 
