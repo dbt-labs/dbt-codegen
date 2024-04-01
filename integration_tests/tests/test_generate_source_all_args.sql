@@ -12,7 +12,11 @@
     name=raw_schema,
     table_names=None,
     include_database=True,
-    include_schema=True
+    include_schema=True,
+    case_sensitive_databases=False,
+    case_sensitive_schemas=False,
+    case_sensitive_tables=False,
+    case_sensitive_cols=False
 ) %}
 
 

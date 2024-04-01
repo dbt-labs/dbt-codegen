@@ -3,6 +3,7 @@
 
 ## Fixes
 - Column `description` fields are now correctly escaped in `generate_model_yaml` ([#142](https://github.com/dbt-labs/dbt-codegen/issues/142))
+- Fix `generate_source` behavior of applying a lowercase function to all object names ([#112](https://github.com/dbt-labs/dbt-codegen/issues/112))
 
 # dbt-codegen v0.11.0
 

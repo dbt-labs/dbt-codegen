@@ -8,7 +8,11 @@
     generate_columns=True,
     name=raw_schema,
     include_database=True,
-    include_schema=True
+    include_schema=True,
+    case_sensitive_databases=True,
+    case_sensitive_schemas=True,
+    case_sensitive_tables=True,
+    case_sensitive_cols=True
 ) %}
 
 {% set expected_source_yaml %}
