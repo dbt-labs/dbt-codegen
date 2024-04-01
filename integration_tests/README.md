@@ -90,7 +90,8 @@ Or, alternatively:
 docker-compose up --detach postgres
 ```
 
-> [!NOTE] > `make` is a venerable build tool that is included in most Unix-like operating systems. It's not strictly necessary to use `make` to develop on this project, but there are several `make` commands that wrap more complex commands and make development easier. If you don't have `make` installed or don't want to use it, you can just run the commands in the `Makefile` directly. All the examples will show both options.
+> [!NOTE]
+> `make` is a venerable build tool that is included in most Unix-like operating systems. It's not strictly necessary to use `make` to develop on this project, but there are several `make` commands that wrap more complex commands and make development easier. If you don't have `make` installed or don't want to use it, you can just run the commands in the `Makefile` directly. All the examples will show both options.
 
 ### Set up virtual environment
 
