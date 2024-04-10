@@ -45,10 +45,10 @@ sources:
 
 | Resource level | Key | Value(s) | Description |
 |---|---|---|---|
-| tables.meta | effective_type | stg_non_eff,<br>stg_eff_type_1,<br>stg_eff_type_2,<br>or stg_eff_type_3_to_type_2 | Required for all tables.<br>Identifies which staging macro should be used. |
-| tables.meta | effective_date_col | column_name | Required for: `stg_eff_type_1`, `stg_eff_type_2`, `stg_eff_type_3_to_type_2`<br>This column identifies which column is tracking the transaction date.<br>This column will always be automatically casted as a date in the macro.<br>If this column has been renamed, then use the renamed name. |
-| tables.meta | effective_sequence_col | column_name | Required for: `stg_eff_type_2`<br>This column identifies which column is tracking the transaction sequence for a single day.<br>If this column has been renamed, then use the renamed name. |
+| tables.meta | effective_type | stg_non_eff,<br>stg_eff_type_1,<br>stg_eff_type_2,<br>or stg_eff_type_3_to_type_2 | Identifies which staging macro should be used.<br>If not specified, then defaults to `stg_non_eff`. |
+| tables.meta | effective_date_col | column_name | Required for: `stg_eff_type_1`, `stg_eff_type_2`, `stg_eff_type_3_to_type_2`<br>This column identifies which column is tracking the transaction date.<br>This column will always be automatically casted as a date in the macro.<br>If this column has been renamed, use the original name. |
+| tables.meta | effective_sequence_col | column_name | Required for: `stg_eff_type_2`<br>This column identifies which column is tracking the transaction sequence for a single day.<br>If this column has been renamed, use the original name. |
 | tables.meta | effective_sequence_order | asc or desc | Required for: `stg_eff_type_2`<br>If the greatest effective sequence reflects the last transaction of the day, then use asc.<br>If the smallest effective sequence reflects the last transaction of the day, then use desc. |
-| tables.meta | partition_columns | ["col_a", "col_b", ...] | Required for: `stg_eff_type_1`, `stg_eff_type_2`, `stg_eff_type_3_to_type_2`<br>This column identifies what columns the table should be partitioned by.<br>If a column has been renamed, then use the renamed name. |
+| tables.meta | partition_columns | ["col_a", "col_b", ...] | Required for: `stg_eff_type_1`, `stg_eff_type_2`, `stg_eff_type_3_to_type_2`<br>This column identifies what columns the table should be partitioned by.<br>If a column has been renamed, use the original name. |
 | tables.columns.meta | casted_as | data_type | Optional.<br>If a column should be recasted, then declare the data type is should be casted as. |
 | tables.columns.meta | renamed_as | new_name | Optional.<br>If a column should be renamed, then declare the new name it should be renamed to. |
