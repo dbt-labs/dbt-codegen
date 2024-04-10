@@ -6,3 +6,4 @@ env/
 .venv/
 .env/
 venv/
+.vscode/
