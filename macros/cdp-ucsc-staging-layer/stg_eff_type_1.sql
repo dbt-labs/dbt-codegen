@@ -21,8 +21,9 @@
 {%- set partition_cols_renamed_as = [] -%}
 {%- set col_casted_as =  {} -%}
 {%- set col_renamed_as = {} -%}
+{%- set soft_delete_cols = [] -%}
 
-{# USE GRAPH CONTEXT VARIABLE TO GET TABLE INFORMATION FROM THE MANIFEST.JSON WHICH REFLECTS PROP AND CONFIG DECLARATIONS IN THE SOURCE.YML #}
+{# USE GRAPH CONTEXT VARIABLE TO GET TABLE INFORMATION FROM THE MANIFEST.JSON WHICH REFLECTS PROP. AND CONFIG. DECLARATIONS IN THE SOURCE.YML #}
 {%- for table_attributes in graph.sources.values() | selectattr("name", "equalto", table_name) -%}
     {# GET THE MODEL'S EFFECTIVE DATE COLUMN FROM THE GRAPH CONTEXT VARIABLE #}
     {% set ns.eff_col = table_attributes.meta.effective_date_col %}
@@ -43,6 +44,11 @@
             {% do col_casted_as.update ({col : col_attr.meta.casted_as}) %}
         {%- endif %}
     {%- endfor -%}
+
+    {# GET THE SOFT DELETE TRACKING COLUMNS AND THEIR CONDITIONS #}
+    {% for i in table_attributes.source_meta.soft_delete_columns %}
+    {% do soft_delete_cols.append(i) %}
+    {% endfor %}
 
 {%- endfor %}
 
@@ -69,8 +75,10 @@
 with
     source as (
         select * from {% raw -%} {{ source( {%- endraw -%} '{{ source_name }}', '{{ table_name }}' {%- raw -%} ) }}{% endraw %}
+        {%- if soft_delete_cols[0] %}
         where
-            _fivetran_deleted != true
+            {{ soft_delete_cols | join('\nand ') | indent(12) }}
+        {%- endif %}
     ),
 
     transformation as (
