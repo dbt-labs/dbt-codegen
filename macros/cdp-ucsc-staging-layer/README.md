@@ -28,6 +28,8 @@ A key feature of the macros is that they are able to read and implement informat
 version:
 sources:
     - name: source_name
+      meta:
+        soft_delete_columns:
       tables:
         - name: table_name
           meta:
