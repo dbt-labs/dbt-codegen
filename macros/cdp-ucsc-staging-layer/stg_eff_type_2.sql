@@ -105,13 +105,13 @@ with
     transformation as (
         select
         {%- for i in col_names %}
-            {# (0) EFFECTIVE DATE COLUMN IS ALWAYS CASTED AS DATE (RENAMED IF NECESSARY) #}
+            {# (0) EFFECTIVE DATE COLUMN IS ALWAYS CASTED AS DATE (RENAMED IF NECESSARY)
             {%- if i == ns.eff_col and not col_renamed_as[i] -%}
             cast({{i}} as date) as {{i}}{{',' if not loop.last}}
             {%- elif i == ns.eff_col and col_renamed_as[i] -%}
-            cast({{i}} as date) as {{col_renamed_as[i]}}{{',' if not loop.last}}
+            cast({{i}} as date) as {{col_renamed_as[i]}}{{',' if not loop.last}} #}
             {# (1) CAST AND RENAME #}
-            {%- elif col_casted_as[i] and col_renamed_as[i] -%}
+            {%- if col_casted_as[i] and col_renamed_as[i] -%}
             cast({{i}} as {{col_casted_as[i]}}) as {{col_renamed_as[i]}}{{',' if not loop.last}}
             {#- (2) CAST ONLY #}
             {%- elif col_casted_as[i] and not col_renamed_as[i] -%}
