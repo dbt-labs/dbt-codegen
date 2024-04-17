@@ -1,7 +1,9 @@
+{% if target.type == 'redshift' %}
+    {% set raw_schema = generate_schema_name('raw_data_case_sensitive') %}
+{% else %}
+    {% set raw_schema = generate_schema_name('Raw_Data_Case_Sensitive') %}
+{% endif %}
 
-{% set raw_schema = generate_schema_name('Raw_Data_Case_Sensitive') %}
-
--- test default args
 {% set actual_source_yaml = codegen.generate_source(
     schema_name=raw_schema,
     database_name=target.database,
