@@ -5,7 +5,7 @@
 ### Features
 
 - `generate_model_yaml` with `upstream_descriptions=True` now reads from upstream sources in addition to models.(#112)[https://github.com/dbt-labs/dbt-codegen/issues/112]
-- `generate_source` now has options for case sensitivity in all fields ([#112](https://github.com/dbt-labs/dbt-codegen/issues/112))
+- `generate_source` now has options for case sensitivity in all fields ([#112](https://github.com/dbt-labs/dbt-codegen/issues/112)
 
 ### Fixes
 

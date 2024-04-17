@@ -27,4 +27,3 @@ vars:
 
 models:
   +bind: false
-
