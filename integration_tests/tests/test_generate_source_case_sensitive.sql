@@ -18,8 +18,8 @@
 {% set expected_source_yaml %}
 version: 2
 
-sources:
 {% if target.database == 'redshift' -%}
+sources:
   - name: {{ raw_schema | trim | lower }}
     database: {{ target.database | trim | lower }}
     schema: {{ raw_schema | trim }}
@@ -30,7 +30,8 @@ sources:
             data_type: integer
           - name: col_b
             data_type: text
-{%- else %}
+{%- else -%}
+sources:
   - name: {{ raw_schema | trim | lower }}
     database: circle_test
     schema: {{ raw_schema | trim }}
