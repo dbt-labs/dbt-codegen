@@ -30,7 +30,7 @@ sources:
             data_type: integer
           - name: col_b
             data_type: text
-{%- else -%}
+{%- else %}
   - name: {{ raw_schema | trim | lower }}
     database: circle_test
     schema: {{ raw_schema | trim }}
