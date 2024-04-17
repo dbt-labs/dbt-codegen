@@ -22,7 +22,7 @@ version: 2
 sources:
   - name: {{ raw_schema | trim | lower }}
     database: {{ target.database | trim | lower }}
-    schema: {{ raw_schema | trim }}
+    schema: {{ raw_schema | trim | lower }}
     tables:
       - name: data__case_sensitive
         columns:
