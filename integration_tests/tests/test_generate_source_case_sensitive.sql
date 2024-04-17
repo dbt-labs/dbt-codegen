@@ -18,7 +18,7 @@
 {% set expected_source_yaml %}
 version: 2
 
-{% if target.database == 'redshift' -%}
+{% if target.type == 'redshift' -%}
 sources:
   - name: {{ raw_schema | trim | lower }}
     database: {{ target.database | trim | lower }}
