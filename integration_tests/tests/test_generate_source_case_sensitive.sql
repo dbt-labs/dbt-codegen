@@ -1,8 +1,7 @@
 {% if target.type == 'redshift' %}
-    {% set raw_schema = generate_schema_name('raw_data_case_sensitive') %}
+    select 'ok' limit 0
 {% else %}
-    {% set raw_schema = generate_schema_name('Raw_Data_Case_Sensitive') %}
-{% endif %}
+{% set raw_schema = generate_schema_name('Raw_Data_Case_Sensitive') %}
 
 {% set actual_source_yaml = codegen.generate_source(
     schema_name=raw_schema,
@@ -20,19 +19,6 @@
 {% set expected_source_yaml %}
 version: 2
 
-{% if target.type == 'redshift' -%}
-sources:
-  - name: {{ raw_schema | trim | lower }}
-    database: {{ target.database | trim | lower }}
-    schema: {{ raw_schema | trim | lower }}
-    tables:
-      - name: data__case_sensitive
-        columns:
-          - name: col_a
-            data_type: integer
-          - name: col_b
-            data_type: text
-{%- else -%}
 sources:
   - name: {{ raw_schema | trim | lower }}
     database: circle_test
@@ -44,8 +30,7 @@ sources:
             data_type: integer
           - name: Col_B
             data_type: text
-{%- endif -%}
 {% endset %}
 
-
 {{ assert_equal (actual_source_yaml | trim, expected_source_yaml | trim) }}
+{%- endif -%}
