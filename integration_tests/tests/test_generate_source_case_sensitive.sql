@@ -31,7 +31,7 @@ sources:
           - name: col_b
             data_type: text
 {%- else -%}
-- name: {{ raw_schema | trim | lower }}
+  - name: {{ raw_schema | trim | lower }}
     database: circle_test
     schema: {{ raw_schema | trim }}
     tables:
