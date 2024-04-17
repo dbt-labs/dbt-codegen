@@ -18,15 +18,7 @@ clean-targets:
 seeds:
   +schema: raw_data
   +quote_columns: false
-  codegen_integration_tests:
-    case_sensitive:
-      +schema: "Raw_Data_Case_Sensitive"
-      +quote_columns: true
-      +enabled: {{ target.type != 'redshift' }}
-    case_sensitive_redshift:
-      +schema: "raw_data_case_sensitive"
-      +quote_columns: true
-      +enabled: {{ target.type == 'redshift' }}
+
 vars:
   my_table_reference: table_c
 

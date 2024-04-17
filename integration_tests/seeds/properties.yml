@@ -1,0 +1,14 @@
+version: 2
+
+seeds:
+  - name: data__Case_Sensitive
+    config:
+      quote_columns: true
+      enabled: {{ target.type != 'redshift' }}
+      schema: "Raw_Data_Case_Sensitive"
+
+  - name: data__case_sensitive_redshift
+    config:
+      quote_columns: true
+      enabled: {{ target.type == 'redshift' }}
+      schema: raw_data_case_sensitive
