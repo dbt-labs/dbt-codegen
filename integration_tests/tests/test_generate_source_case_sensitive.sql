@@ -19,9 +19,10 @@
 version: 2
 
 sources:
-  - name: codegen_integration_tests_postgres_raw_data_case_sensitive
-    database: circle_test
-    schema: codegen_integration_tests_postgres_Raw_Data_Case_Sensitive
+{% if target.database == 'redshift' -%}
+  - name: {{ raw_schema | trim | lower }}
+    database: {{ target.database | trim | lower }}
+    schema: {{ raw_schema | trim }}
     tables:
       - name: data__Case_Sensitive
         columns:
@@ -29,6 +30,18 @@ sources:
             data_type: integer
           - name: Col_B
             data_type: text
+{%- else -%}
+- name: {{ raw_schema | trim | lower }}
+    database: circle_test
+    schema: {{ raw_schema | trim }}
+    tables:
+      - name: data__Case_Sensitive
+        columns:
+          - name: Col_A
+            data_type: integer
+          - name: Col_B
+            data_type: text
+{%- endif -%}
 {% endset %}
 
 
