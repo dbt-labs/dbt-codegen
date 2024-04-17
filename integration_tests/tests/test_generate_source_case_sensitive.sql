@@ -24,11 +24,11 @@ sources:
     database: {{ target.database | trim | lower }}
     schema: {{ raw_schema | trim }}
     tables:
-      - name: data__Case_Sensitive
+      - name: data__case_sensitive
         columns:
-          - name: Col_A
+          - name: col_a
             data_type: integer
-          - name: Col_B
+          - name: col_b
             data_type: text
 {%- else -%}
 - name: {{ raw_schema | trim | lower }}
