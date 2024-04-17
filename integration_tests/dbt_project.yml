@@ -19,7 +19,7 @@ seeds:
   +schema: raw_data
   +quote_columns: false
   codegen_integration_tests:
-    data__Case_Sensitive:
+    case_sensitive:
       +schema: Raw_Data_Case_Sensitive
       quote_columns: true
 vars:
