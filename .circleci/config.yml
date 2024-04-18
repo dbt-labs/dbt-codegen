@@ -43,18 +43,18 @@ jobs:
             dbt --warn-error run --target postgres
             dbt --warn-error test --target postgres
 
-      # - run:
-      #     name: "Run Tests - Redshift"
-      #     command: |
-      #       . dbt_venv/bin/activate
-      #       echo `pwd`
-      #       cd integration_tests
-      #       dbt --warn-error deps --target redshift
-      #       dbt --warn-error run-operation create_source_table --target redshift
-      #       dbt --warn-error seed --target redshift --full-refresh
-      #       dbt --warn-error run --target redshift
-      #       dbt --warn-error test --target redshift
-      #
+      - run:
+          name: "Run Tests - Redshift"
+          command: |
+            . dbt_venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt --warn-error deps --target redshift
+            dbt --warn-error run-operation create_source_table --target redshift
+            dbt --warn-error seed --target redshift --full-refresh
+            dbt --warn-error run --target redshift
+            dbt --warn-error test --target redshift
+
       - run:
           name: "Run Tests - Snowflake"
           command: |
