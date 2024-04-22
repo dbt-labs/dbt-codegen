@@ -173,33 +173,6 @@ with
                 when current_record_desc in ('future', 'past') then false
             end as is_current_record
 
-            {%- if "setid" in partition_cols_renamed_as and "estabid" in partition_cols_renamed_as -%}
-            ,
-
-            'verification_needed' as is_ucsc_record
-
-            {%- elif "setid" in partition_cols_renamed_as -%}
-            ,
-
-            transformation.setid in ('SCCMP', 'SCFIN', 'UCSHR') as is_ucsc_record,
-            case
-                when is_ucsc_record = false
-                    then 'other campus specific'
-                when is_ucsc_record = true
-                    and transformation.setid in ('SCCMP', 'SCFIN')
-                    then 'ucsc specific'
-                when is_ucsc_record = true
-                    and transformation.setid = 'UCSHR'
-                    then 'shared system wide'
-            end as ucsc_record_desc
-
-            {%- elif "estabid" in partition_cols_renamed_as -%}
-            ,
-
-            case when transformation.estabid = 'UCSC' then true else false end as is_ucsc_record,
-            case when is_ucsc_record = true then 'ucsc specific' else 'other campus specific' end as ucsc_record_desc
-            {% endif %}
-
         from transformation
 
         left outer join valid_to

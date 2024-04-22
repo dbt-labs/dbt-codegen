@@ -13,7 +13,7 @@ sample output
 
 */
 
-{% set out_string = '"alphabetize"'": true}' > models/staging/stg_" ~ source_name ~ "__" %}
+{% set out_string = '"alphabetize"'": true}' > models/staging/" ~ source_name ~ "/stg_" ~ source_name ~ "__" %}
 
 {% if execute %}
 
