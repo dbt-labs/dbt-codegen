@@ -7,7 +7,7 @@
 example:
   dbt run-operation --quiet build_stg_bash_script  --args '{"source_name": "fis"}' > utilities/bash_scripts/gen_fis_stg_models.shl
 
-sample output 
+sample output
   dbt run-operation --quiet stage_banner_tables --args '{"source_name": "fis", "table_name": "ftvfsyr", "alphabetize": true}'
   dbt run-operation --quiet stage_banner_eff_date_tables --args '{"source_name": "fis", "table_name": "ftvftyp", "partition_columns": ['ftvftyp_ftyp_code'],"alphabetize": true}'
 
