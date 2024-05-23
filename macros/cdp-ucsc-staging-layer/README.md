@@ -2,16 +2,18 @@
 For the core domain projects, the staging layer has been generated using the custom macros contained in this directory. Source tables are grouped into non-effective and effective dated tables. Where effective dated tables are further categorized into different types.
 
 ## Non-effective dated tables
-All non-effective dates tables are generated with the `stg_non_eff` macro.
+All non-effective dated tables are generated with the `stg_non_eff` macro.
 
 ## Effective dated tables
 Effective dated tables are categorized into the following types:
-- Type 1. The effective date column is a date type and the table is **not** effective sequenced.
-- Type 2. The effective date column is a date type and the table **is** effective sequenced.
-- Type 3. The effective date column is a timestamp and the table is **not** effective sequenced.
+- Type 1. The effective date column is a **date** type and the table is **not** effective sequenced.
+- Type 2. The effective date column is a **date** type and the table **is** effective sequenced.
+- Type 3. The effective date column is a **timestamp** and the table is **not** effective sequenced.
   - Type 3 tables can be turned into type 1 or type 2 tables.
-- Type 4. The effective date column is a timestamp and the table **is** effective sequenced.
+- Type 4. The effective date column is a **timestamp** and the table **is** effective sequenced.
   - Type 4 tables can be turned into type 2 tables.
+
+There are edge cases for effective dated tables as well. These cases are handled uniquely and often have their own macros. For example, FIS tables with both an `_eff_date` and `_nchg_date` field.
 
 | Use Case | Macro |
 |---|---|
@@ -20,9 +22,10 @@ Effective dated tables are categorized into the following types:
 | If the source table is a type 3 table and cannot have multiple transactions in a single day, then use this macro to generate the staging model. The macro will automatically convert the effective date column into a date type. | stg_eff_type_1 |
 | If the source table is a type 3 table and can have multiple transactions in a single day, then use this macro to generate the staging model. The macro will automatically convert the effective date column into a date type. | stg_eff_type_3_to_type_2 |
 | If the source table is a type 4 table, then use this macro to generate the staging model. The macro will automatically convert the effective date column into a date type. | stg_eff_type_2 |
+| If the source table is a FIS table that has both an `_eff_date` and `_nchg_date` field, then use this macro to generate the staging model. | stage_banner_eff_nchg_date_tables |
 
 ## Source.yml
-A key feature of the macros is that they are able to read and implement information from the source.yml in the generated staging models. The following information can or needs to be declared in the `source.yml`.
+A key feature of the macros is that they are able to read and implement information into the generated staging models from the source.yml. The following information can or needs to be declared in the `source.yml`.
 
 ```yaml
 version:
