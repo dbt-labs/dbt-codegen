@@ -70,14 +70,13 @@ which you can then paste into a schema file.
 - `include_schema` (optional, default=False): Whether you want to add
   the schema to your source definition
 - `case_sensitive_databases` (optional, default=False): Whether you want database names to be
-in lowercase, or to match the case in the source table
+  in lowercase, or to match the case in the source table — not compatible with Redshift
 - `case_sensitive_schemas` (optional, default=False): Whether you want schema names to be
-in lowercase, or to match the case in the source table
+  in lowercase, or to match the case in the source table — not compatible with Redshift
 - `case_sensitive_tables` (optional, default=False): Whether you want table names to be
-in lowercase, or to match the case in the source table
+  in lowercase, or to match the case in the source table — not compatible with Redshift
 - `case_sensitive_cols` (optional, default=False): Whether you want column names to be
-in lowercase, or to match the case in the source table
-
+  in lowercase, or to match the case in the source table
 
 ### Outputting to a file
 

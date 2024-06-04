@@ -18,13 +18,9 @@ clean-targets:
 seeds:
   +schema: raw_data
   +quote_columns: false
-  codegen_integration_tests:
-    data__Case_Sensitive:
-      +schema: Raw_Data_Case_Sensitive
-      quote_columns: true
+
 vars:
   my_table_reference: table_c
 
 models:
   +bind: false
-
