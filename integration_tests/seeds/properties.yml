@@ -1,7 +1,0 @@
-version: 2
-
-seeds:
-  - name: "data__Case_Sensitive"
-    config:
-      quote_columns: true
-      schema: "Raw_Data_Case_Sensitive"
