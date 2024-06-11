@@ -34,6 +34,7 @@ jobs:
             POSTGRES_TEST_PASS: ""
             POSTGRES_TEST_PORT: 5432
             POSTGRES_TEST_DBNAME: circle_test
+            POSTGRES_TEST_SCHEMA: codegen_integration_tests_postgres
           command: |
             . dbt_venv/bin/activate
             cd integration_tests
@@ -45,6 +46,8 @@ jobs:
 
       - run:
           name: "Run Tests - Redshift"
+          environment:
+            REDSHIFT_TEST_SCHEMA: codegen_integration_tests_redshift
           command: |
             . dbt_venv/bin/activate
             echo `pwd`
@@ -57,6 +60,8 @@ jobs:
 
       - run:
           name: "Run Tests - Snowflake"
+          environment:
+            SNOWFLAKE_TEST_SCHEMA: codegen_integration_tests_snowflake
           command: |
             . dbt_venv/bin/activate
             echo `pwd`
@@ -71,6 +76,7 @@ jobs:
           name: "Run Tests - BigQuery"
           environment:
             BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
+            REDSHIFT_TEST_SCHEMA: codegen_integration_tests_bigquery
 
           command: |
             . dbt_venv/bin/activate
