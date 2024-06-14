@@ -48,30 +48,30 @@ The environment variables you'll need to set for each adapter are:
 
 ```bash
 # Postgres — these are the defaults for the Docker container so actually have values
-export POSTGRES_TEST_HOST=localhost
-export POSTGRES_TEST_USER=root
-export POSTGRES_TEST_PASS=''
-export POSTGRES_TEST_PORT=5432
-export POSTGRES_TEST_DBNAME=circle_test
+export POSTGRES_HOST=localhost
+export POSTGRES_USER=root
+export POSTGRES_PASS=''
+export POSTGRES_PORT=5432
+export POSTGRES_DATABASE=circle_test
 
 # BigQuery
 export BIGQUERY_SERVICE_KEY_PATH=
-export BIGQUERY_TEST_DATABASE=
+export BIGQUERY_PROJECT=
 
 # Redshift
-export REDSHIFT_TEST_HOST=
-export REDSHIFT_TEST_USER=
-export REDSHIFT_TEST_PASS=
-export REDSHIFT_TEST_DBNAME=
-export REDSHIFT_TEST_PORT=
+export REDSHIFT_HOST=
+export REDSHIFT_USER=
+export REDSHIFT_PASS=
+export REDSHIFT_DATABASE=
+export REDSHIFT_PORT=
 
 # Snowflake
-export SNOWFLAKE_TEST_ACCOUNT=
-export SNOWFLAKE_TEST_USER=
-export SNOWFLAKE_TEST_PASSWORD=
-export SNOWFLAKE_TEST_ROLE=
-export SNOWFLAKE_TEST_DATABASE=
-export SNOWFLAKE_TEST_WAREHOUSE=
+export SNOWFLAKE_ACCOUNT=
+export SNOWFLAKE_USER=
+export SNOWFLAKE_PASSWORD=
+export SNOWFLAKE_ROLE=
+export SNOWFLAKE_DATABASE=
+export SNOWFLAKE_WAREHOUSE=
 ```
 
 ### Setup Postgres or other database targets

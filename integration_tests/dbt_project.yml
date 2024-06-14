@@ -15,6 +15,10 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
+flags:
+  send_anonymous_usage_stats: False
+  use_colors: True
+
 seeds:
   +schema: raw_data
   +quote_columns: false
