@@ -29,10 +29,10 @@ integration_tests:
     bigquery:
       type: bigquery
       method: service-account-json
-      keyfile: "{{ env_var('DBT_ENV_SECRET_BIGQUERY_KEYFILE_JSON') | as_native }}"
       project: "{{ env_var('BIGQUERY_PROJECT') }}"
-      schema: "{{ env_var('BIGQUERY_SCHEMA') }}"
-      threads: 1
+      keyfile_json: "{{ env_var('DBT_ENV_SECRET_BIGQUERY_KEYFILE_JSON') | as_native }}"
+      dataset: "{{ env_var('BIGQUERY_SCHEMA') }}"
+      threads: 10
 
     snowflake:
       type: snowflake
