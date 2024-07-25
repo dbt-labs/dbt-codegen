@@ -38,6 +38,7 @@ jobs:
           command: |
             . dbt_venv/bin/activate
             cd integration_tests
+            cp ci/sample.profiles.yml profiles.yml
             dbt --warn-error deps --target postgres
             dbt --warn-error run-operation create_source_table --target postgres
             dbt --warn-error seed --target postgres --full-refresh
@@ -52,6 +53,7 @@ jobs:
             . dbt_venv/bin/activate
             echo `pwd`
             cd integration_tests
+            cp ci/sample.profiles.yml profiles.yml
             dbt --warn-error deps --target redshift
             dbt --warn-error run-operation create_source_table --target redshift
             dbt --warn-error seed --target redshift --full-refresh
@@ -66,6 +68,7 @@ jobs:
             . dbt_venv/bin/activate
             echo `pwd`
             cd integration_tests
+            cp ci/sample.profiles.yml profiles.yml
             dbt --warn-error deps --target snowflake
             dbt --warn-error run-operation create_source_table --target snowflake
             dbt --warn-error seed --target snowflake --full-refresh
@@ -82,6 +85,7 @@ jobs:
             . dbt_venv/bin/activate
             echo `pwd`
             cd integration_tests
+            cp ci/sample.profiles.yml profiles.yml
             dbt --warn-error deps --target bigquery
             dbt --warn-error run-operation create_source_table --target bigquery
             dbt --warn-error seed --target bigquery --full-refresh
