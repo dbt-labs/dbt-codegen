@@ -2,9 +2,8 @@
 # HEY! This file is used in the dbt-codegen integrations tests with CircleCI.
 # You should __NEVER__ check credentials into version control. Thanks for reading :)
 
-config:
-    send_anonymous_usage_stats: False
-    use_colors: True
+# This profile only exists for use with circleCI.
+# Once CircleCi is deprecated, this profile can be removed.
 
 integration_tests:
   target: postgres
