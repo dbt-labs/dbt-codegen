@@ -34,9 +34,11 @@ jobs:
             POSTGRES_TEST_PASS: ""
             POSTGRES_TEST_PORT: 5432
             POSTGRES_TEST_DBNAME: circle_test
+            POSTGRES_TEST_SCHEMA: codegen_integration_tests_postgres
           command: |
             . dbt_venv/bin/activate
             cd integration_tests
+            cp ci/sample.profiles.yml profiles.yml
             dbt --warn-error deps --target postgres
             dbt --warn-error run-operation create_source_table --target postgres
             dbt --warn-error seed --target postgres --full-refresh
@@ -45,10 +47,13 @@ jobs:
 
       - run:
           name: "Run Tests - Redshift"
+          environment:
+            REDSHIFT_TEST_SCHEMA: codegen_integration_tests_redshift
           command: |
             . dbt_venv/bin/activate
             echo `pwd`
             cd integration_tests
+            cp ci/sample.profiles.yml profiles.yml
             dbt --warn-error deps --target redshift
             dbt --warn-error run-operation create_source_table --target redshift
             dbt --warn-error seed --target redshift --full-refresh
@@ -57,10 +62,13 @@ jobs:
 
       - run:
           name: "Run Tests - Snowflake"
+          environment:
+            SNOWFLAKE_TEST_SCHEMA: codegen_integration_tests_snowflake
           command: |
             . dbt_venv/bin/activate
             echo `pwd`
             cd integration_tests
+            cp ci/sample.profiles.yml profiles.yml
             dbt --warn-error deps --target snowflake
             dbt --warn-error run-operation create_source_table --target snowflake
             dbt --warn-error seed --target snowflake --full-refresh
@@ -71,11 +79,13 @@ jobs:
           name: "Run Tests - BigQuery"
           environment:
             BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
+            REDSHIFT_TEST_SCHEMA: codegen_integration_tests_bigquery
 
           command: |
             . dbt_venv/bin/activate
             echo `pwd`
             cd integration_tests
+            cp ci/sample.profiles.yml profiles.yml
             dbt --warn-error deps --target bigquery
             dbt --warn-error run-operation create_source_table --target bigquery
             dbt --warn-error seed --target bigquery --full-refresh
