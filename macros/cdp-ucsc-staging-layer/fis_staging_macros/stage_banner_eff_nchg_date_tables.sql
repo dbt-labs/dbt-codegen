@@ -121,14 +121,14 @@ with
             derive_effseq_and_transform.{{table_name}}_effseq
             = derive_effseq_and_transform.{{table_name}}_max_effseq as is_max_rcd_of_effdt,
             case
-                when valid_from > {{'{{'}} var("current_date_pst") {{'}}'}} then 'future'
-                when valid_to < {{'{{'}} var("current_date_pst") {{'}}'}} then 'past'
-                when valid_to >= {{'{{'}} var("current_date_pst") {{'}}'}}
-                    and is_max_rcd_of_effdt = true
+                when (
+                    derive_effseq_and_transform.{{ns.eff_col_renamed_as}} <= {{'{{'}} var("current_timestamp_pst") {{'}}'}}
+                    and derive_effseq_and_transform.{{ns.nchg_col_renamed_as}} > {{'{{'}} var("current_timestamp_pst") {{'}}'}}
+                )
                     then 'current'
-                when valid_to >= {{'{{'}} var("current_date_pst") {{'}}'}}
-                    and is_max_rcd_of_effdt = false
-                    then 'past'
+                when derive_effseq_and_transform.{{ns.eff_col_renamed_as}} > {{'{{'}} var("current_timestamp_pst") {{'}}'}}
+                    then 'future'
+                else 'past'
             end as current_record_desc,
             case
                 when current_record_desc = 'current' then true
