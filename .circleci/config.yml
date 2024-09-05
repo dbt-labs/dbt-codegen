@@ -10,7 +10,7 @@ jobs:
       - checkout
 
       - run:
-          run: setup_creds
+          name: setup_creds
           command: |
             echo $BIGQUERY_SERVICE_ACCOUNT_JSON > ${HOME}/bigquery-service-key.json
 
@@ -79,14 +79,14 @@ jobs:
           name: "Run Tests - BigQuery"
           environment:
             BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
-            REDSHIFT_TEST_SCHEMA: codegen_integration_tests_bigquery
+            BIGQUERY_TEST_SCHEMA: codegen_integration_tests_bigquery
 
           command: |
             . dbt_venv/bin/activate
             echo `pwd`
             cd integration_tests
             cp ci/sample.profiles.yml profiles.yml
-            dbt --warn-error deps --target bigquery
+            dbt --warn-error deps --target bigquery-circleci
             dbt --warn-error run-operation create_source_table --target bigquery
             dbt --warn-error seed --target bigquery --full-refresh
             dbt --warn-error run --target bigquery
