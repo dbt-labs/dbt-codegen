@@ -23,6 +23,12 @@ on:
 
 env:
     PYTHON_VERSION: "3.11"
+    POSTGRES_HOST: "localhost"
+    POSTGRES_USER: "root"
+    DBT_ENV_SECRET_POSTGRES_PASS: "public_password"
+    POSTGRES_PORT: "5432"
+    POSTGRES_DATABASE: "postgres_test"
+    POSTGRES_SCHEMA: "dbt_codegen_integration_tests_postgres_${{ github.run_number }}"
 
 jobs:
     determine-supported-adapters:
@@ -76,10 +82,10 @@ jobs:
             postgres:
                 image: postgres
                 env:
-                    POSTGRES_USER: ${{ vars.POSTGRES_USER }}
-                    POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASS }}
-                    POSTGRES_DB: ${{ vars.POSTGRES_DATABASE }}
-                    POSTGRES_HOST: ${{ vars.POSTGRES_HOST }}
+                    POSTGRES_USER: ${{ env.POSTGRES_USER }}
+                    POSTGRES_PASSWORD: ${{ env.DBT_ENV_SECRET_POSTGRES_PASS }}
+                    POSTGRES_DB: ${{ env.POSTGRES_DATABASE }}
+                    POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
                 options: >-
                     --health-cmd pg_isready
                     --health-interval 10s
@@ -116,9 +122,9 @@ jobs:
                   tox -e dbt_integration_${{ matrix.adapter }}
               # postgres runs in the container, so nothing below is an actual secret
               env:
-                  POSTGRES_HOST: postgres_db
-                  POSTGRES_USER: postgres
-                  DBT_ENV_SECRET_POSTGRES_PASS: postgres
-                  POSTGRES_PORT: 5432
-                  POSTGRES_DATABASE: postgres
-                  POSTGRES_SCHEMA: "dbt_codegen_integration_tests_postgres_${{ github.run_number }}"
+                  POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
+                  POSTGRES_USER: ${{ env.POSTGRES_USER }}
+                  DBT_ENV_SECRET_POSTGRES_PASS: ${{ env.DBT_ENV_SECRET_POSTGRES_PASS }}
+                  POSTGRES_PORT: ${{ env.POSTGRES_PORT }}
+                  POSTGRES_DATABASE: ${{ env.POSTGRES_DATABASE }}
+                  POSTGRES_SCHEMA: ${{ env.POSTGRES_SCHEMA }}
