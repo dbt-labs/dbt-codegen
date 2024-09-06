@@ -17,7 +17,6 @@ on:
     workflow_dispatch:
 
 env:
-    PYTHON_VERSION: "3.11"
     POSTGRES_HOST: "localhost"
     POSTGRES_USER: "root"
     DBT_ENV_SECRET_POSTGRES_PASS: "public_password"
@@ -26,32 +25,14 @@ env:
     POSTGRES_SCHEMA: "dbt_codegen_integration_tests_postgres_${{ github.run_number }}"
 
 jobs:
-    run-tests:
-        runs-on: ubuntu-latest
-        services:
-            postgres:
-                image: postgres
-                env:
-                    POSTGRES_USER: ${{ env.POSTGRES_USER }}
-                    POSTGRES_PASSWORD: ${{ env.DBT_ENV_SECRET_POSTGRES_PASS }}
-                    POSTGRES_DB: ${{ env.POSTGRES_DATABASE }}
-                    POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
-                options: >-
-                    --health-cmd pg_isready
-                    --health-interval 10s
-                    --health-timeout 5s
-                    --health-retries 5
-                ports:
-                    - 5432:5432
-
-        steps:
-            - name: "Test ${{ github.event.repository }}"
-              uses:  emmyoop/package-testing@main
-              # postgres runs in the container, so nothing below is an actual secret
-              env:
-                  POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
-                  POSTGRES_USER: ${{ env.POSTGRES_USER }}
-                  DBT_ENV_SECRET_POSTGRES_PASS: ${{ env.DBT_ENV_SECRET_POSTGRES_PASS }}
-                  POSTGRES_PORT: ${{ env.POSTGRES_PORT }}
-                  POSTGRES_DATABASE: ${{ env.POSTGRES_DATABASE }}
-                  POSTGRES_SCHEMA: ${{ env.POSTGRES_SCHEMA }}
+  run-tests:
+      uses: emmyoop/package-testing/.github/workflows/tox_tests.yml@main
+      with:
+        POSTGRES_SCHEMA: ${{ env.POSTGRES_SCHEMA }}
+        POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
+        POSTGRES_USER: ${{ env.POSTGRES_USER }}
+        POSTGRES_PORT: ${{ env.POSTGRES_PORT }}
+        POSTGRES_DATABASE: ${{ env.POSTGRES_DATABASE }}
+      secrets:
+        DBT_ENV_SECRET_POSTGRES_PASS: ${{ env.DBT_ENV_SECRET_POSTGRES_PASS }}
+ 
