@@ -16,23 +16,13 @@ on:
     pull_request:
     workflow_dispatch:
 
-env:
-    POSTGRES_HOST: "localhost"
-    POSTGRES_USER: "root"
-    DBT_ENV_SECRET_POSTGRES_PASS: "public_password"
-    POSTGRES_PORT: "5432"
-    POSTGRES_DATABASE: "postgres_test"
-    POSTGRES_SCHEMA: "dbt_codegen_integration_tests_postgres_${{ github.run_number }}"
-
 jobs:
   run-tests:
       uses: emmyoop/package-testing/.github/workflows/tox_tests.yml@main
       with:
-        POSTGRES_SCHEMA: ${{ env.POSTGRES_SCHEMA }}
-        POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
-        POSTGRES_USER: ${{ env.POSTGRES_USER }}
-        POSTGRES_PORT: ${{ env.POSTGRES_PORT }}
-        POSTGRES_DATABASE: ${{ env.POSTGRES_DATABASE }}
-      secrets:
-        DBT_ENV_SECRET_POSTGRES_PASS: ${{ env.DBT_ENV_SECRET_POSTGRES_PASS }}
+        POSTGRES_SCHEMA: "dbt_codegen_integration_tests_postgres_${{ github.run_number }}"
+        POSTGRES_HOST: "localhost"
+        POSTGRES_USER: "root"
+        POSTGRES_PORT: "5432"
+        POSTGRES_DATABASE: "postgres_test"
  
