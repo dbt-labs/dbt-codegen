@@ -19,10 +19,11 @@ on:
 jobs:
   run-tests:
       uses: emmyoop/package-testing/.github/workflows/tox_tests.yml@main
-      with:
-        POSTGRES_SCHEMA: "dbt_codegen_integration_tests_postgres_${{ github.run_number }}"
-        POSTGRES_HOST: "localhost"
-        POSTGRES_USER: "root"
-        POSTGRES_PORT: "5432"
-        POSTGRES_DATABASE: "postgres_test"
+    #   with:
+    #     POSTGRES_SCHEMA: "${{ needs.postgres-creds.outputs.POSTGRES_SCHEMA }}"
+    #     POSTGRES_HOST: "${{ needs.postgres-creds.outputs.POSTGRES_HOST }}"
+    #     POSTGRES_USER: "${{ needs.postgres-creds.outputs.POSTGRES_USER }}"
+    #     POSTGRES_PORT: "${{ needs.postgres-creds.outputs.POSTGRES_PORT }}"
+    #     POSTGRES_DATABASE: "${{ needs.postgres-creds.outputs.POSTGRES_DATABASE }}"
+    #     DBT_ENV_SECRET_POSTGRES_PASS: ${{ needs.postgres-creds.outputs.DBT_ENV_SECRET_POSTGRES_PASS }}
  
