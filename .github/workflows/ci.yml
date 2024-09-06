@@ -18,7 +18,7 @@ on:
 
 jobs:
   run-tests:
-      uses: emmyoop/package-testing/.github/workflows/tox_tests.yml@main
+      uses: dbt-labs/dbt-package-testing/.github/workflows/run_tox.yml@er/use-action
     #   with:
     #     POSTGRES_SCHEMA: "${{ needs.postgres-creds.outputs.POSTGRES_SCHEMA }}"
     #     POSTGRES_HOST: "${{ needs.postgres-creds.outputs.POSTGRES_HOST }}"
