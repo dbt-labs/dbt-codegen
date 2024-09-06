@@ -15,11 +15,6 @@ on:
             - main
     pull_request:
     workflow_dispatch:
-        inputs:
-            adapter:
-                description: The adapter to test against.  Defaults to all supported adapters when blank.
-                type: string
-                required: false
 
 env:
     PYTHON_VERSION: "3.11"
