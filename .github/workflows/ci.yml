@@ -18,4 +18,4 @@ on:
 
 jobs:
   run-tests:
-      uses: dbt-labs/dbt-package-testing/.github/workflows/run_tox.yml@er/use-action
+      uses: dbt-labs/dbt-package-testing/.github/workflows/run_tox.yml@main
