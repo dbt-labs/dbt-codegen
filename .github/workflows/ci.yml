@@ -18,7 +18,7 @@ on:
 
 jobs:
   run-tests:
-      uses: dbt-labs/dbt-package-testing/.github/workflows/run_tox.yml@main
+      uses: dbt-labs/dbt-package-testing/.github/workflows/run_tox.yml@v1
       # this just tests with postgres so no variables need to be passed through.
       # When it's time to add more adapters you will need to pass through inputs for
       # the other adapters as shown in the below example for redshift
