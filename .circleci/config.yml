@@ -46,8 +46,6 @@ jobs:
 
       - run:
           name: "Run Tests - Redshift"
-          environment:
-            REDSHIFT_SCHEMA: codegen_integration_tests_redshift
           command: |
             . dbt_venv/bin/activate
             echo `pwd`
@@ -60,8 +58,6 @@ jobs:
 
       - run:
           name: "Run Tests - Snowflake"
-          environment:
-            SNOWFLAKE_SCHEMA: codegen_integration_tests_snowflake
           command: |
             . dbt_venv/bin/activate
             echo `pwd`
@@ -76,7 +72,6 @@ jobs:
           name: "Run Tests - BigQuery"
           environment:
             BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
-            BIGQUERY_SCHEMA: codegen_integration_tests_bigquery
 
           command: |
             . dbt_venv/bin/activate
