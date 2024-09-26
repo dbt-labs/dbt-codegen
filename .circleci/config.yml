@@ -82,7 +82,7 @@ jobs:
             . dbt_venv/bin/activate
             echo `pwd`
             cd integration_tests
-            dbt --warn-error deps --target bigquery-circleci
+            dbt --warn-error deps --target bigquery
             dbt --warn-error run-operation create_source_table --target bigquery
             dbt --warn-error seed --target bigquery --full-refresh
             dbt --warn-error run --target bigquery
