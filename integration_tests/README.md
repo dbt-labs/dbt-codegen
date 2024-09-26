@@ -44,7 +44,7 @@ You can set these env vars in a couple ways:
 - **Temporary**: Set these environment variables in your shell before running the tests. This is the easiest way to get started, but you'll have to set them every time you open a new terminal.
 - **Reusable**: If you anticipate developing for multiple sessions, set these environment variables in your shell profile (like `~/.bashrc` or `~/.zshrc`). This way, you won't have to set them every time you open a new terminal.
 
-The environment variables you'll need to set for each adapter are:
+The environment variables you'll need to set for each adapter when running tests with the bash script:
 
 ```bash
 # Postgres — these are the defaults for the Docker container so actually have values
@@ -73,6 +73,8 @@ export SNOWFLAKE_TEST_ROLE=
 export SNOWFLAKE_TEST_DATABASE=
 export SNOWFLAKE_TEST_WAREHOUSE=
 ```
+
+The environment variables you'll need to set for each adapter when running tests with tox can be found in [integration_tests/.env/](integration_tests/.env/).
 
 ### Setup Postgres or other database targets
 
@@ -139,7 +141,9 @@ source .venv/bin/activate
 
 ## Write or modify an integration test
 
-### Run the integration tests
+Run all the tests _before_ you start developing to make sure everything is working as expected before you start making changes. Nothing is worse than spending a ton of time troubleshooting a failing test, only to realize it was failing before you touched anything. This will also ensure that you have the correct environment variables set up and that your database is running.
+
+### Run the Circle CI integration tests
 
 To run all the integration tests on your local machine like they will get run in CI:
 
@@ -157,7 +161,13 @@ make test target=postgres
 ./run_test.sh postgres
 ```
 
-Run all the tests _before_ you start developing to make sure everything is working as expected before you start making changes. Nothing is worse than spending a ton of time troubleshooting a failing test, only to realize it was failing before you touched anything. This will also ensure that you have the correct environment variables set up and that your database is running.
+### Run the tox Supported Tests
+
+To run all the integration tests on your local machine like they will get run in the CI (using GitHub workflows with tox):
+
+```shell
+make test_tox target=postgres
+```
 
 ### Creating a new integration test
 
