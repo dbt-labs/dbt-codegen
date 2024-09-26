@@ -1,5 +1,5 @@
 
-# HEY! This file is used in the dbt-utils integrations tests with GitHub CI.
+# HEY! This file is used in the dbt-codegen integrations tests with GitHub CI.
 # You should __NEVER__ check credentials into version control. That's why we use environment variables everywhere.
 # Thanks for reading :)
 
