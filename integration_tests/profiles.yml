@@ -17,32 +17,30 @@ integration_tests:
       threads: 5
 
     redshift:
-      type: "redshift"
-      host: "{{ env_var('REDSHIFT_HOST') }}"
-      user: "{{ env_var('REDSHIFT_USER') }}"
-      pass: "{{ env_var('DBT_ENV_SECRET_REDSHIFT_PASS') }}"
-      dbname: "{{ env_var('REDSHIFT_DATABASE') }}"
-      port: "{{ env_var('REDSHIFT_PORT') | as_number }}"
-      schema: "{{ env_var('REDSHIFT_SCHEMA') }}"
-      threads: 5
+      type: redshift
+      host: "{{ env_var('REDSHIFT_TEST_HOST') }}"
+      user: "{{ env_var('REDSHIFT_TEST_USER') }}"
+      pass: "{{ env_var('REDSHIFT_TEST_PASS') }}"
+      dbname: "{{ env_var('REDSHIFT_TEST_DBNAME') }}"
+      port: "{{ env_var('REDSHIFT_TEST_PORT') | as_number }}"
+      schema: codegen_integration_tests_redshift
+      threads: 1
 
     bigquery:
-      type: "bigquery"
-      method: "service-account-json"
-      project: "{{ env_var('BIGQUERY_PROJECT') }}"
-      dataset: "{{ env_var('BIGQUERY_SCHEMA') }}"
-      threads: 10
-      keyfile_json:
-        "{{ env_var('BIGQUERY_KEYFILE_JSON') | as_native }}"
-      job_retries: 3
+      type: bigquery
+      method: service-account
+      keyfile: "{{ env_var('BIGQUERY_SERVICE_KEY_PATH') }}"
+      project: "{{ env_var('BIGQUERY_TEST_DATABASE') }}"
+      schema: codegen_integration_tests_bigquery
+      threads: 1
 
     snowflake:
-      type: "snowflake"
-      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
-      user: "{{ env_var('SNOWFLAKE_USER') }}"
-      password: "{{ env_var('DBT_ENV_SECRET_SNOWFLAKE_PASS') }}"
-      role: "{{ env_var('SNOWFLAKE_ROLE') }}"
-      database: "{{ env_var('SNOWFLAKE_DATABASE') }}"
-      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
-      schema: "{{ env_var('SNOWFLAKE_SCHEMA') }}"
-      threads: 10
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_TEST_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_TEST_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_TEST_PASSWORD') }}"
+      role: "{{ env_var('SNOWFLAKE_TEST_ROLE') }}"
+      database: "{{ env_var('SNOWFLAKE_TEST_DATABASE') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_TEST_WAREHOUSE') }}"
+      schema: codegen_integration_tests_snowflake
+      threads: 1
