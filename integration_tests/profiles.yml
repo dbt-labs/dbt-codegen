@@ -1,23 +1,20 @@
 
-# HEY! This file is used in the dbt-codegen integrations tests with CircleCI.
-# You should __NEVER__ check credentials into version control. Thanks for reading :)
-
-config:
-    send_anonymous_usage_stats: False
-    use_colors: True
+# HEY! This file is used in the dbt-codegen integrations tests with GitHub CI.
+# You should __NEVER__ check credentials into version control. That's why we use environment variables everywhere.
+# Thanks for reading :)
 
 integration_tests:
   target: postgres
   outputs:
     postgres:
-      type: postgres
-      host: "{{ env_var('POSTGRES_TEST_HOST') }}"
-      user: "{{ env_var('POSTGRES_TEST_USER') }}"
-      pass: "{{ env_var('POSTGRES_TEST_PASS') }}"
-      port: "{{ env_var('POSTGRES_TEST_PORT') | as_number }}"
-      dbname: "{{ env_var('POSTGRES_TEST_DBNAME') }}"
-      schema: codegen_integration_tests_postgres
-      threads: 1
+      type: "postgres"
+      host: "{{ env_var('POSTGRES_HOST') }}"
+      user: "{{ env_var('POSTGRES_USER') }}"
+      pass: "{{ env_var('DBT_ENV_SECRET_POSTGRES_PASS') }}"
+      port: "{{ env_var('POSTGRES_PORT') | as_number }}"
+      dbname: "{{ env_var('POSTGRES_DATABASE') }}"
+      schema: "{{ env_var('POSTGRES_SCHEMA') }}"
+      threads: 5
 
     redshift:
       type: redshift
