@@ -7,7 +7,7 @@
 
 
 {# add to an input dictionary entries containing all the column descriptions of a given model #}
-{% macro add_model_column_descriptions_to_dict(resource_type, model_name, dict_with_descriptions={}) %}
+{% macro add_model_column_descriptions_to_dict(resource_type, model_name, dict_with_descriptions={}, case_sensitive_cols=False) %}
     {% if resource_type == 'source' %}
         {# sources aren't part of graph.nodes #}
         {% set nodes = graph.sources %}
@@ -18,7 +18,7 @@
         | selectattr('resource_type', 'equalto', resource_type)
         | selectattr('name', 'equalto', model_name) %}
         {% for col_name, col_values in node.columns.items() %}
-            {% do dict_with_descriptions.update( {col_name: col_values.description} ) %}
+            {% do dict_with_descriptions.update( {col_name if case_sensitive_cols else col_name | lower: col_values.description} ) %}
         {% endfor %}
     {% endfor %}
     {{ return(dict_with_descriptions) }}
@@ -26,12 +26,12 @@
 
 {# build a global dictionary looping through all the direct parents models #}
 {# if the same column name exists with different descriptions it is overwritten at each loop #}
-{% macro build_dict_column_descriptions(model_name) %}
+{% macro build_dict_column_descriptions(model_name, case_sensitive_cols=False) %}
     {% if execute %}
         {% set glob_dict = {} %}
         {% for full_model in codegen.get_model_dependencies(model_name) %}
             {% do codegen.add_model_column_descriptions_to_dict(
-                full_model.split('.')[0], full_model.split('.')[-1], glob_dict
+                full_model.split('.')[0], full_model.split('.')[-1], glob_dict, case_sensitive_cols
             ) %}
         {% endfor %}
         {{ return(glob_dict) }}

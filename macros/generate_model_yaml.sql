@@ -14,7 +14,7 @@
     {% if include_data_types %}
         {% do model_yaml.append('        data_type: ' ~ codegen.data_type_format_model(column)) %}
     {% endif %}
-    {% do model_yaml.append('        description: ' ~ (column_desc_dict.get(column.name | lower,'') | tojson)) %}
+    {% do model_yaml.append('        description: ' ~ (column_desc_dict.get(column_name,'') | tojson)) %}
     {% do model_yaml.append('') %}
 
     {% if column.fields|length > 0 %}
@@ -48,7 +48,7 @@
 
             {% set relation=ref(model) %}
             {%- set columns = adapter.get_columns_in_relation(relation) -%}
-            {% set column_desc_dict =  codegen.build_dict_column_descriptions(model) if upstream_descriptions else {} %}
+            {% set column_desc_dict =  codegen.build_dict_column_descriptions(model, case_sensitive_cols) if upstream_descriptions else {} %}
 
             {% for column in columns %}
                 {% set model_yaml = codegen.generate_column_yaml(column, model_yaml, column_desc_dict, include_data_types, case_sensitive_cols=case_sensitive_cols) %}
