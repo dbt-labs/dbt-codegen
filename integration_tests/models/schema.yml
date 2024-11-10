@@ -5,3 +5,7 @@ models:
     columns:
       - name: col_a
         description: 'description column "a"'
+  - name: Case_Sensitive_Model
+    columns:
+      - name: col_A
+        description: 'description column "a"'
