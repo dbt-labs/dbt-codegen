@@ -19,9 +19,9 @@
 version: 2
 
 sources:
-  - name: integration_tests_{{ target.type }}_raw_data_case_sensitive
-    database: circle_test
-    schema: integration_tests_{{ target.type }}_Raw_Data_Case_Sensitive
+  - name: {{ raw_schema | lower }}
+    database: {{ target.database }}
+    schema: {{ raw_schema }}
     tables:
       - name: data__Case_Sensitive
         columns:
