@@ -23,7 +23,7 @@ sources:
     database: {{ target.database }}
     schema: {{ raw_schema }}
     tables:
-      - name: data__Case_Sensitive
+      - name: {%- if target.type == "snowflake" -%}DATA__CASE_SENSITIVE{%- else -%}data__Case_Sensitive{%- endif -%}
         columns:
           - name: Col_A
             data_type: {{ integer_type_value() }}
