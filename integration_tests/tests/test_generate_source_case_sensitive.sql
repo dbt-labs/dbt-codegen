@@ -26,9 +26,9 @@ sources:
       - name: data__Case_Sensitive
         columns:
           - name: Col_A
-            data_type: integer
+            data_type: {{ integer_type_value() }}
           - name: Col_B
-            data_type: text
+            data_type: {{ text_type_value() }}
 {% endset %}
 
 
