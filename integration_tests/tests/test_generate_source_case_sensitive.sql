@@ -19,9 +19,9 @@
 version: 2
 
 sources:
-  - name: codegen_integration_tests_postgres_raw_data_case_sensitive
+  - name: integration_tests_{{ target.type }}_raw_data_case_sensitive
     database: circle_test
-    schema: codegen_integration_tests_postgres_Raw_Data_Case_Sensitive
+    schema: integration_tests_{{ target.type }}_Raw_Data_Case_Sensitive
     tables:
       - name: data__Case_Sensitive
         columns:
