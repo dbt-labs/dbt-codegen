@@ -20,8 +20,8 @@ with source as (
 renamed as (
 
     select
-        {% if target.type == "bigquery" %}My_Integer_Col{% else %}"My_Integer_Col"{% endif %}
-        , {% if target.type == "bigquery" %}My_Bool_Col{% else %}"My_Bool_Col"{% endif %}
+        {{ adapter.quote("My_Integer_Col") }}
+        , {{ adapter.quote("My_Bool_Col") }}
 
     from source
 
