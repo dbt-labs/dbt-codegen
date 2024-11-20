@@ -2,7 +2,7 @@ target/
 dbt_modules/
 dbt_packages/
 logs/
-env/
+env*/
 .venv/
 .env/
 venv/
