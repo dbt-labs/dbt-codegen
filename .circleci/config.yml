@@ -36,6 +36,7 @@ jobs:
             POSTGRES_DATABASE: circle_test
             POSTGRES_SCHEMA: codegen_integration_tests_postgres
           command: |
+            set -x
             . dbt_venv/bin/activate
             cd integration_tests
             python -m pip list | grep '^dbt-'
