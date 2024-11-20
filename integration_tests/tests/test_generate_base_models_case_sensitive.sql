@@ -15,7 +15,6 @@ with source as (
 
 renamed as (
 
-    -- force failure for all adapters
     select
         {{ adapter.quote("My_Integer_Col") }},
         {{ adapter.quote("My_Bool_Col") }}
