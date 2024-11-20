@@ -38,6 +38,7 @@ jobs:
           command: |
             . dbt_venv/bin/activate
             cd integration_tests
+            python -m pip list | grep '^dbt-'
             dbt --version
             dbt --warn-error deps --target postgres
             dbt --warn-error run-operation create_source_table --target postgres
