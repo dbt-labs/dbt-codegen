@@ -1,32 +1,54 @@
-# dbt-codegen v0.12.0-b1
+# dbt-codegen v0.13.0-b1
 
 ## What's Changed
 
 ### Features
 
-- `generate_model_yaml` with `upstream_descriptions=True` now reads from upstream sources in addition to models.(#112)[https://github.com/dbt-labs/dbt-codegen/issues/112]
-- `generate_source` now has options for case sensitivity in all fields ([#112](https://github.com/dbt-labs/dbt-codegen/issues/112)
+* Read upstream descriptions from sources by @esegal in https://github.com/dbt-labs/dbt-codegen/pull/154
+* Case sensitive generate source by @pnadolny13 in https://github.com/dbt-labs/dbt-codegen/pull/168
 
 ### Fixes
 
-- Column `description` fields are now correctly escaped in `generate_model_yaml` ([#142](https://github.com/dbt-labs/dbt-codegen/issues/142))
+* Escape upstream descriptions in generate_model_yaml by @wircho in https://github.com/dbt-labs/dbt-codegen/pull/159
 
 ### Docs
 
-- Fixed `generate_source` documentation
-- Rewrote the contributor README at `integration_tests/README.md`
+* fix generate_source example by @yatsky in https://github.com/dbt-labs/dbt-codegen/pull/164
+* Improve developer README by @gwenwindflower in https://github.com/dbt-labs/dbt-codegen/pull/163
+* Fix bad spacing in dev README by @gwenwindflower in https://github.com/dbt-labs/dbt-codegen/pull/170
+* Update Changelog by @gwenwindflower in https://github.com/dbt-labs/dbt-codegen/pull/174
 
 ## New Contributors
 
 - @wircho made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/159
 - @yatsky made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/164
-- @pnadolny made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/168
+- @pnadolny13 made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/168
 - @esegal made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/154
 - @gwenwindflower made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/163
 
-**Full Changelog**: https://github.com/dbt-labs/dbt-codegen/compare/0.11.0...0.12.0-b1
+**Full Changelog**: https://github.com/dbt-labs/dbt-codegen/compare/0.12.1...v0.13.0-b1
 
-## New features
+# dbt-codegen v0.12.1
+
+## What's Changed
+* Add dispatch to macros by @jeremyyeo in https://github.com/dbt-labs/dbt-codegen/pull/148
+* Remove terminal output in the generated file. by @vijmen in https://github.com/dbt-labs/dbt-codegen/pull/149
+
+## New Contributors
+* @jeremyyeo made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/148
+* @vijmen made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/149
+
+**Full Changelog**: https://github.com/dbt-labs/dbt-codegen/compare/0.12.0...0.12.1
+
+# dbt-codegen v0.12.0
+
+## What's Changed
+* Use print for outputting codegen by @JorgenG in https://github.com/dbt-labs/dbt-codegen/pull/86
+
+## New Contributors
+* @JorgenG made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/86
+
+**Full Changelog**: https://github.com/dbt-labs/dbt-codegen/compare/0.11.0...0.12.0
 
 # dbt-codegen v0.11.0
 
