@@ -22,12 +22,13 @@ jobs:
       # this just tests with postgres so no variables need to be passed through.
       # When it's time to add more adapters you will need to pass through inputs for
       # the other adapters as shown in the below example for redshift
-    #   with:
-    #     # redshift
-    #     REDSHIFT_HOST: ${{ vars.REDSHIFT_HOST }}
-    #     REDSHIFT_USER: ${{ vars.REDSHIFT_USER }}
-    #     REDSHIFT_DATABASE: ${{ vars.REDSHIFT_DATABASE }}
-    #     REDSHIFT_SCHEMA: "integration_tests_redshift_${{ github.run_number }}"
-    #     REDSHIFT_PORT: ${{ vars.REDSHIFT_PORT }}
-    #   secrets:
-    #     DBT_ENV_SECRET_REDSHIFT_PASS: ${{ secrets.DBT_ENV_SECRET_REDSHIFT_PASS }}
+      with:
+        # snowflake
+        SNOWFLAKE_USER: ${{ vars.SNOWFLAKE_USER }}
+        SNOWFLAKE_ROLE: ${{ vars.SNOWFLAKE_ROLE }}
+        SNOWFLAKE_DATABASE: ${{ vars.SNOWFLAKE_DATABASE }}
+        SNOWFLAKE_WAREHOUSE: ${{ vars.SNOWFLAKE_WAREHOUSE }}
+        SNOWFLAKE_SCHEMA: "integration_tests_snowflake_${{ github.run_number }}"
+      secrets:
+        SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+        DBT_ENV_SECRET_SNOWFLAKE_PASS: ${{ secrets.DBT_ENV_SECRET_SNOWFLAKE_PASS }}
