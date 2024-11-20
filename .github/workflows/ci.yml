@@ -31,4 +31,4 @@ jobs:
         SNOWFLAKE_SCHEMA: "integration_tests_snowflake_${{ github.run_number }}"
       secrets:
         SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-        DBT_ENV_SECRET_SNOWFLAKE_PASS: ${{ secrets.DBT_ENV_SECRET_SNOWFLAKE_PASS }}
+        DBT_ENV_SECRET_SNOWFLAKE_PASS: ${{ secrets.SNOWFLAKE_PASS }}
