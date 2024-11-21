@@ -90,3 +90,7 @@ workflows:
           context: profile-redshift
           requires:
             - integration-postgres
+      - integration-snowflake:
+          context: profile-snowflake
+          requires:
+            - integration-postgres
