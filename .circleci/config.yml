@@ -22,7 +22,6 @@ jobs:
       - run:
           name: "Run Tests - Postgres"
           command: |
-            . dbt_venv/bin/activate
             cd integration_tests
             dbt --warn-error deps --target postgres
             dbt --warn-error run-operation create_source_table --target postgres
