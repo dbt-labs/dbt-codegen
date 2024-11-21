@@ -36,9 +36,35 @@ jobs:
     # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
     resource_class: large
 
+  integration-redshift:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - run: pip install --pre dbt-core dbt-redshift
+      - run:
+          name: "Run Tests - Redshift"
+          command: |
+            cd integration_tests
+            dbt --warn-error deps --target redshift
+            dbt --warn-error run-operation create_source_table --target redshift
+            dbt --warn-error seed --target redshift --full-refresh
+            dbt --warn-error run --target redshift
+            dbt --warn-error test --target redshift
+      - store_artifacts:
+          path: integration_tests/logs
+      - store_artifacts:
+          path: integration_tests/target
+    # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
+    resource_class: large
+
 workflows:
   version: 2
   test-all:
     jobs:
       - integration-postgres:
           context: profile-postgres
+      - integration-redshift:
+          context: profile-redshift
+          requires:
+            - integration-postgres
