@@ -88,6 +88,12 @@ jobs:
           paths:
             - "dbt_venv"
 
+      - store_artifacts:
+          path: integration_tests/logs
+
+      - store_artifacts:
+          path: integration_tests/target
+
 workflows:
   version: 2
   test-all:
