@@ -82,6 +82,7 @@ jobs:
 
   integration-bigquery:
     environment:
+      BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
       BIGQUERY_SERVICE_ACCOUNT_JSON: "/home/circleci/bigquery-service-key.json"
     docker:
       - image: cimg/python:3.9
