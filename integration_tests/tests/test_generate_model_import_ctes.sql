@@ -12,9 +12,9 @@
     materialized='table',
 ) }}{% endraw %}
 
-with codegen_integration_tests__data_source_schema_codegen_integration_tests__data_source_table as (
+with {{ target.schema.replace(".", "_") }}__data_source_schema_codegen_integration_tests__data_source_table as (
 
-    select * from codegen_integration_tests__data_source_schema.codegen_integration_tests__data_source_table
+    select * from {{ target.schema }}__data_source_schema.codegen_integration_tests__data_source_table
     -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
   
 ),
