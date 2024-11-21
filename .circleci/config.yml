@@ -83,12 +83,15 @@ jobs:
   integration-bigquery:
     environment:
       BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
-      BIGQUERY_SERVICE_ACCOUNT_JSON: "/home/circleci/bigquery-service-key.json"
     docker:
       - image: cimg/python:3.9
     steps:
       - checkout
       - run: pip install --pre dbt-core dbt-bigquery
+      - run:
+          name: setup_creds
+          command: |
+            echo $BIGQUERY_SERVICE_ACCOUNT_JSON > ${HOME}/bigquery-service-key.json
       - run:
           name: Setup Environment Variables
           command: echo 'export BIGQUERY_KEYFILE_JSON="$BIGQUERY_SERVICE_ACCOUNT_JSON"' >> "$BASH_ENV"
