@@ -93,6 +93,7 @@ jobs:
           command: echo 'export BIGQUERY_KEYFILE_JSON="$BIGQUERY_SERVICE_ACCOUNT_JSON"' >> "$BASH_ENV"
       - run:
           name: "Run Tests - BigQuery"
+          command: |
             cd integration_tests
             dbt --warn-error deps --target bigquery
             dbt --warn-error run-operation create_source_table --target bigquery
