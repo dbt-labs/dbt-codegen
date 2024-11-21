@@ -26,47 +26,47 @@ jobs:
             python -m pip install --upgrade pip setuptools
             python -m pip install --pre dbt-core dbt-postgres dbt-redshift dbt-snowflake dbt-bigquery
 
-      # - run:
-      #     name: "Run Tests - Postgres"
-      #     environment:
-      #       POSTGRES_HOST: localhost
-      #       POSTGRES_USER: root
-      #       DBT_ENV_SECRET_POSTGRES_PASS: ""
-      #       POSTGRES_PORT: 5432
-      #       POSTGRES_DATABASE: circle_test
-      #       POSTGRES_SCHEMA: codegen_integration_tests_postgres
-      #     command: |
-      #       . dbt_venv/bin/activate
-      #       cd integration_tests
-      #       dbt --warn-error deps --target postgres
-      #       dbt --warn-error run-operation create_source_table --target postgres
-      #       dbt --warn-error seed --target postgres --full-refresh
-      #       dbt --warn-error run --target postgres
-      #       dbt --warn-error test --target postgres
+      - run:
+          name: "Run Tests - Postgres"
+          environment:
+            POSTGRES_HOST: localhost
+            POSTGRES_USER: root
+            DBT_ENV_SECRET_POSTGRES_PASS: ""
+            POSTGRES_PORT: 5432
+            POSTGRES_DATABASE: circle_test
+            POSTGRES_SCHEMA: codegen_integration_tests_postgres
+          command: |
+            . dbt_venv/bin/activate
+            cd integration_tests
+            dbt --warn-error deps --target postgres
+            dbt --warn-error run-operation create_source_table --target postgres
+            dbt --warn-error seed --target postgres --full-refresh
+            dbt --warn-error run --target postgres
+            dbt --warn-error test --target postgres
 
-      # - run:
-      #     name: "Run Tests - Redshift"
-      #     command: |
-      #       . dbt_venv/bin/activate
-      #       echo `pwd`
-      #       cd integration_tests
-      #       dbt --warn-error deps --target redshift
-      #       dbt --warn-error run-operation create_source_table --target redshift
-      #       dbt --warn-error seed --target redshift --full-refresh
-      #       dbt --warn-error run --target redshift
-      #       dbt --warn-error test --target redshift
+      - run:
+          name: "Run Tests - Redshift"
+          command: |
+            . dbt_venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt --warn-error deps --target redshift
+            dbt --warn-error run-operation create_source_table --target redshift
+            dbt --warn-error seed --target redshift --full-refresh
+            dbt --warn-error run --target redshift
+            dbt --warn-error test --target redshift
 
-      # - run:
-      #     name: "Run Tests - Snowflake"
-      #     command: |
-      #       . dbt_venv/bin/activate
-      #       echo `pwd`
-      #       cd integration_tests
-      #       dbt --warn-error deps --target snowflake
-      #       dbt --warn-error run-operation create_source_table --target snowflake
-      #       dbt --warn-error seed --target snowflake --full-refresh
-      #       dbt --warn-error run --target snowflake
-      #       dbt --warn-error test --target snowflake
+      - run:
+          name: "Run Tests - Snowflake"
+          command: |
+            . dbt_venv/bin/activate
+            echo `pwd`
+            cd integration_tests
+            dbt --warn-error deps --target snowflake
+            dbt --warn-error run-operation create_source_table --target snowflake
+            dbt --warn-error seed --target snowflake --full-refresh
+            dbt --warn-error run --target snowflake
+            dbt --warn-error test --target snowflake
 
       - run:
           name: "Run Tests - BigQuery"
