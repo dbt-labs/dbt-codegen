@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - checkout
-      - run: python -m pip install --pre dbt-core dbt-postgres
+      - run: pip install --pre dbt-core dbt-postgres
       - run:
           name: "Run Tests - Postgres"
           command: |
