@@ -4,7 +4,7 @@ jobs:
 
   integration-postgres:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.11
       - image: cimg/postgres:9.6
         environment:
           POSTGRES_USER: root
@@ -38,7 +38,7 @@ jobs:
 
   integration-redshift:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.11
     steps:
       - checkout
       - run: pip install dbt-core dbt-redshift
@@ -60,7 +60,7 @@ jobs:
 
   integration-snowflake:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.11
     steps:
       - checkout
       - run: pip install dbt-core dbt-snowflake
@@ -84,7 +84,7 @@ jobs:
     environment:
       BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.11
     steps:
       - checkout
       - run: pip install dbt-core dbt-bigquery
