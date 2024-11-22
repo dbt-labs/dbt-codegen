@@ -2,7 +2,7 @@
 
 {% set target_schema=api.Relation.create(
     database=target.database,
-    schema="codegen_integration_tests__data_source_schema"
+    schema=target.schema ~ "__data_source_schema"
 ) %}
 
 
