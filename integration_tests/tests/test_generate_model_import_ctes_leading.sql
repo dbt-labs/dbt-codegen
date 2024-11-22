@@ -13,14 +13,7 @@
     materialized='table',
 ) }}{% endraw %}
 
-with codegen_integration_tests__data_source_schema_codegen_integration_tests__data_source_table as (
-
-    select * from codegen_integration_tests__data_source_schema.codegen_integration_tests__data_source_table
-    -- CAUTION: It's best practice to use the ref or source function instead of a direct reference
-  
-)
-
-,data__a_relation as (
+with data__a_relation as (
 
     select * from {% raw %}{{ ref('data__a_relation') }}{% endraw %}
   
@@ -109,7 +102,7 @@ with codegen_integration_tests__data_source_schema_codegen_integration_tests__da
 my_second_cte as (
     select
         1 as id
-    from codegen_integration_tests__data_source_schema_codegen_integration_tests__data_source_table
+    from {% raw %}{{ target.schema }}{% endraw %}__data_source_schema.codegen_integration_tests__data_source_table
     union all
     select
         2 as id
