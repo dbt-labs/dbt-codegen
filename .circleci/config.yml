@@ -1,91 +1,113 @@
 version: 2
 
 jobs:
-  build:
+
+  integration-postgres:
     docker:
-      - image: cimg/python:3.9.9
-      - image: circleci/postgres:9.6.5-alpine-ram
+      - image: cimg/python:3.11
+      - image: cimg/postgres:9.6
+        environment:
+          POSTGRES_USER: root
+    environment:
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: root
+      DBT_ENV_SECRET_POSTGRES_PASS: ''
+      POSTGRES_PORT: 5432
+      POSTGRES_DATABASE: circle_test
+      POSTGRES_SCHEMA: codegen_integration_tests_postgres
 
     steps:
       - checkout
+      - run: pip install dbt-core dbt-postgres
+      - run:
+          name: "Run Tests - Postgres"
+          command: |
+            cd integration_tests
+            dbt --warn-error deps --target postgres
+            dbt --warn-error run-operation create_source_table --target postgres
+            dbt --warn-error seed --target postgres --full-refresh
+            dbt --warn-error run --target postgres
+            dbt --warn-error test --target postgres
+      - store_artifacts:
+          path: integration_tests/logs
+      - store_artifacts:
+          path: integration_tests/target
 
+    # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
+    resource_class: large
+
+  integration-redshift:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - checkout
+      - run: pip install dbt-core dbt-redshift
+      - run:
+          name: "Run Tests - Redshift"
+          command: |
+            cd integration_tests
+            dbt --warn-error deps --target redshift
+            dbt --warn-error run-operation create_source_table --target redshift
+            dbt --warn-error seed --target redshift --full-refresh
+            dbt --warn-error run --target redshift
+            dbt --warn-error test --target redshift
+      - store_artifacts:
+          path: integration_tests/logs
+      - store_artifacts:
+          path: integration_tests/target
+    # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
+    resource_class: large
+
+  integration-snowflake:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - checkout
+      - run: pip install dbt-core dbt-snowflake
+      - run:
+          name: "Run Tests - Snowflake"
+          command: |
+            cd integration_tests
+            dbt --warn-error deps --target snowflake
+            dbt --warn-error run-operation create_source_table --target snowflake
+            dbt --warn-error seed --target snowflake --full-refresh
+            dbt --warn-error run --target snowflake
+            dbt --warn-error test --target snowflake
+      - store_artifacts:
+          path: integration_tests/logs
+      - store_artifacts:
+          path: integration_tests/target
+    # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
+    resource_class: large
+
+  integration-bigquery:
+    environment:
+      BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - checkout
+      - run: pip install dbt-core dbt-bigquery
       - run:
           name: Setup Environment Variables
-          command: echo 'export BIGQUERY_KEYFILE_JSON="$BIGQUERY_SERVICE_ACCOUNT_JSON"' >> "$BASH_ENV"
-
-      - restore_cache:
-          key: deps1-{{ .Branch }}
-
-      - run:
-          name: "Setup dbt"
           command: |
-            python3 -m venv dbt_venv
-            . dbt_venv/bin/activate
-
-            python -m pip install --upgrade pip setuptools
-            python -m pip install --pre dbt-core dbt-postgres dbt-redshift dbt-snowflake dbt-bigquery
-
-      # - run:
-      #     name: "Run Tests - Postgres"
-      #     environment:
-      #       POSTGRES_HOST: localhost
-      #       POSTGRES_USER: root
-      #       DBT_ENV_SECRET_POSTGRES_PASS: ""
-      #       POSTGRES_PORT: 5432
-      #       POSTGRES_DATABASE: circle_test
-      #       POSTGRES_SCHEMA: codegen_integration_tests_postgres
-      #     command: |
-      #       . dbt_venv/bin/activate
-      #       cd integration_tests
-      #       dbt --warn-error deps --target postgres
-      #       dbt --warn-error run-operation create_source_table --target postgres
-      #       dbt --warn-error seed --target postgres --full-refresh
-      #       dbt --warn-error run --target postgres
-      #       dbt --warn-error test --target postgres
-
-      # - run:
-      #     name: "Run Tests - Redshift"
-      #     command: |
-      #       . dbt_venv/bin/activate
-      #       echo `pwd`
-      #       cd integration_tests
-      #       dbt --warn-error deps --target redshift
-      #       dbt --warn-error run-operation create_source_table --target redshift
-      #       dbt --warn-error seed --target redshift --full-refresh
-      #       dbt --warn-error run --target redshift
-      #       dbt --warn-error test --target redshift
-
-      # - run:
-      #     name: "Run Tests - Snowflake"
-      #     command: |
-      #       . dbt_venv/bin/activate
-      #       echo `pwd`
-      #       cd integration_tests
-      #       dbt --warn-error deps --target snowflake
-      #       dbt --warn-error run-operation create_source_table --target snowflake
-      #       dbt --warn-error seed --target snowflake --full-refresh
-      #       dbt --warn-error run --target snowflake
-      #       dbt --warn-error test --target snowflake
-
+            echo $BIGQUERY_SERVICE_ACCOUNT_JSON > $BIGQUERY_SERVICE_KEY_PATH
+            echo 'export BIGQUERY_KEYFILE_JSON="$BIGQUERY_SERVICE_ACCOUNT_JSON"' >> "$BASH_ENV"
       - run:
           name: "Run Tests - BigQuery"
-          environment:
-            BIGQUERY_SERVICE_KEY_PATH: "/home/circleci/bigquery-service-key.json"
-
           command: |
-            . dbt_venv/bin/activate
-            echo `pwd`
             cd integration_tests
             dbt --warn-error deps --target bigquery
             dbt --warn-error run-operation create_source_table --target bigquery
             dbt --warn-error seed --target bigquery --full-refresh
             dbt --warn-error run --target bigquery
             dbt --warn-error test --target bigquery
-
-      - save_cache:
-          key: deps1-{{ .Branch }}
-          paths:
-            - "dbt_venv"
+      - store_artifacts:
+          path: integration_tests/logs
+      - store_artifacts:
+          path: integration_tests/target
+    # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
+    resource_class: large
 
       - store_artifacts:
           path: integration_tests/logs
@@ -97,8 +119,17 @@ workflows:
   version: 2
   test-all:
     jobs:
-      - build:
-          context:
-            - profile-redshift
-            - profile-snowflake
-            - profile-bigquery
+      - integration-postgres:
+          context: profile-postgres
+      - integration-redshift:
+          context: profile-redshift
+          requires:
+            - integration-postgres
+      - integration-snowflake:
+          context: profile-snowflake
+          requires:
+            - integration-postgres
+      - integration-bigquery:
+          context: profile-bigquery
+          requires:
+            - integration-postgres

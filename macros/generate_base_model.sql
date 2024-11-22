@@ -25,11 +25,11 @@ renamed as (
     select
         {%- if leading_commas -%}
         {%- for column in column_names %}
-        {{", " if not loop.first}}{% if not case_sensitive_cols %}{{ column | lower }}{% elif target.type == "bigquery" %}{{ column }}{% else %}{{ "\"" ~ column ~ "\"" }}{% endif %}
+        {{", " if not loop.first}}{% if not case_sensitive_cols %}{{ column | lower }}{% else %}{{ adapter.quote(column) }}{% endif %}
         {%- endfor %}
         {%- else -%}
         {%- for column in column_names %}
-        {% if not case_sensitive_cols %}{{ column | lower }}{% elif target.type == "bigquery" %}{{ column }}{% else %}{{ "\"" ~ column ~ "\"" }}{% endif %}{{"," if not loop.last}}
+        {% if not case_sensitive_cols %}{{ column | lower }}{% else %}{{ adapter.quote(column) }}{% endif %}{{"," if not loop.last}}
         {%- endfor -%}
         {%- endif %}
 
