@@ -89,7 +89,7 @@ Next, install `dbt-core` (and its dependencies) with:
 ```shell
 make dev target=[postgres|redshift|...]
 # or
-python3 -m pip install --pre dbt-core dbt-[postgres|redshift|...]
+python3 -m pip install dbt-core dbt-[postgres|redshift|...]
 ```
 
 Or more specific:
@@ -97,11 +97,8 @@ Or more specific:
 ```shell
 make dev target=postgres
 # or
-python3 -m pip install --pre dbt-core dbt-postgres
+python3 -m pip install dbt-core dbt-postgres
 ```
-
-> [!NOTE]
-> The `--pre` flag tells pip to install the latest pre-release version of whatever you pass to install. This ensures you're always using the latest version of dbt, so if your code interacts with dbt in a way that causes issues or test failures, we'll know about it ahead of a release.
 
 Make sure to reload your virtual environment after installing the dependencies:
 
