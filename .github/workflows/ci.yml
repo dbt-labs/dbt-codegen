@@ -29,6 +29,9 @@ jobs:
         SNOWFLAKE_DATABASE: ${{ vars.SNOWFLAKE_DATABASE }}
         SNOWFLAKE_WAREHOUSE: ${{ vars.SNOWFLAKE_WAREHOUSE }}
         SNOWFLAKE_SCHEMA: "integration_tests_snowflake_${{ github.run_number }}"
+        # bigquery
+        BIGQUERY_PROJECT: ${{ vars.BIGQUERY_PROJECT }}
+        BIGQUERY_SCHEMA: "integration_tests_bigquery_${{ github.run_number }}"
         # redshift
         REDSHIFT_HOST: ${{ vars.REDSHIFT_HOST }}
         REDSHIFT_USER: ${{ vars.REDSHIFT_USER }}
@@ -39,3 +42,4 @@ jobs:
         SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
         DBT_ENV_SECRET_SNOWFLAKE_PASS: ${{ secrets.SNOWFLAKE_PASS }}
         DBT_ENV_SECRET_REDSHIFT_PASS: ${{ secrets.REDSHIFT_PASS }}
+        BIGQUERY_KEYFILE_JSON: ${{ secrets.BIGQUERY_KEYFILE_JSON }}

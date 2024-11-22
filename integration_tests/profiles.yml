@@ -28,10 +28,11 @@ integration_tests:
 
     bigquery:
       type: bigquery
-      method: service-account
-      keyfile: "{{ env_var('BIGQUERY_SERVICE_KEY_PATH') }}"
-      project: "{{ env_var('BIGQUERY_TEST_DATABASE') }}"
-      schema: codegen_integration_tests_bigquery
+      method: service-account-json
+      keyfile_json:
+        "{{ env_var('BIGQUERY_KEYFILE_JSON') | as_native}}"
+      project: "{{ env_var('BIGQUERY_PROJECT') }}"
+      dataset: "{{ env_var('BIGQUERY_SCHEMA') }}"
       threads: 1
 
     snowflake:
