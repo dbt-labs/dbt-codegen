@@ -17,13 +17,13 @@ integration_tests:
       threads: 5
 
     redshift:
-      type: redshift
-      host: "{{ env_var('REDSHIFT_TEST_HOST') }}"
-      user: "{{ env_var('REDSHIFT_TEST_USER') }}"
-      pass: "{{ env_var('REDSHIFT_TEST_PASS') }}"
-      dbname: "{{ env_var('REDSHIFT_TEST_DBNAME') }}"
-      port: "{{ env_var('REDSHIFT_TEST_PORT') | as_number }}"
-      schema: codegen_integration_tests_redshift
+      type: "redshift"
+      host: "{{ env_var('REDSHIFT_HOST') }}"
+      user: "{{ env_var('REDSHIFT_USER') }}"
+      pass: "{{ env_var('DBT_ENV_SECRET_REDSHIFT_PASS') }}"
+      dbname: "{{ env_var('REDSHIFT_DATABASE') }}"
+      port: "{{ env_var('REDSHIFT_PORT') | as_number }}"
+      schema: "{{ env_var('REDSHIFT_SCHEMA') }}"
       threads: 1
 
     bigquery:
