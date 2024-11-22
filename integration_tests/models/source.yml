@@ -2,6 +2,7 @@ version: 2
 
 sources:
   - name: codegen_integration_tests__data_source_schema
+    schema: "{{ target.schema ~ '__data_source_schema' }}"
     tables:
       - name: codegen_integration_tests__data_source_table
         columns:
