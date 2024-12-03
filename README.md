@@ -1,5 +1,7 @@
 # dbt-codegen
 
+testing
+
 Macros that generate dbt code, and log it to the command line.
 
 # Contents
