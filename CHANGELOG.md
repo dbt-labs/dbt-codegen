@@ -1,3 +1,13 @@
+# dbt-codegen v0.13.1
+
+## What's Changed
+
+## Under the hood
+
+* Temporarily remove CI test for case-sensitive identifiers when generating sources by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/230
+
+**Full Changelog**: https://github.com/dbt-labs/dbt-codegen/compare/0.13.0...0.13.1
+
 # dbt-codegen v0.13.0
 
 ## What's Changed
