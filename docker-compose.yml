@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   postgres:
-    image: cimg/postgres:17
+    image: cimg/postgres:17.0
     environment:
       - POSTGRES_USER=root
     ports:
