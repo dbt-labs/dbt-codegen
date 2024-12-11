@@ -15,15 +15,23 @@ models:
     description: ""
     columns:
       - name: repeated_int
-        data_type: array<{{ integer_type_value() }}>
+        data_type: array<int64>
         description: ""
 
       - name: repeated_struct
-        data_type: array<struct<`int_field` int64>>
+        data_type: array<struct<`nested_int_field` int64, `nested_repeated_struct` array<struct<`string_field` string>>>>
         description: ""
 
-      - name: repeated_struct.int_field
-        data_type: {{ integer_type_value() }}
+      - name: repeated_struct.nested_int_field
+        data_type: int64
+        description: ""
+
+      - name: repeated_struct.nested_repeated_struct
+        data_type: array<struct<`string_field` string>>
+        description: ""
+
+      - name: repeated_struct.nested_repeated_struct.string_field
+        data_type: string
         description: ""
 
 {% endset %}
