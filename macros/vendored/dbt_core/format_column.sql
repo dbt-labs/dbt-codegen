@@ -10,8 +10,12 @@
 {%- endmacro -%}
 
 {# Vendored from: https://github.com/dbt-labs/dbt-bigquery/blob/4d255b2f854d21d5d8871bdaa8d7ab47e7e863a3/dbt/include/bigquery/macros/utils/get_columns_spec_ddl.sql#L1-L5 #}
+{# But modified to handle https://github.com/dbt-labs/dbt-codegen/issues/190 #}
 {% macro bigquery__format_column(column) -%}
   {% set data_type = column.data_type %}
+  {% if column.mode.lower() == "repeated" and column.dtype.lower() == "record" %}
+    {% set data_type = "array" %}
+  {% endif %}
   {% set formatted = column.column.lower() ~ " " ~ data_type %}
   {{ return({'name': column.name, 'data_type': data_type, 'formatted': formatted}) }}
 {%- endmacro -%}

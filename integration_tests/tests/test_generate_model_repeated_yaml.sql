@@ -19,7 +19,7 @@ models:
         description: ""
 
       - name: repeated_struct
-        data_type: array<struct<`nested_int_field` int64, `nested_repeated_struct` array<struct<`string_field` string>>>>
+        data_type: array
         description: ""
 
       - name: repeated_struct.nested_int_field
@@ -27,7 +27,7 @@ models:
         description: ""
 
       - name: repeated_struct.nested_repeated_struct
-        data_type: array<struct<`string_field` string>>
+        data_type: array
         description: ""
 
       - name: repeated_struct.nested_repeated_struct.string_field
