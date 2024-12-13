@@ -1,3 +1,7 @@
+### Fixes
+
+- fix data_type for BigQuery repeated fields
+
 # dbt-codegen v0.13.1
 
 ## What's Changed
