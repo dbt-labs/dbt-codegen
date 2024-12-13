@@ -17,6 +17,7 @@ resolves #
 
 ## Checklist
 - [ ] This code is associated with an [issue](https://github.com/dbt-labs/dbt-codegen/issues) which has been triaged and [accepted for development](https://docs.getdbt.com/docs/contributing/oss-expectations#pull-requests).
-- [ ] I have verified that these changes work locally
+- [ ] I have read [the contributing guide](https://github.com/dbt-labs/dbt-codegen/blob/main/CONTRIBUTING.md) and understand what's expected of me
+- [ ] I have run this code in development and it appears to resolve the stated issue
+- [ ] This PR includes tests, or tests are not required/relevant for this PR
 - [ ] I have updated the README.md (if applicable)
-- [ ] I have added tests & descriptions to my models (and macros if applicable)
