@@ -18,4 +18,3 @@ Describe your changes, and why you're making them.
 - [ ] I have verified that these changes work locally
 - [ ] I have updated the README.md (if applicable)
 - [ ] I have added tests & descriptions to my models (and macros if applicable)
-- [ ] I have added an entry to CHANGELOG.md
