@@ -1,3 +1,59 @@
+# dbt-codegen v0.13.1
+
+## What's Changed
+
+## Under the hood
+
+* Temporarily remove CI test for case-sensitive identifiers when generating sources by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/230
+
+**Full Changelog**: https://github.com/dbt-labs/dbt-codegen/compare/0.13.0...0.13.1
+
+# dbt-codegen v0.13.0
+
+## What's Changed
+
+### Features
+
+* Read upstream descriptions from sources by @esegal in https://github.com/dbt-labs/dbt-codegen/pull/154
+* Parameters in `generate_source` for case-sensitive identifiers by @pnadolny13 in https://github.com/dbt-labs/dbt-codegen/pull/168
+
+### Fixes
+
+* Escape upstream descriptions in generate_model_yaml by @wircho in https://github.com/dbt-labs/dbt-codegen/pull/159
+* Fix quoted identifiers in the `generate_base_model` macro for BigQuery by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/199
+
+### Docs
+
+* fix generate_source example by @yatsky in https://github.com/dbt-labs/dbt-codegen/pull/164
+* Improve developer README by @gwenwindflower in https://github.com/dbt-labs/dbt-codegen/pull/163
+* Fix bad spacing in dev README by @gwenwindflower in https://github.com/dbt-labs/dbt-codegen/pull/170
+* Changelogs for 0.12.0, 0.12.1, and 0.13.0-b1 by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/196
+
+## Under the hood
+
+* Restore CI test for case-sensitive identifiers when generating sources by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/192
+* Remove Redshift-specific logic for toggling case-sensitive identifiers by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/208
+* Use the `cimg/postgres` Docker image by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/214
+* Independent CircleCI workflow job for each tested adapter by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/215
+* Simplify environment variables for BigQuery in CircleCI by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/216
+* Stop installing prereleases from PyPI in favor of stable releases only by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/220
+* Upgrade to Python 3.11 in CircleCI by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/222
+* Use dynamic schema names rather than hardcoded ones by @dbeatty10 in https://github.com/dbt-labs/dbt-codegen/pull/224
+* Add support for postgres testing in GitHub CI via tox by @emmyoop by @emmyoop in https://github.com/dbt-labs/dbt-codegen/pull/181
+* Add support for snowflake testing in GitHub CI via tox by @emmyoop in https://github.com/dbt-labs/dbt-codegen/pull/198
+* Add support for redshift testing in GitHub CI via tox by @emmyoop in https://github.com/dbt-labs/dbt-codegen/pull/204
+* Add support for bigquery testing in GitHub CI via tox by @emmyoop in https://github.com/dbt-labs/dbt-codegen/pull/203
+
+## New Contributors
+* @wircho made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/159
+* @esegal made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/154
+* @yatsky made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/164
+* @gwenwindflower made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/163
+* @pnadolny13 made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/168
+* @emmyoop made their first contribution in https://github.com/dbt-labs/dbt-codegen/pull/181
+
+**Full Changelog**: https://github.com/dbt-labs/dbt-codegen/compare/0.12.1...0.13.0
+
 # dbt-codegen v0.13.0-b1
 
 ## What's Changed
