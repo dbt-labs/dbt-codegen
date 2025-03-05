@@ -48,7 +48,7 @@
             {% set model_path = "/".join(model.path.split("/")[:-1]) %}
             {% if model_path == directory and model.name.startswith(prefix) %}
                 {% do model_names.append(model.name) %}
-            {% endif %} 
+            {% endif %}
         {% endfor %}
     {% elif directory %}
         {% for model in models %}
@@ -87,4 +87,19 @@
 {% macro default__data_type_format_model(column) %}
     {% set formatted = codegen.format_column(column) %}
     {{ return(formatted['data_type'] | lower) }}
+{% endmacro %}
+
+{# retrieve entire resource dictionary based on unique id #}
+{% macro get_resource_from_unique_id(resource_unique_id) %}
+    {% set resource_type = resource_unique_id.split('.')[0] %}
+    {% if resource_type == 'source' %}
+        {% set resource = graph.sources[resource_unique_id] %}
+    {% elif resource_type == 'exposure' %}
+        {% set resource = graph.exposure[resource_unique_id] %}
+    {% elif resource_type == 'metric' %}
+        {% set resource = graph.metrics[resource_unique_id] %}
+    {% else %}
+        {% set resource = graph.nodes[resource_unique_id] %}
+    {% endif %}
+    {{ return(resource) }}
 {% endmacro %}
