@@ -1,4 +1,4 @@
-{% macro generate_unit_test_template(model_name, expected_rows=true) %}
+{% macro generate_unit_test_template(model_name) %}
 
     {%- set ns = namespace(depends_on_list = []) -%}
 
@@ -27,11 +27,14 @@
     {%- endfor -%}
 
     -- getting 'this' columns
-    {%- set ns.expected_columns_list = [] -%}
-    {%- set columns = adapter.get_columns_in_relation(ref(model_name)) -%}
-    {%- for column in columns -%}
-        {{ ns.expected_columns_list.append(column.name) }}
-    {%- endfor -%}
+    {% set relation_exists = load_relation(ref(model_name)) is not none %}
+    {% if relation_exists %}
+        {%- set ns.expected_columns_list = [] -%}
+        {%- set columns = adapter.get_columns_in_relation(ref(model_name)) -%}
+        {%- for column in columns -%}
+            {{ ns.expected_columns_list.append(column.name) }}
+        {%- endfor -%}
+    {% endif %}
 
     {%- set unit_test_yaml_template -%}
 unit_tests:
@@ -66,7 +69,7 @@ unit_tests:
     {%- if ns.this_materialization == 'incremental' -%}
       - input: this
         rows:
-        {%- if expected_rows -%}
+        {%- if relation_exists -%}
         {%- set ns.column_string = '- {' -%}
         {%- for column_name in ns.expected_columns_list -%}
               {%- if not loop.last -%}
@@ -81,7 +84,7 @@ unit_tests:
 
     expect:
       rows:
-        {%- if expected_rows -%}
+        {%- if relation_exists -%}
         {%- set ns.column_string = '- {' -%}
         {%- for column_name in ns.expected_columns_list -%}
             {%- if not loop.last -%}
