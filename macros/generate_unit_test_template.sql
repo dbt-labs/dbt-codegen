@@ -1,4 +1,4 @@
-{% macro generate_unit_test_template(model_name) %}
+{% macro generate_unit_test_template(model_name, inline_columns=false) %}
 
     {%- set ns = namespace(depends_on_list = []) -%}
 
@@ -55,44 +55,77 @@ unit_tests:
       - input: ref("{{item_dict.alias}}")
         rows:
         {%- endif -%}
-        {%- set ns.column_string = '- {' -%}
-        {%- for column_name in ns.input_columns_list[i] -%}
-            {%- if not loop.last -%}
-                {%- set ns.column_string = ns.column_string ~ column_name ~ ': , ' -%}
-            {%- else -%}
-                {%- set ns.column_string = ns.column_string ~ column_name ~ ': }' -%}
-            {%- endif -%}
-        {% endfor %}
+        {%- if inline_columns -%}
+            {%- set ns.column_string = '- {' -%}
+            {%- for column_name in ns.input_columns_list[i] -%}
+                {%- if not loop.last -%}
+                    {%- set ns.column_string = ns.column_string ~ column_name ~ ': , ' -%}
+                {%- else -%}
+                    {%- set ns.column_string = ns.column_string ~ column_name ~ ': }' -%}
+                {%- endif -%}
+            {% endfor %}
+        {%- else -%}
+            {%- set ns.column_string = '' -%}
+            {%- for column_name in ns.input_columns_list[i] -%}
+                {%- if loop.first -%}
+                    {%- set ns.column_string = ns.column_string ~ '- ' ~ column_name ~ ': ' -%}
+                {%- else -%}
+                    {%- set ns.column_string = ns.column_string ~ '\n            ' ~ column_name ~ ': ' -%}
+                {%- endif -%}
+            {% endfor %}
+        {%- endif %}
           {{ns.column_string}}
     {% endfor %}
 
-    {%- if ns.this_materialization == 'incremental' -%}
+    {%- if ns.this_materialization == 'incremental' %}
       - input: this
         rows:
         {%- if relation_exists -%}
-        {%- set ns.column_string = '- {' -%}
-        {%- for column_name in ns.expected_columns_list -%}
-              {%- if not loop.last -%}
-                  {%- set ns.column_string = ns.column_string ~ column_name ~ ': , ' -%}
-              {%- else -%}
-                  {%- set ns.column_string = ns.column_string ~ column_name ~ ': }' -%}
-              {%- endif -%}
-              {% endfor %}
+            {%- if inline_columns -%}
+                {%- set ns.column_string = '- {' -%}
+                {%- for column_name in ns.expected_columns_list -%}
+                    {%- if not loop.last -%}
+                        {%- set ns.column_string = ns.column_string ~ column_name ~ ': , ' -%}
+                    {%- else -%}
+                        {%- set ns.column_string = ns.column_string ~ column_name ~ ': }' -%}
+                    {%- endif -%}
+                {% endfor %}
+            {%- else -%}
+                {%- set ns.column_string = '' -%}
+                {%- for column_name in ns.expected_columns_list -%}
+                    {%- if loop.first -%}
+                        {%- set ns.column_string = ns.column_string ~ '- ' ~ column_name ~ ': ' -%}
+                    {%- else -%}
+                        {%- set ns.column_string = ns.column_string ~ '\n            ' ~ column_name ~ ': ' -%}
+                    {%- endif -%}
+                {% endfor %}
+            {%- endif %}
           {{ns.column_string}}
-        {% endif %}
+        {%- endif %}
     {% endif %}
 
     expect:
       rows:
         {%- if relation_exists -%}
-        {%- set ns.column_string = '- {' -%}
-        {%- for column_name in ns.expected_columns_list -%}
-            {%- if not loop.last -%}
-                {%- set ns.column_string = ns.column_string ~ column_name ~ ': , ' -%}
+            {%- if inline_columns -%}
+                {%- set ns.column_string = '- {' -%}
+                {%- for column_name in ns.expected_columns_list -%}
+                    {%- if not loop.last -%}
+                        {%- set ns.column_string = ns.column_string ~ column_name ~ ': , ' -%}
+                    {%- else -%}
+                        {%- set ns.column_string = ns.column_string ~ column_name ~ ': }' -%}
+                    {%- endif -%}
+                {% endfor %}
             {%- else -%}
-                {%- set ns.column_string = ns.column_string ~ column_name ~ ': }' -%}
-            {%- endif -%}
-        {% endfor %}
+                {%- set ns.column_string = '' -%}
+                {%- for column_name in ns.expected_columns_list -%}
+                    {%- if loop.first -%}
+                        {%- set ns.column_string = ns.column_string ~ '- ' ~ column_name ~ ': ' -%}
+                    {%- else -%}
+                        {%- set ns.column_string = ns.column_string ~ '\n          ' ~ column_name ~ ': ' -%}
+                    {%- endif -%}
+                {% endfor %}
+            {%- endif %}
         {{ns.column_string}}
     {%- endif -%}
 
@@ -100,4 +133,19 @@ unit_tests:
 
     {{ print(unit_test_yaml_template) }}
 
+{% endmacro %}
+
+{# retrieve entire resource dictionary based on unique id #}
+{% macro get_resource_from_unique_id(resource_unique_id) %}
+    {% set resource_type = resource_unique_id.split('.')[0] %}
+    {% if resource_type == 'source' %}
+        {% set resource = graph.sources[resource_unique_id] %}
+    {% elif resource_type == 'exposure' %}
+        {% set resource = graph.exposure[resource_unique_id] %}
+    {% elif resource_type == 'metric' %}
+        {% set resource = graph.metrics[resource_unique_id] %}
+    {% else %}
+        {% set resource = graph.nodes[resource_unique_id] %}
+    {% endif %}
+    {{ return(resource) }}
 {% endmacro %}
