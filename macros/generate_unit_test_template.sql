@@ -134,18 +134,3 @@ unit_tests:
     {{ print(unit_test_yaml_template) }}
 
 {% endmacro %}
-
-{# retrieve entire resource dictionary based on unique id #}
-{% macro get_resource_from_unique_id(resource_unique_id) %}
-    {% set resource_type = resource_unique_id.split('.')[0] %}
-    {% if resource_type == 'source' %}
-        {% set resource = graph.sources[resource_unique_id] %}
-    {% elif resource_type == 'exposure' %}
-        {% set resource = graph.exposure[resource_unique_id] %}
-    {% elif resource_type == 'metric' %}
-        {% set resource = graph.metrics[resource_unique_id] %}
-    {% else %}
-        {% set resource = graph.nodes[resource_unique_id] %}
-    {% endif %}
-    {{ return(resource) }}
-{% endmacro %}
