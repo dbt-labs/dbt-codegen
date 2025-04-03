@@ -26,6 +26,9 @@ Macros that generate dbt code, and log it to the command line.
   - [generate_model_import_ctes (source)](#generate_model_import_ctes-source)
     - [Arguments:](#arguments-5)
     - [Usage:](#usage-5)
+  - [generate_unit_test_template (source)](#generate_unit_test_template-source)
+    - [Arguments:](#arguments-6)
+    - [Usage:](#usage-6)
 - [Contributing](#contributing)
 
 # Installation instructions
@@ -393,6 +396,45 @@ select * from final
 ```
 
 4. Replace the contents of the model's current SQL file with the compiled or logged code
+
+## generate_unit_test_template ([source](macros/generate_unit_test_template.sql))
+
+This macro generates the unit testing YAML for a given model with all references included as `given` inputs (along with their columns), plus the columns within the expected output.
+
+### Arguments:
+
+- `model_name` (required): The model you wish to generate unit testing YAML for.
+- `inline_columns` (optional, default=False): Whether you want all columns on the same line.
+
+### Usage:
+
+1. Create a model with your original SQL query
+2. Call the macro as an [operation](https://docs.getdbt.com/docs/using-operations):
+
+```
+$ dbt run-operation generate_unit_test_template --args '{"model_name": "order_items", "inline_columns": true}'
+```
+
+3. The new YAML - with all given inputs included - will be logged to the command line
+
+```yaml
+unit_tests:
+  - name: unit_test_order_items
+    model: order_items
+
+    given:
+      - input: ref("stg_order_items")
+        rows:
+          - col_a: 
+            col_b: 
+
+    expect:
+      rows:
+        - id: 
+```
+
+4. Create a new YAML file with the compiled or logged code.
+5. Add column values for the given inputs and expected output.
 
 ## Contributing
 
