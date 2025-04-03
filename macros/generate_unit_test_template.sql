@@ -1,6 +1,12 @@
 {% macro generate_unit_test_template(model_name, inline_columns=false) %}
+  {{ return(adapter.dispatch('generate_unit_test_template', 'codegen')(model_name, inline_columns)) }}
+{% endmacro %}
+
+{% macro default__generate_unit_test_template(model_name, inline_columns=false) %}
 
     {%- set ns = namespace(depends_on_list = []) -%}
+
+    {%- if execute -%}
 
     -- getting inputs and materialization info
     {%- for node in graph.nodes.values()
@@ -10,11 +16,13 @@
         {%- set ns.this_materialization = node.config['materialized'] -%}
     {%- endfor -%}
 
+    {%- endif -%}
+
     -- getting the input columns
     {%- set ns.input_columns_list = [] -%}
     {%- for item in ns.depends_on_list -%}
         {%- set input_columns_list = [] -%}
-        {%- set item_dict = get_resource_from_unique_id(item) -%}
+        {%- set item_dict = codegen.get_resource_from_unique_id(item) -%}
         {%- if item_dict.resource_type == 'source' %}
             {%- set columns = adapter.get_columns_in_relation(source(item_dict.source_name, item_dict.identifier)) -%}
         {%- else -%}
@@ -40,14 +48,16 @@
 unit_tests:
   - name: unit_test_{{ model_name }}
     model: {{ model_name }}
-    {% if ns.this_materialization == 'incremental' %}
+{% if ns.this_materialization == 'incremental' %}
     overrides:
       macros:
         is_incremental: true
-    {% endif %}
-    given:
+{% else -%}
+
+{%- endif %}
+    given: {%- if ns.depends_on_list|length == 0 and ns.this_materialization != 'incremental' %} []{% endif %}
     {%- for i in range(ns.depends_on_list|length) -%}
-        {%- set item_dict = get_resource_from_unique_id(ns.depends_on_list[i]) -%}
+        {%- set item_dict = codegen.get_resource_from_unique_id(ns.depends_on_list[i]) -%}
         {% if item_dict.resource_type == 'source' %}
       - input: source("{{item_dict.source_name}}", "{{item_dict.identifier}}")
         rows:
@@ -75,7 +85,7 @@ unit_tests:
             {% endfor %}
         {%- endif %}
           {{ns.column_string}}
-    {% endfor %}
+    {%- endfor %}
 
     {%- if ns.this_materialization == 'incremental' %}
       - input: this
@@ -102,7 +112,7 @@ unit_tests:
             {%- endif %}
           {{ns.column_string}}
         {%- endif %}
-    {% endif %}
+    {%- endif %}
 
     expect:
       rows:
@@ -131,6 +141,11 @@ unit_tests:
 
     {%- endset -%}
 
-    {{ print(unit_test_yaml_template) }}
+    {% if execute %}
+
+        {{ print(unit_test_yaml_template) }}
+        {% do return(unit_test_yaml_template) %}
+
+    {% endif %}
 
 {% endmacro %}
