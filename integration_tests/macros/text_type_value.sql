@@ -1,6 +1,6 @@
 {%- macro text_type_value(case_sensitive=False) -%}
 {%- if target.type == "redshift"-%}
-    {%- if case_sensitive -%}CHARACTER VARYING{%- else -%}character varying{%- endif -%}
+    text
 {%- elif target.type == "snowflake" -%}
     {%- if case_sensitive -%}VARCHAR{%- else -%}varchar{%- endif -%}
 {%- elif target.type == "bigquery" -%}
