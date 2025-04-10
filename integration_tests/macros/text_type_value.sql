@@ -1,11 +1,13 @@
-{%- macro text_type_value() -%}
+{%- macro text_type_value(case_sensitive=False) -%}
 {%- if target.type == "redshift"-%}
-character varying
+    {%- if case_sensitive -%}CHARACTER VARYING{%- else -%}character varying{%- endif -%}
 {%- elif target.type == "snowflake" -%}
-varchar
+    {%- if case_sensitive -%}VARCHAR{%- else -%}varchar{%- endif -%}
 {%- elif target.type == "bigquery" -%}
-string
+    {%- if case_sensitive -%}STRING{%- else -%}string{%- endif -%}
+{%- elif target.type == "postgres" -%}
+    text
 {%- else -%}
-text
+    {%- if case_sensitive -%}TEXT{%- else -%}text{%- endif -%}
 {%- endif -%}
 {%- endmacro -%}

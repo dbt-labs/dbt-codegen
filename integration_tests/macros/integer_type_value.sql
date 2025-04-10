@@ -1,9 +1,11 @@
-{%- macro integer_type_value() -%}
+{%- macro integer_type_value(case_sensitive=False) -%}
 {%- if target.type == "snowflake" -%}
-number
+    {%- if case_sensitive -%}NUMBER{%- else -%}number{%- endif -%}
 {%- elif target.type == "bigquery" -%}
-int64
+    {%- if case_sensitive -%}INT64{%- else -%}int64{%- endif -%}
+{%- elif target.type == "postgres" -%}
+    integer
 {%- else -%}
-integer
+    {%- if case_sensitive -%}INTEGER{%- else -%}integer{%- endif -%}
 {%- endif -%}
 {%- endmacro -%}
