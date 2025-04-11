@@ -4,8 +4,5 @@ services:
     image: cimg/postgres:17.0
     environment:
       - POSTGRES_USER=root
-      - POSTGRES_DATABASE=codegen_test
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_SCHEMA=codegen_integration_tests_postgres
     ports:
       - "5432:5432"
