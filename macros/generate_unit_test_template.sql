@@ -29,7 +29,7 @@
             {%- set columns = adapter.get_columns_in_relation(ref(item_dict.alias)) -%}
         {%- endif -%}
         {%- for column in columns -%}
-            {{ input_columns_list.append(column.name) }}
+            {{ input_columns_list.append(column.name|lower) }}
         {%- endfor -%}
         {{ ns.input_columns_list.append(input_columns_list) }}
     {%- endfor -%}
@@ -40,7 +40,7 @@
         {%- set ns.expected_columns_list = [] -%}
         {%- set columns = adapter.get_columns_in_relation(ref(model_name)) -%}
         {%- for column in columns -%}
-            {{ ns.expected_columns_list.append(column.name) }}
+            {{ ns.expected_columns_list.append(column.name|lower) }}
         {%- endfor -%}
     {% endif %}
 
