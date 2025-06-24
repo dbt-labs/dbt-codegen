@@ -79,14 +79,14 @@
     {{ return(formatted['data_type'] | lower) }}
 {% endmacro %}
 
-{% macro data_type_format_model(column) -%}
-  {{ return(adapter.dispatch('data_type_format_model', 'codegen')(column)) }}
+{% macro data_type_format_model(column, case_sensitive_data_types=False) -%}
+  {{ return(adapter.dispatch('data_type_format_model', 'codegen')(column, case_sensitive_data_types)) }}
 {%- endmacro %}
 
 {# format a column data type for a model #}
-{% macro default__data_type_format_model(column) %}
+{% macro default__data_type_format_model(column, case_sensitive_data_types) %}
     {% set formatted = codegen.format_column(column) %}
-    {{ return(formatted['data_type'] | lower) }}
+    {{ return(formatted['data_type'] if case_sensitive_data_types else formatted['data_type'] | lower) }}
 {% endmacro %}
 
 {# retrieve entire resource dictionary based on unique id #}
