@@ -1,7 +1,6 @@
 #!/bin/bash
 
 echo `pwd`
-cd integration_tests
 cp ci/sample.profiles.yml profiles.yml
 
 dbt --warn-error deps --target $1 || exit 1
