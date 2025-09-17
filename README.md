@@ -258,7 +258,7 @@ schema.yml file.
 - `upstream_descriptions` (optional, default=False): Whether you want to include descriptions for identical column names from upstream models and sources.
 - `include_data_types` (optional, default=True): Whether you want to add data types to your model column definitions.
 - `case_sensitive_cols` (optional, default=False): Whether you want column names to be
-  in lowercase, or to match the case in the source table.
+  in lowercase, or to match the case in the model table.
 
 ### Usage:
 
