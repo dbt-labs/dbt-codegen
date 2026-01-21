@@ -244,7 +244,7 @@ This bash script when executed from your local IDE will create model files in yo
 2. Copy the macro into a statement tab into your local IDE, and run your code
 
 ```bash
-source dbt_packages/codegen/bash_scripts/base_model_creation.sh "source_name" ["this-table","that-table"]
+source dbt_packages/codegen/bash_scripts/base_model_creation.sh source_name table-1 table-2 table-3 ...
 ```
 
 ## generate_model_yaml ([source](macros/generate_model_yaml.sql))
