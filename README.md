@@ -236,7 +236,7 @@ This bash script when executed from your local IDE will create model files in yo
 ### Arguments:
 
 - `source_name` (required): The source you wish to generate base model SQL for.
-- `tables` (required): A list of all tables you want to generate the base models for.
+- `table_name` (required): A single table name for which you want to generate the base model.
 
 ### Usage:
 
@@ -244,7 +244,7 @@ This bash script when executed from your local IDE will create model files in yo
 2. Copy the macro into a statement tab into your local IDE, and run your code
 
 ```bash
-source dbt_packages/codegen/bash_scripts/base_model_creation.sh "source_name" ["this-table","that-table"]
+source dbt_packages/codegen/bash_scripts/base_model_creation.sh "source_name" "table_name"
 ```
 
 ## generate_model_yaml ([source](macros/generate_model_yaml.sql))
