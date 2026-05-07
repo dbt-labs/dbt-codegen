@@ -38,21 +38,34 @@
     {% endif %}
 {% endmacro %}
 
+{# detect whether the project is running on Mac/Linux (forward slash) or Windows (backslash) #}
+{# by inspecting original_file_path values already present in the graph #}
+{# adapted from https://github.com/dbt-labs/pro-serv-dag-auditing #}
+{% macro is_os_mac_or_linux() %}
+    {% for val in graph.nodes.values() %}
+        {{ return("\\" not in val.get("original_file_path", "")) }}
+    {% endfor %}
+    {{ return(true) }}
+{% endmacro %}
+
 {# build a list of models looping through all models in the project #}
 {# filter by directory or prefix arguments, if provided #}
 {% macro get_models(directory=None, prefix=None) %}
     {% set model_names=[] %}
     {% set models = graph.nodes.values() | selectattr('resource_type', "equalto", 'model') %}
+    {% if directory %}
+        {% set sep = "/" if codegen.is_os_mac_or_linux() else "\\" %}
+    {% endif %}
     {% if directory and prefix %}
         {% for model in models %}
-            {% set model_path = "/".join(model.path.split("/")[:-1]) %}
+            {% set model_path = sep.join(model.path.split(sep)[:-1]) %}
             {% if model_path == directory and model.name.startswith(prefix) %}
                 {% do model_names.append(model.name) %}
             {% endif %}
         {% endfor %}
     {% elif directory %}
         {% for model in models %}
-            {% set model_path = "/".join(model.path.split("/")[:-1]) %}
+            {% set model_path = sep.join(model.path.split(sep)[:-1]) %}
             {% if model_path == directory %}
                 {% do model_names.append(model.name) %}
             {% endif %}
