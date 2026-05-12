@@ -13,6 +13,8 @@ sources:
     tables:
       - name: data__a_relation
         description: ""
+      - name: data__a_relation_case_sensitive_columns
+        description: ""
       - name: data__b_relation
         description: ""
       - name: data__campaign_analytics

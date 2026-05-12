@@ -40,6 +40,16 @@ sources:
             data_type: {{ text_type_value() }}
             description: ""
 
+      - name: data__a_relation_case_sensitive_columns
+        description: ""
+        columns:
+          - name: col_a
+            data_type: {{ integer_type_value() }}
+            description: ""
+          - name: col_b
+            data_type: {{ text_type_value() }}
+            description: ""
+
       - name: data__b_relation
         description: ""
         columns:
