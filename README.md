@@ -438,4 +438,4 @@ unit_tests:
 
 ## Contributing
 
-To contirbute code to this package, please follow the steps outlined in the `integration_tests` directory's [README](https://github.com/dbt-labs/dbt-codegen/blob/main/integration_tests/README.md) file.
+To contribute code to this package, please follow the steps outlined in the `integration_tests` directory's [README](https://github.com/dbt-labs/dbt-codegen/blob/main/integration_tests/README.md) file.
