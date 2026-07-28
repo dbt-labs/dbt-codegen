@@ -1,5 +1,5 @@
 #!/bin/bash
 
-echo "" > models/stg_$1__$2.sql
+echo "" > models/stg_"$1"__"$2".sql
 
-dbt --quiet run-operation codegen.generate_base_model --args '{"source_name": "'$1'", "table_name": "'$2'"}' | tail -n +3 >> models/stg_$1__$2.sql
+dbt --quiet run-operation codegen.generate_base_model --args '{"source_name": "'"$1"'", "table_name": "'"$2"'"}' | tail -n +3 >> models/stg_"$1"__"$2".sql
