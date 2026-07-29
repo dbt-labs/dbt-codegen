@@ -12,6 +12,7 @@ sources:
     schema: {{ raw_schema | trim | lower }}
     tables:
       - name: data__a_relation
+      - name: data__a_relation_case_sensitive_columns
       - name: data__b_relation
       - name: data__campaign_analytics
 
