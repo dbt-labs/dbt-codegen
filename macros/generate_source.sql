@@ -13,7 +13,10 @@
 
 {% endmacro %}
 
-{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, include_data_types=True, table_pattern='%', exclude='', name=schema_name, table_names=None, include_database=False, include_schema=False, case_sensitive_databases=False, case_sensitive_schemas=False, case_sensitive_tables=False, case_sensitive_cols=False) %}
+{% macro generate_source(schema_name, database_name=target.database, generate_columns=False, include_descriptions=False, include_data_types=True, table_pattern='%', exclude='', name=schema_name, table_names=None, include_database=False, include_schema=False, case_sensitive_databases=False, case_sensitive_schemas=False, case_sensitive_tables=False, case_sensitive_cols=none) %}
+    {% if case_sensitive_cols is none %}
+        {% set case_sensitive_cols = var('dbt_codegen_case_sensitive_cols', False) %}
+    {% endif %}
     {{ return(adapter.dispatch('generate_source', 'codegen')(schema_name, database_name, generate_columns, include_descriptions, include_data_types, table_pattern, exclude, name, table_names, include_database, include_schema, case_sensitive_databases, case_sensitive_schemas, case_sensitive_tables, case_sensitive_cols)) }}
 {% endmacro %}
 

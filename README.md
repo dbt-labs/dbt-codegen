@@ -8,6 +8,7 @@ Macros that generate dbt code, and log it to the command line.
 - [Contents](#contents)
 - [Installation instructions](#installation-instructions)
 - [Macros](#macros)
+  - [Case sensitivity var](#case-sensitivity-var)
   - [generate_source (source)](#generate_source-source)
     - [Arguments](#arguments)
     - [Usage:](#usage)
@@ -47,6 +48,18 @@ packages:
 
 # Macros
 
+## Case sensitivity var
+
+`generate_source`, `generate_base_model`, and `generate_model_yaml` each take a `case_sensitive_cols` argument. If you call a macro without passing `case_sensitive_cols` explicitly, it falls back to the `dbt_codegen_case_sensitive_cols` var, so you can turn on case-sensitive column names project-wide (e.g. for a case-sensitive platform like Microsoft Fabric) without having to pass the argument on every call, or override any macros:
+
+```yml
+# dbt_project.yml
+vars:
+  dbt_codegen_case_sensitive_cols: true
+```
+
+An explicit `case_sensitive_cols` argument on the macro call always takes precedence over the var. If neither is set, the default remains `False` (columns are lowercased), so this is fully backwards compatible.
+
 ## generate_source ([source](macros/generate_source.sql))
 
 This macro generates lightweight YAML for a [Source](https://docs.getdbt.com/docs/using-sources),
@@ -79,7 +92,8 @@ which you can then paste into a schema file.
 - `case_sensitive_tables` (optional, default=False): Whether you want table names to be
   in lowercase, or to match the case in the source table — not compatible with Redshift
 - `case_sensitive_cols` (optional, default=False): Whether you want column names to be
-  in lowercase, or to match the case in the source table
+  in lowercase, or to match the case in the source table. If not passed explicitly, falls
+  back to the `dbt_codegen_case_sensitive_cols` var (see [below](#case-sensitivity-var)).
 
 ### Outputting to a file
 
@@ -158,7 +172,7 @@ model.
 - `source_name` (required): The source you wish to generate base model SQL for.
 - `table_name` (required): The source table you wish to generate base model SQL for.
 - `leading_commas` (optional, default=False): Whether you want your commas to be leading (vs trailing).
-- `case_sensitive_cols ` (optional, default=False): Whether your source table has case sensitive column names. If true, keeps the case of the column names from the source.
+- `case_sensitive_cols ` (optional, default=False): Whether your source table has case sensitive column names. If true, keeps the case of the column names from the source. If not passed explicitly, falls back to the `dbt_codegen_case_sensitive_cols` var (see [below](#case-sensitivity-var)).
 - `materialized` (optional, default=None): Set materialization style (e.g. table, view, incremental) inside of the model's `config` block. If not set, materialization style will be controlled by `dbt_project.yml`
 
 ### Usage:
@@ -257,6 +271,7 @@ schema.yml file.
 - `model_names` (required): The model(s) you wish to generate YAML for.
 - `upstream_descriptions` (optional, default=False): Whether you want to include descriptions for identical column names from upstream models and sources.
 - `include_data_types` (optional, default=True): Whether you want to add data types to your model column definitions.
+- `case_sensitive_cols` (optional, default=False): Whether your model has case sensitive column names. If true, keeps the case of the column names as returned by the adapter instead of lowercasing them. If not passed explicitly, falls back to the `dbt_codegen_case_sensitive_cols` var (see [below](#case-sensitivity-var)).
 
 ### Usage:
 
