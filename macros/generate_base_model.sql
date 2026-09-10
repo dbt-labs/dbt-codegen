@@ -1,4 +1,4 @@
-{% macro generate_base_model(source_name, table_name, leading_commas=False, case_sensitive_cols=none, materialized=None) %}
+{% macro generate_base_model(source_name, table_name, leading_commas=False, case_sensitive_cols=none, materialized=none) %}
   {% if case_sensitive_cols is none %}
     {% set case_sensitive_cols = var('dbt_codegen_case_sensitive_cols', False) %}
   {% endif %}
